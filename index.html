@@ -404,11 +404,14 @@
       Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menginjeksi Template PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
       
       try {
-        const { PDFDocument, rgb } = PDFLib;
+        const { PDFDocument, rgb, StandardFonts } = PDFLib; // Tambahkan StandardFonts
         
         const urlTemplate = 'https://dikbudkra.github.io/inst-revitsmp/INSTRUMEN_revit_2026.pdf';
         const existingPdfBytes = await fetch(urlTemplate).then(res => res.arrayBuffer());
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        
+        // Panggil font khusus simbol (ZapfDingbats)
+        const checkFont = await pdfDoc.embedFont(StandardFonts.ZapfDingbats);
         const pages = pdfDoc.getPages();
         
         // Halaman Depan
