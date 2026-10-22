@@ -2,43 +2,57 @@
 <html lang="id" class="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Marshal - Admin Panel</title>
+  <title>Marshal - Admin Panel Monev</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>body { background-color: #0f172a; color: #f8fafc; }</style>
+  <style>
+    body { background-color: #0f172a; color: #f8fafc; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  </style>
 </head>
-<body class="p-10 font-sans">
+<body class="p-10 font-sans h-screen flex flex-col overflow-hidden">
   
-  <div id="loginBox" class="max-w-sm mx-auto bg-slate-800 p-8 rounded-xl shadow-xl border border-slate-700 mt-20">
-    <h2 class="text-2xl font-bold mb-6 text-amber-400 text-center">Akses Admin</h2>
-    <input type="text" id="aUser" placeholder="Username" class="w-full px-4 py-2 mb-4 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
-    <input type="password" id="aPass" placeholder="Password" class="w-full px-4 py-2 mb-6 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
-    <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-bold transition">Masuk Panel</button>
+  <div id="loginBox" class="max-w-sm mx-auto bg-slate-800 p-8 rounded-xl shadow-xl border border-slate-700 mt-20 shrink-0 relative overflow-hidden">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+    <h2 class="text-2xl font-bold mb-6 text-amber-400 text-center relative z-10">Akses Marshal</h2>
+    <div class="relative z-10">
+      <input type="text" id="aUser" placeholder="Username Admin" class="w-full px-4 py-2 mb-4 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
+      <input type="password" id="aPass" placeholder="Master Password" class="w-full px-4 py-2 mb-6 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
+      <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-bold transition shadow-lg">Masuk Panel</button>
+    </div>
   </div>
 
-  <div id="dashboard" class="max-w-5xl mx-auto hidden">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-white">Monitoring Progres Sekolah</h1>
-      <button onclick="location.reload()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm">Keluar</button>
+  <div id="dashboard" class="max-w-6xl mx-auto hidden flex-1 flex flex-col w-full h-full">
+    <div class="flex justify-between items-center mb-6 shrink-0">
+      <div>
+        <h1 class="text-2xl font-bold text-white">Monitoring Progres Sekolah</h1>
+        <p class="text-slate-400 text-sm">Dashboard Pemantauan e-Monev Revitalisasi</p>
+      </div>
+      <button onclick="location.reload()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm font-semibold transition">Keluar Akun</button>
     </div>
     
-    <div class="bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700">
-      <table class="w-full text-left text-sm">
-        <thead class="bg-slate-900 text-slate-400">
-          <tr>
-            <th class="p-4">NPSN</th>
-            <th class="p-4">Nama Instansi</th>
-            <th class="p-4">Status Dokumen</th>
-            <th class="p-4 text-right">Tindakan</th>
-          </tr>
-        </thead>
-        <tbody id="tBody" class="divide-y divide-slate-700/50"></tbody>
-      </table>
+    <div class="bg-slate-800 rounded-xl shadow-lg border border-slate-700 flex-1 flex flex-col overflow-hidden">
+      <div class="overflow-y-auto flex-1 p-1">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900 text-slate-400 sticky top-0 z-10 shadow">
+            <tr>
+              <th class="p-4 rounded-tl-lg">NPSN</th>
+              <th class="p-4">Nama Instansi</th>
+              <th class="p-4 text-center">Status</th>
+              <th class="p-4 text-right rounded-tr-lg">Tindakan Khusus</th>
+            </tr>
+          </thead>
+          <tbody id="tBody" class="divide-y divide-slate-700/50"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/GANTI_DENGAN_URL_GAS_ANDA/exec';
+    // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI (SAMAKAN DENGAN YANG DI SEKOLAH)
+    const API_URL = 'https://script.google.com/macros/s/AKfycbye4n7H63B9qG05o0l-Yk2qEaE9G1Ld3t6X_7p8_z39_w5Y8-e0m6Z1d9X2O_Y_m9w8G/exec';
 
     async function reqGAS(data) {
       const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(data) });
@@ -48,11 +62,14 @@
     async function loginAdmin() {
       const u = document.getElementById('aUser').value;
       const p = document.getElementById('aPass').value;
+      if(!u || !p) return;
+      
       Swal.showLoading();
       const res = await reqGAS({ action: 'loginAdmin', username: u, password: p });
       if (res.status === 'success') {
         document.getElementById('loginBox').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('dashboard').classList.add('flex');
         loadTable();
       } else {
         Swal.fire('Error', res.message, 'error');
@@ -64,16 +81,22 @@
       let html = '';
       res.data.forEach(s => {
         let badge = s.status === 'Selesai' ? 'bg-green-500/20 text-green-400 border border-green-500/50' : (s.status === 'Draf' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/50' : 'bg-slate-700 text-slate-400');
+        
+        let safeJson = encodeURIComponent(s.draft_json); 
+
         let btn = s.status === 'Selesai' 
-          ? `<button onclick="unlock('${s.npsn}')" class="text-xs bg-red-900/50 hover:bg-red-800 text-red-300 px-3 py-1.5 rounded mr-2 border border-red-700/50">Buka Kunci</button>
-             <a href="${s.pdf_link}" target="_blank" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded">Buka Berkas</a>`
-          : `<span class="text-slate-500 italic text-xs">Menunggu Finalisasi</span>`;
+          ? `<div class="flex flex-col gap-2 items-end">
+               <a href="${s.pdf_link}" target="_blank" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded w-32 text-center transition">Buka PDF</a>
+               <button onclick="downloadDocx('${s.nama_sekolah}', '${safeJson}')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded w-32 text-center transition">Rekap (DOCX)</button>
+               <button onclick="unlock('${s.npsn}')" class="text-xs text-slate-400 hover:text-red-400 hover:bg-red-900/30 px-2 py-1 rounded w-32 text-center transition mt-1">Buka Kunci</button>
+             </div>`
+          : `<span class="text-slate-500 italic text-xs block mt-2 text-right">Proses / Menunggu</span>`;
         
         html += `<tr class="hover:bg-slate-700/30 transition">
-          <td class="p-4 text-slate-400">${s.npsn}</td>
-          <td class="p-4 font-semibold text-slate-200">${s.nama_sekolah}</td>
-          <td class="p-4"><span class="px-2 py-1 rounded text-[11px] uppercase tracking-wider font-bold ${badge}">${s.status}</span></td>
-          <td class="p-4 text-right">${btn}</td>
+          <td class="p-4 text-slate-400 align-top">${s.npsn}</td>
+          <td class="p-4 font-semibold text-slate-200 align-top">${s.nama_sekolah}</td>
+          <td class="p-4 align-top text-center"><span class="px-2 py-1 rounded text-[11px] uppercase tracking-wider font-bold inline-block ${badge}">${s.status}</span></td>
+          <td class="p-4 align-top">${btn}</td>
         </tr>`;
       });
       document.getElementById('tBody').innerHTML = html;
@@ -81,10 +104,54 @@
     }
 
     async function unlock(npsn) {
-      if(!confirm('Buka kunci form sekolah ini?')) return;
+      if(!confirm('Anda yakin ingin membuka kunci (reset PDF) sekolah ini?')) return;
       Swal.showLoading();
       await reqGAS({ action: 'adminUnlock', npsn: npsn });
       loadTable();
+    }
+
+    function downloadDocx(namaSekolah, draftJsonEncoded) {
+      let draft = {};
+      try { draft = JSON.parse(decodeURIComponent(draftJsonEncoded)); } catch(e) {}
+      
+      let K = 0, CB = 0, B = 0, SB = 0;
+      for (let i = 1; i <= 30; i++) {
+        if(draft[`q${i}`] === 'K') K++;
+        if(draft[`q${i}`] === 'CB') CB++;
+        if(draft[`q${i}`] === 'B') B++;
+        if(draft[`q${i}`] === 'SB') SB++;
+      }
+
+      let header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head><meta charset='utf-8'><title>Rekap Monev</title></head><body>`;
+      
+      let content = `
+        <h2 style="text-align: center; font-family: Arial, sans-serif;">KESIMPULAN HASIL MONEV REVITALISASI</h2>
+        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #1e3a8a; margin-bottom: 30px;">${namaSekolah}</h3>
+        <p style="font-family: Arial, sans-serif;">Berdasarkan pengisian 30 Indikator Instrumen, berikut adalah ringkasan penilaian:</p>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif; width: 100%; border-color: #cbd5e1;">
+          <tr>
+            <th style="background-color: #f1f5f9; width: 70%; text-align: left;">Kategori Penilaian</th>
+            <th style="background-color: #f1f5f9; width: 30%; text-align: center;">Jumlah Jawaban</th>
+          </tr>
+          <tr><td style="color: #059669; font-weight: bold;">Sangat Baik (SB)</td><td style="text-align:center; font-size: 16px;"><b>${SB}</b></td></tr>
+          <tr><td style="color: #2563eb; font-weight: bold;">Baik (B)</td><td style="text-align:center; font-size: 16px;"><b>${B}</b></td></tr>
+          <tr><td style="color: #d97706; font-weight: bold;">Cukup Baik (CB)</td><td style="text-align:center; font-size: 16px;"><b>${CB}</b></td></tr>
+          <tr><td style="color: #e11d48; font-weight: bold;">Kurang (K)</td><td style="text-align:center; font-size: 16px;"><b>${K}</b></td></tr>
+        </table>
+        <p style="font-family: Arial, sans-serif; margin-top: 30px; font-size: 12px; color: #64748b;"><em>Dokumen ini digenerate secara otomatis dari Sistem e-Monev Bidang SMP.</em></p>
+      `;
+      let footer = "</body></html>";
+      
+      let sourceHTML = header + content + footer;
+      let source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+      
+      let fileDownload = document.createElement("a");
+      document.body.appendChild(fileDownload);
+      fileDownload.href = source;
+      fileDownload.download = 'Rekap_Monev_' + namaSekolah.replace(/ /g,"_") + '.doc';
+      fileDownload.click();
+      document.body.removeChild(fileDownload);
     }
   </script>
 </body>
