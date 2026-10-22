@@ -3,57 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>e-Monev Revitalisasi Sekolah</title>
+  <title>e-Monev Revitalisasi Sekolah 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <style>
-    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    /* Efek transisi antar bab */
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans overflow-hidden">
 
   <!-- Header Institusi -->
-  <header class="bg-slate-800 border-b border-slate-700 py-3 px-6 flex justify-between items-center shadow-lg z-10">
+  <header class="bg-slate-800 border-b border-slate-700 py-3 px-6 flex justify-between items-center shadow-lg z-10 shrink-0">
     <div class="flex items-center gap-4">
-      <!-- Logo Tut Wuri -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/512px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Tut Wuri Handayani" class="h-10 object-contain drop-shadow-md">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/512px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Tut Wuri Handayani" class="h-8 sm:h-10 object-contain drop-shadow-md">
       <div>
-        <h1 class="text-lg font-bold text-slate-100 tracking-wide">INSTRUMEN MONEV</h1>
-        <p class="text-xs text-slate-400">Revitalisasi Sekolah Dasar & Menengah 2026</p>
+        <h1 class="text-sm sm:text-lg font-bold text-slate-100 tracking-wide">INSTRUMEN MONEV</h1>
+        <p class="text-[10px] sm:text-xs text-slate-400">Revitalisasi Sekolah Dasar & Menengah 2026</p>
       </div>
     </div>
     <div class="flex items-center gap-4">
-      <span class="text-xs text-slate-400 text-right hidden sm:block">Dinas Pendidikan<br>Kab. Karanganyar</span>
-      <!-- Logo Karanganyar -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Kabupaten_Karanganyar.png/400px-Lambang_Kabupaten_Karanganyar.png" alt="Kabupaten Karanganyar" class="h-10 object-contain drop-shadow-md">
+      <span class="text-xs text-slate-400 text-right hidden md:block">Dinas Pendidikan & Kebudayaan<br>Kabupaten Karanganyar</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Kabupaten_Karanganyar.png/400px-Lambang_Kabupaten_Karanganyar.png" alt="Kabupaten Karanganyar" class="h-8 sm:h-10 object-contain drop-shadow-md">
     </div>
   </header>
 
   <main class="flex-1 flex overflow-hidden relative">
     
     <!-- 1. Halaman Login -->
-    <div id="loginSection" class="absolute inset-0 z-20 bg-slate-900 flex items-center justify-center">
-      <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-96 border border-slate-700">
-        <h2 class="text-2xl font-bold mb-6 text-center text-amber-400">Login Sekolah</h2>
-        <input type="text" id="usernameInput" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 focus:border-amber-400 focus:outline-none mb-4 text-white">
-        <!-- ID input disamarkan menjadi passwordInput -->
-        <input type="password" id="passwordInput" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 focus:border-amber-400 focus:outline-none mb-6 text-white">
-        <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 py-3 rounded-lg font-bold transition shadow-lg shadow-amber-500/20">Masuk</button>
+    <div id="loginSection" class="absolute inset-0 z-20 bg-slate-900 flex items-center justify-center p-4">
+      <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-slate-700 relative overflow-hidden">
+        <!-- Dekorasi Background Login -->
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
+        
+        <h2 class="text-2xl font-bold mb-2 text-center text-amber-400 relative z-10">Login Sekolah</h2>
+        <p class="text-slate-400 text-sm text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
+        
+        <div class="relative z-10">
+          <input type="text" id="usernameInput" placeholder="Username (ex: revitSMP)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-4 text-white placeholder-slate-400 transition">
+          <input type="password" id="passwordInput" placeholder="Password (NPSN)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-6 text-white placeholder-slate-400 transition">
+          <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 rounded-lg font-bold transition shadow-[0_0_15px_rgba(245,158,11,0.2)]">Masuk ke Instrumen</button>
+        </div>
       </div>
     </div>
 
     <!-- 2. Skeleton Loader -->
-    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex p-6 gap-6 hidden">
-      <div class="w-1/4 h-full bg-slate-800 rounded-xl p-4 animate-pulse">
+    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex flex-col sm:flex-row p-4 sm:p-6 gap-6 hidden">
+      <div class="w-full sm:w-1/4 h-full bg-slate-800 rounded-xl p-4 animate-pulse shrink-0 border border-slate-700/50">
         <div class="h-6 bg-slate-700 rounded w-1/2 mb-8"></div>
         <div class="h-10 bg-slate-700 rounded mb-4"></div>
         <div class="h-10 bg-slate-700 rounded mb-4"></div>
+        <div class="h-10 bg-slate-700 rounded mb-4"></div>
       </div>
-      <div class="w-3/4 h-full bg-slate-800 rounded-xl p-8 animate-pulse">
+      <div class="w-full sm:w-3/4 h-full bg-slate-800 rounded-xl p-6 sm:p-8 animate-pulse border border-slate-700/50">
         <div class="h-8 bg-slate-700 rounded w-1/3 mb-10"></div>
         <div class="h-4 bg-slate-700 rounded w-1/4 mb-4"></div>
         <div class="h-12 bg-slate-700 rounded mb-8"></div>
@@ -63,79 +72,128 @@
     </div>
 
     <!-- 3. Dashboard / Form Area -->
-    <div id="dashboardSection" class="w-full h-full flex hidden">
-      <aside class="w-1/4 bg-slate-800 border-r border-slate-700 flex flex-col">
-        <div class="p-6 border-b border-slate-700">
-          <p class="text-xs text-slate-400 uppercase tracking-widest mb-1">Sekolah Aktif</p>
-          <h3 id="schoolName" class="font-bold text-lg text-amber-400">Nama Sekolah</h3>
+    <div id="dashboardSection" class="w-full h-full flex flex-col sm:flex-row hidden">
+      
+      <!-- Sidebar Navigasi Bab -->
+      <aside class="w-full sm:w-1/4 bg-slate-800 border-r border-slate-700 flex flex-col shrink-0 sm:h-full h-48">
+        <div class="p-5 border-b border-slate-700 bg-slate-800/80 backdrop-blur">
+          <p class="text-[10px] text-slate-400 uppercase tracking-widest mb-1 font-semibold">Sekolah Aktif</p>
+          <h3 id="schoolName" class="font-bold text-base text-amber-400 leading-tight">Memuat Nama...</h3>
         </div>
-        <nav class="flex-1 overflow-y-auto p-4">
-          <ul class="space-y-2 text-sm font-medium text-slate-300">
-            <li class="p-3 bg-slate-700/50 rounded-lg border-l-4 border-amber-400">1. Indikator Sarpras</li>
-            <li class="p-3 hover:bg-slate-700 rounded-lg cursor-not-allowed opacity-50">2. Indikator Kurikulum (Terkunci)</li>
-          </ul>
+        <nav class="flex-1 overflow-y-auto p-3" id="sidebarNav">
+          <!-- Daftar Bab Di-generate oleh JS -->
         </nav>
         <div class="p-4 border-t border-slate-700">
-          <button onclick="location.reload()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm text-white">Keluar Sistem</button>
+          <button onclick="location.reload()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm font-semibold text-white transition">Keluar Sistem</button>
         </div>
       </aside>
 
-      <section class="w-3/4 bg-slate-900 overflow-y-auto relative">
-        <div id="lockedOverlay" class="absolute inset-0 bg-slate-900/90 backdrop-blur-sm z-10 flex flex-col items-center justify-center hidden">
-          <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-4 text-3xl">✓</div>
-          <h2 class="text-2xl font-bold text-white mb-2">Monev Selesai</h2>
-          <p class="text-slate-400 mb-6">Data sekolah Anda telah difinalisasi dan dikunci.</p>
-          <a id="btnDownloadPDF" href="#" target="_blank" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold shadow-lg">Unduh Berkas PDF</a>
+      <!-- Main Form Content -->
+      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full">
+        <!-- Overlay jika form selesai -->
+        <div id="lockedOverlay" class="absolute inset-0 bg-slate-900/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center hidden p-6 text-center">
+          <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 text-4xl border border-emerald-500/30">✓</div>
+          <h2 class="text-3xl font-bold text-white mb-3">Monev Selesai</h2>
+          <p class="text-slate-400 mb-8 max-w-md">Data instrumen sekolah Anda telah difinalisasi, dikunci, dan dikirim ke Dinas Pendidikan.</p>
+          <a id="btnDownloadPDF" href="#" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg shadow-blue-600/20 transition transform hover:-translate-y-1">Lihat / Unduh PDF</a>
         </div>
 
-        <div class="max-w-3xl mx-auto p-8 lg:p-12">
-          <h2 class="text-3xl font-bold text-white mb-2">Bagian 1: Sarana Prasarana</h2>
-          <p class="text-slate-400 mb-8 pb-4 border-b border-slate-800">Isi data sesuai kondisi aktual di lapangan.</p>
-
-          <div class="mb-8">
-            <label class="block mb-3 font-semibold text-slate-200">1. Kondisi Ruang Kelas Utama</label>
-            <select id="q1" onchange="autoSave()" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-amber-400 focus:outline-none text-slate-100">
-              <option value="">-- Pilih Penilaian --</option>
-              <option value="Sangat Baik">Sangat Baik (Kerusakan &lt; 10%)</option>
-              <option value="Baik">Baik (Kerusakan 10% - 25%)</option>
-              <option value="Cukup">Cukup (Kerusakan &gt; 25%)</option>
-            </select>
-          </div>
-
-          <div class="mb-10">
-            <label class="block mb-3 font-semibold text-slate-200">2. Jumlah Toilet Siswa Berfungsi</label>
-            <input type="number" id="q2" onblur="autoSave()" placeholder="Misal: 4" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:border-amber-400 focus:outline-none text-slate-100">
-          </div>
-
-          <div class="flex justify-end pt-6 border-t border-slate-800">
-            <button onclick="generatePDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 px-8 rounded-lg font-bold shadow-lg shadow-amber-500/20">Finalisasi Dokumen</button>
-          </div>
+        <div class="max-w-4xl mx-auto p-6 sm:p-10 lg:p-12" id="formArea">
+          <!-- Konten Form Di-generate oleh JS -->
         </div>
       </section>
     </div>
   </main>
 
-  <footer class="w-full bg-slate-950 text-center py-4 text-[11px] sm:text-sm font-medium tracking-wider text-slate-500 whitespace-nowrap border-t border-slate-800 z-10">
+  <footer class="w-full bg-slate-950 text-center py-3 text-[10px] sm:text-xs font-medium tracking-wider text-slate-500 whitespace-nowrap border-t border-slate-800 z-10 shrink-0">
     DIGITALLY SHAPED BY
-    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-5 sm:h-6 mx-1 sm:mx-1.5 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_10px_rgba(56,189,248,0.8)]">
-    <span class="text-slate-400 font-semibold text-xs sm:text-sm">[BID SMP 2026]</span>
+    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-4 sm:h-5 mx-1 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
+    <span class="text-slate-400 font-bold ml-1">[BID SMP 2026]</span>
   </footer>
 
   <script>
-    // PASTIKAN URL INI DIGANTI DENGAN URL DEPLOYMENT GAS ANDA
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyvIaktkn-eFrU3RP0ClexlnNeKLpaMuuUR69M_UTB3RpE_JRIEsTsJ_KvHoHfIKmI2ew/exec';
+    // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzz/exec';
+    
     let sessionData = {};
+    let currentDraft = {};
+    let activeBabIndex = 0;
+
+    // --- DATA INSTRUMEN ASLI SESUAI PDF ---
+    const instrumenData = [
+      {
+        bab: "Indikator 1: Peran Dinas Pendidikan Kab/Kota",
+        soal: [
+          "Apakah Dinas Pendidikan melakukan sosialisasi awal terkait program revitalisasi sekolah?",
+          "Apakah Dinas Pendidikan memberikan pembinaan dan arahan teknis secara berkala selama program berjalan?",
+          "Apakah Dinas Pendidikan memantau progres pelaksanaan fisik dan administrasi sekolah secara rutin?",
+          "Apakah Dinas Pendidikan memberikan solusi konkret atau advokasi regulasi ketika sekolah menemui kendala prinsipil?"
+        ]
+      },
+      {
+        bab: "Indikator 2: Peran Kepala Sekolah",
+        soal: [
+          "Apakah Kepala Sekolah membentuk Tim P2SP melalui keputusan resmi?",
+          "Apakah Kepala Sekolah memimpin rapat koordinasi rutin dengan seluruh unsur pelaksana?",
+          "Apakah Kepala Sekolah melakukan kontrol langsung terhadap kesesuaian mutu hasil pembangunan di lapangan?",
+          "Apakah Kepala Sekolah memastikan seluruh dokumen laporan pertanggungjawaban disusun secara akuntabel dan tepat waktu?"
+        ]
+      },
+      {
+        bab: "Indikator 3: Peran P2SP",
+        soal: [
+          "Apakah P2SP melaksanakan pengadaan bahan dan pekerja sesuai dengan ketentuan petunjuk teknis?",
+          "Apakah P2SP melakukan pencatatan administrasi keuangan dan material masuk/keluar secara rutin?",
+          "Apakah P2SP memastikan hasil pekerjaan fisik harian sesuai dengan spesifikasi yang ditetapkan?",
+          "Apakah P2SP mendokumentasikan perkembangan fisik (foto 0%, 50%, 100%) dan administrasi secara lengkap dan sistematis?"
+        ]
+      },
+      {
+        bab: "Indikator 4: Peran Perencana",
+        soal: [
+          "Apakah Perencana menyusun dokumen Gambar Detail Desain (DED) dan RAB sebelum pembangunan dimulai?",
+          "Apakah dokumen perencanaan yang dibuat mudah dipahami dan diterapkan oleh tim pelaksana di lapangan?",
+          "Apakah Perencana memberikan penjelasan teknis (aanwijzing) atau klarifikasi terhadap keraguan pelaksana lapangan?",
+          "Apakah Perencana memberikan rekomendasi penyesuaian desain/justifikasi teknis secara cepat jika terjadi perbedaan kondisi riil lapangan?"
+        ]
+      },
+      {
+        bab: "Indikator 5: Peran Pengawas Konstruksi",
+        soal: [
+          "Apakah Pengawas melakukan kunjungan dan verifikasi fisik secara terjadwal di lapangan?",
+          "Apakah Pengawas memeriksa dan memastikan kualitas bahan bangunan yang masuk sesuai dengan spesifikasi?",
+          "Apakah Pengawas memberikan instruksi atau catatan koreksi tertulis jika ditemukan deviasi pekerjaan?",
+          "Apakah Pengawas menyusun laporan pengawasan berkala yang mengukur kesesuaian progres riil dengan rencana?"
+        ]
+      },
+      {
+        bab: "Indikator 6: Progres Pembangunan Kurva S",
+        soal: [
+          "Apakah sekolah memiliki dokumen Kurva S yang disetujui sebagai acuan jadwal pelaksanaan pekerjaan?",
+          "Apakah perhitungan bobot persentase capaian fisik diperbarui secara berkala pada grafik Kurva S?",
+          "Apakah grafik Kurva S menunjukkan kesesuaian (atau deviasi yang masih aman) antara rencana kumulatif dengan realisasi di lapangan?",
+          "Apakah hasil analisis Kurva S digunakan sebagai dasar penentuan strategi percepatan pekerjaan jika terjadi keterlambatan?",
+          "Apakah dokumen pembaruan Kurva S ini dilaporkan secara berkala kepada pihak manajemen dan dinas terkait?"
+        ]
+      },
+      {
+        bab: "Indikator 7: Hambatan dan Penanganan",
+        soal: [
+          "Apakah sekolah memetakan dan mencatat hambatan (seperti keterlambatan material, kendala cuaca, atau masalah tukang) yang muncul selama pembangunan?",
+          "Apakah setiap hambatan yang muncul langsung dicarikan solusi jangka pendek agar pekerjaan tidak terhenti total?",
+          "Apakah sekolah melibatkan unsur eksternal (Perencana/Pengawas/Dinas) untuk memecahkan hambatan yang memerlukan keputusan teknis khusus?",
+          "Apakah sekolah melakukan evaluasi terhadap efektivitas solusi atau mitigasi yang telah diterapkan pada hambatan sebelumnya?",
+          "Apakah hambatan dan langkah penanganannya didokumentasikan dalam laporan berkala sebagai bagian dari akuntabilitas proyek?"
+        ]
+      }
+    ];
 
     async function reqGAS(data) {
       try {
-        const res = await fetch(API_URL, { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'text/plain' }, // Mencegah blokir CORS
-          body: JSON.stringify(data) 
-        });
+        const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
         return await res.json();
       } catch (err) {
-        return { status: 'error', message: 'Gagal terhubung ke server. Pastikan URL GAS benar dan akses diset ke "Anyone".' };
+        return { status: 'error', message: 'Koneksi gagal. Pastikan URL GAS benar dan di-set "Anyone".' };
       }
     }
 
@@ -144,15 +202,14 @@
     }
 
     async function login() {
-      const u = document.getElementById('usernameInput').value;
-      const p = document.getElementById('passwordInput').value; // Ambil dari input password
+      const u = document.getElementById('usernameInput').value.trim();
+      const p = document.getElementById('passwordInput').value.trim();
       
       if (!u || !p) return Swal.fire('Oops', 'Lengkapi Username dan Password', 'warning');
 
       document.getElementById('loginSection').classList.add('hidden');
       showSkeleton(true);
 
-      // Tetap kirim sebagai npsn ke backend agar code.gs tidak perlu diubah
       const res = await reqGAS({ action: 'loginSekolah', username: u, npsn: p });
       
       showSkeleton(false);
@@ -166,41 +223,119 @@
           document.getElementById('lockedOverlay').classList.remove('hidden');
           document.getElementById('btnDownloadPDF').href = sessionData.pdf_link;
         } else {
-          let draft = JSON.parse(sessionData.draft_json);
-          if (draft.q1) document.getElementById('q1').value = draft.q1;
-          if (draft.q2) document.getElementById('q2').value = draft.q2;
+          try { currentDraft = JSON.parse(sessionData.draft_json); } catch(e) { currentDraft = {}; }
+          buildUI();
         }
       } else {
         document.getElementById('loginSection').classList.remove('hidden');
-        Swal.fire('Login Gagal', res.message, 'error');
+        Swal.fire('Akses Ditolak', res.message, 'error');
       }
     }
 
-    async function autoSave() {
-      let draft = {
-        q1: document.getElementById('q1').value,
-        q2: document.getElementById('q2').value
-      };
-      reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(draft) });
+    // --- FUNGSI MEMBANGUN FORM OTOMATIS DARI ARRAY ---
+    function buildUI() {
+      let sidebarHTML = '';
+      instrumenData.forEach((bab, i) => {
+        sidebarHTML += `<div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 mb-2 rounded-lg cursor-pointer text-sm font-semibold transition ${i === 0 ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">${bab.bab}</div>`;
+      });
+      document.getElementById('sidebarNav').innerHTML = sidebarHTML;
+      renderBab(0);
+    }
+
+    function switchBab(index) {
+      // Update styling sidebar
+      document.getElementById(`navBab-${activeBabIndex}`).className = "p-3 mb-2 rounded-lg cursor-pointer text-sm font-semibold transition text-slate-400 hover:bg-slate-700/50 hover:text-slate-300";
+      document.getElementById(`navBab-${index}`).className = "p-3 mb-2 rounded-lg cursor-pointer text-sm font-semibold transition bg-amber-500/20 text-amber-400 border-l-4 border-amber-500";
+      
+      activeBabIndex = index;
+      renderBab(index);
+    }
+
+    function renderBab(index) {
+      const babData = instrumenData[index];
+      // Hitung urutan nomor soal kumulatif (1 sampai 30)
+      let startingNumber = 1;
+      for (let i = 0; i < index; i++) startingNumber += instrumenData[i].soal.length;
+
+      let formHTML = `<div class="fade-in">
+        <h2 class="text-2xl font-bold text-white mb-2 leading-tight">${babData.bab}</h2>
+        <p class="text-slate-400 mb-8 pb-4 border-b border-slate-700/50 text-sm">Pilih jawaban yang paling mencerminkan kondisi riil.</p>
+        <div class="space-y-8">`;
+
+      babData.soal.forEach((soal, i) => {
+        let qNum = startingNumber + i;
+        let draftVal = currentDraft[`q${qNum}`] || '';
+        
+        formHTML += `
+          <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50">
+            <label class="block mb-4 font-medium text-slate-200 leading-relaxed"><span class="text-amber-400 font-bold mr-2">${qNum}.</span> ${soal}</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              ${['K (Kurang)', 'CB (Cukup Baik)', 'B (Baik)', 'SB (Sangat Baik)'].map(opt => `
+                <label class="relative cursor-pointer">
+                  <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${draftVal === opt ? 'checked' : ''} class="peer sr-only">
+                  <div class="px-3 py-3 text-center rounded-lg border border-slate-600 text-slate-400 text-sm font-semibold transition peer-checked:bg-blue-600/20 peer-checked:border-blue-500 peer-checked:text-blue-400 hover:bg-slate-700">
+                    ${opt.split(' ')[0]}
+                  </div>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      formHTML += `</div><div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-800">`;
+      
+      if (index > 0) {
+        formHTML += `<button onclick="switchBab(${index - 1})" class="px-6 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition">← Bab Sebelumnya</button>`;
+      } else {
+        formHTML += `<div></div>`; // Spacer
+      }
+
+      if (index < instrumenData.length - 1) {
+        formHTML += `<button onclick="switchBab(${index + 1})" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-semibold transition">Selanjutnya →</button>`;
+      } else {
+        formHTML += `<button onclick="generatePDF()" class="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-lg font-bold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-1">Finalisasi & Kirim</button>`;
+      }
+
+      formHTML += `</div></div>`;
+      
+      const formArea = document.getElementById('formArea');
+      formArea.innerHTML = formHTML;
+      // Scroll to top of form smoothly
+      document.querySelector('section').scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    async function autoSave(questionId, value) {
+      currentDraft[questionId] = value;
+      // Fire and forget auto-save ke GAS
+      reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(currentDraft) });
     }
 
     async function generatePDF() {
-      Swal.fire({ title: 'Menyusun Dokumen...', text: 'Membuat PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      // Validasi sederhana: apakah sudah terjawab 30 soal?
+      if (Object.keys(currentDraft).length < 30) {
+        return Swal.fire('Belum Lengkap', 'Harap jawab seluruh 30 pertanyaan sebelum melakukan finalisasi.', 'warning');
+      }
+
+      Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menyiapkan PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
       
       const { PDFDocument, rgb } = PDFLib;
       const pdfDoc = await PDFDocument.create();
       const page = pdfDoc.addPage([600, 800]);
       
-      page.drawText(sessionData.nama_sekolah, { x: 50, y: 700, size: 24, color: rgb(0.9, 0.7, 0) });
-      page.drawText(`Kondisi: ${document.getElementById('q1').value}`, { x: 50, y: 650, size: 14 });
+      // HEADER SESUAI PERMINTAAN BAPAK: Nama Instrumen kecil sebaris & Nama Sekolah di bawahnya
+      page.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 720, size: 16, color: rgb(0.2, 0.2, 0.2) });
+      page.drawText(sessionData.nama_sekolah, { x: 50, y: 690, size: 22, color: rgb(0, 0.2, 0.6) });
+      
+      page.drawText('Dokumen ini digenerate otomatis melalui e-Monev.', { x: 50, y: 660, size: 10, color: rgb(0.5, 0.5, 0.5) });
       
       const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fName = `Monev_${sessionData.npsn}.pdf`;
+      const fName = `Monev_Revit_${sessionData.npsn}.pdf`;
 
       const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: pdfBytes, fileName: fName });
       
       if (res.status === 'success') {
-        Swal.fire('Selesai', 'Monev terkunci.', 'success').then(() => location.reload());
+        Swal.fire('Selesai', 'Monev terkunci dan tersimpan di server.', 'success').then(() => location.reload());
       } else {
         Swal.fire('Error', res.message, 'error');
       }
