@@ -89,7 +89,7 @@
           <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 text-4xl border border-emerald-500/30">✓</div>
           <h2 class="text-3xl font-bold text-white mb-3">Monev Selesai</h2>
           <p class="text-slate-400 mb-8 max-w-md">Data instrumen sekolah Anda telah difinalisasi, dikunci, dan dikirim ke Dinas Pendidikan.</p>
-          <a id="btnDownloadPDF" href="#" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg shadow-blue-600/20 transition">Lihat Berkas PDF</a>
+          <a id="btnDownloadPDF" href="#" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg shadow-blue-600/20 transition">Lihat / Unduh Berkas PDF</a>
         </div>
 
         <div class="max-w-5xl mx-auto p-6 sm:p-10 lg:p-12" id="formArea"></div>
@@ -105,7 +105,7 @@
 
   <script>
     // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyvIaktkn-eFrU3RP0ClexlnNeKLpaMuuUR69M_UTB3RpE_JRIEsTsJ_KvHoHfIKmI2ew/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbye4n7H63B9qG05o0l-Yk2qEaE9G1Ld3t6X_7p8_z39_w5Y8-e0m6Z1d9X2O_Y_m9w8G/exec';
     
     let sessionData = {};
     let currentDraft = {};
@@ -286,12 +286,10 @@
       let startingNumber = 1;
       for (let i = 0; i < index; i++) startingNumber += instrumenData[i].soal.length;
 
-      // HTML untuk Tabel Rubrik (Terbuka permanen dengan desain yang rapi)
       let formHTML = `
         <div class="fade-in">
           <h2 class="text-2xl font-bold text-white mb-6 leading-tight border-b border-slate-700 pb-4">${babData.bab}</h2>
           
-          <!-- Panduan Penilaian (Rubrik) -->
           <div class="mb-10 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
             <div class="bg-slate-800 px-5 py-3 border-b border-slate-700 flex items-center gap-2">
               <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -300,28 +298,27 @@
             <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700">
               <div class="p-5 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-rose-500/80"></div>
-                <h4 class="font-bold text-rose-400 mb-2">KURANG</h4>
+                <h4 class="font-bold text-rose-400 mb-2">KURANG (K)</h4>
                 <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.K}</p>
               </div>
               <div class="p-5 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-amber-500/80"></div>
-                <h4 class="font-bold text-amber-400 mb-2">CUKUP BAIK</h4>
+                <h4 class="font-bold text-amber-400 mb-2">CUKUP BAIK (CB)</h4>
                 <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.CB}</p>
               </div>
               <div class="p-5 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-blue-500/80"></div>
-                <h4 class="font-bold text-blue-400 mb-2">BAIK</h4>
+                <h4 class="font-bold text-blue-400 mb-2">BAIK (B)</h4>
                 <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.B}</p>
               </div>
               <div class="p-5 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500/80"></div>
-                <h4 class="font-bold text-emerald-400 mb-2">SANGAT BAIK</h4>
+                <h4 class="font-bold text-emerald-400 mb-2">SANGAT BAIK (SB)</h4>
                 <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.SB}</p>
               </div>
             </div>
           </div>
 
-          <!-- Daftar Pertanyaan -->
           <div class="space-y-6">`;
 
       babData.soal.forEach((soal, i) => {
@@ -371,30 +368,90 @@
       reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(currentDraft) });
     }
 
+    // MAP KOORDINAT DARI SPREADSHEET (Page di pdf-lib dimulai dari index 0)
+    // Jadi Hal 2 di PDF adalah pageIndex 1.
+    const coordMap = {
+      q1: { p: 1, K: [563.00, 460.00], CB: [523.67, 459.33], B: [483.00, 458.00], SB: [443.67, 454.00] },
+      q2: { p: 1, K: [563.00, 522.00], CB: [517.00, 521.33], B: [478.33, 520.67], SB: [439.00, 520.00] },
+      q3: { p: 1, K: [565.67, 579.33], CB: [523.00, 578.67], B: [481.67, 578.00], SB: [440.33, 578.00] },
+      q4: { p: 1, K: [566.33, 648.00], CB: [526.33, 650.00], B: [481.00, 648.00], SB: [441.67, 646.00] },
+      q5: { p: 2, K: [562.33, 437.33], CB: [521.00, 437.33], B: [479.67, 436.00], SB: [439.67, 436.00] },
+      q6: { p: 2, K: [558.33, 515.33], CB: [520.33, 514.00], B: [483.67, 514.67], SB: [439.67, 512.67] },
+      q7: { p: 2, K: [563.00, 578.00], CB: [521.67, 580.00], B: [483.67, 580.00], SB: [437.67, 579.33] },
+      q8: { p: 2, K: [565.00, 646.00], CB: [523.00, 645.33], B: [484.33, 646.00], SB: [443.00, 646.67] },
+      q9: { p: 3, K: [569.00, 460.00], CB: [522.33, 460.00], B: [483.67, 459.33], SB: [439.67, 457.33] },
+      q10: { p: 3, K: [565.00, 524.67], CB: [519.67, 523.33], B: [484.33, 524.00], SB: [437.67, 522.00] },
+      q11: { p: 3, K: [562.33, 580.67], CB: [523.00, 581.33], B: [479.67, 584.00], SB: [437.67, 580.00] },
+      q12: { p: 3, K: [571.67, 650.00], CB: [522.33, 647.33], B: [481.00, 649.33], SB: [440.33, 648.67] },
+      q13: { p: 4, K: [567.67, 426.00], CB: [527.00, 426.00], B: [479.00, 424.00], SB: [439.00, 424.67] },
+      q14: { p: 4, K: [571.00, 503.33], CB: [528.33, 503.33], B: [481.67, 500.67], SB: [443.00, 500.00] },
+      q15: { p: 4, K: [565.00, 575.33], CB: [523.00, 574.67], B: [481.67, 573.33], SB: [444.33, 575.33] },
+      q16: { p: 4, K: [564.33, 651.33], CB: [521.00, 651.33], B: [485.67, 648.00], SB: [441.00, 650.67] },
+      q17: { p: 5, K: [558.33, 460.67], CB: [521.67, 460.00], B: [479.00, 456.67], SB: [439.00, 456.00] },
+      q18: { p: 5, K: [565.67, 522.67], CB: [521.67, 524.67], B: [481.00, 524.67], SB: [439.67, 521.33] },
+      q19: { p: 5, K: [560.33, 581.33], CB: [523.67, 581.33], B: [481.00, 580.00], SB: [444.33, 579.33] },
+      q20: { p: 5, K: [573.00, 650.00], CB: [524.33, 646.67], B: [486.33, 648.67], SB: [442.33, 648.67] },
+      q21: { p: 6, K: [561.67, 382.00], CB: [521.67, 384.67], B: [481.00, 382.67], SB: [442.33, 381.33] },
+      q22: { p: 6, K: [564.33, 458.00], CB: [521.67, 459.33], B: [480.33, 458.00], SB: [443.00, 457.33] },
+      q23: { p: 6, K: [562.33, 530.00], CB: [520.33, 531.33], B: [482.33, 530.00], SB: [442.33, 531.33] },
+      q24: { p: 6, K: [561.67, 598.67], CB: [521.67, 596.67], B: [483.00, 598.67], SB: [441.67, 594.67] },
+      q25: { p: 6, K: [561.00, 652.67], CB: [526.33, 654.00], B: [483.00, 652.67], SB: [442.33, 654.00] },
+      q26: { p: 7, K: [564.33, 387.33], CB: [524.33, 386.67], B: [485.00, 386.67], SB: [444.33, 385.33] },
+      q27: { p: 7, K: [571.00, 464.00], CB: [523.00, 466.00], B: [487.00, 464.67], SB: [438.33, 462.67] },
+      q28: { p: 7, K: [567.00, 545.33], CB: [526.33, 546.00], B: [486.33, 543.33], SB: [439.67, 545.33] },
+      q29: { p: 7, K: [564.33, 616.00], CB: [526.33, 618.67], B: [481.00, 614.67], SB: [442.33, 616.00] },
+      q30: { p: 7, K: [564.33, 672.67], CB: [526.33, 672.67], B: [484.33, 672.00], SB: [439.00, 674.67] }
+    };
+
     async function generatePDF() {
       if (Object.keys(currentDraft).length < 30) {
         return Swal.fire('Belum Lengkap', 'Harap jawab seluruh 30 pertanyaan sebelum melakukan finalisasi.', 'warning');
       }
 
-      Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menyiapkan PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menginjeksi Template PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
       
-      const { PDFDocument, rgb } = PDFLib;
-      const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([600, 800]);
-      
-      page.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 720, size: 16, color: rgb(0.2, 0.2, 0.2) });
-      page.drawText(sessionData.nama_sekolah, { x: 50, y: 690, size: 22, color: rgb(0, 0.2, 0.6) });
-      page.drawText('Dokumen ini digenerate otomatis melalui e-Monev.', { x: 50, y: 660, size: 10, color: rgb(0.5, 0.5, 0.5) });
-      
-      const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
-      const fName = `Monev_Revit_${sessionData.npsn}.pdf`;
-
-      const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: pdfBytes, fileName: fName });
-      
-      if (res.status === 'success') {
-        Swal.fire('Selesai', 'Monev terkunci dan tersimpan di server.', 'success').then(() => location.reload());
-      } else {
-        Swal.fire('Error', res.message, 'error');
+      try {
+        const { PDFDocument, rgb } = PDFLib;
+        
+        const urlTemplate = 'https://dikbudkra.github.io/inst-revitsmp/INSTRUMEN_revit_2026.pdf';
+        const existingPdfBytes = await fetch(urlTemplate).then(res => res.arrayBuffer());
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const pages = pdfDoc.getPages();
+        
+        const page1 = pages[0];
+        page1.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 350, size: 20, color: rgb(0.1, 0.1, 0.1) });
+        page1.drawText(sessionData.nama_sekolah, { x: 50, y: 320, size: 24, color: rgb(0, 0.2, 0.6) });
+        
+        for (let i = 1; i <= 30; i++) {
+          let jwb = currentDraft[`q${i}`]; 
+          let coordData = coordMap[`q${i}`];
+          
+          if(coordData && coordData[jwb]) {
+            let targetPage = pages[coordData.p];
+            let xPos = coordData[jwb][0];
+            let yPos = coordData[jwb][1];
+            
+            // Injeksi tanda centang. Huruf v kecil, font bold
+            targetPage.drawText('V', { x: xPos, y: yPos, size: 14, color: rgb(0, 0, 0) }); 
+          }
+        }
+        
+        const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
+        
+        const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: pdfBytes, namaSekolah: sessionData.nama_sekolah });
+        
+        if (res.status === 'success') {
+          Swal.close();
+          // Hide form, show overlay on same page (No reload)
+          document.getElementById('formArea').classList.add('hidden'); 
+          document.getElementById('lockedOverlay').classList.remove('hidden');
+          document.getElementById('btnDownloadPDF').href = res.pdf_link;
+        } else {
+          Swal.fire('Error', res.message, 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire('Error PDF', 'Gagal memproses template PDF. Pastikan template bisa diakses publik (CORS).', 'error');
       }
     }
   </script>
