@@ -18,19 +18,13 @@
 </head>
 <body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans overflow-hidden">
 
-  <!-- Header -->
-  <header class="bg-slate-800 border-b border-slate-700 py-3 px-6 flex justify-between items-center shadow-lg z-10 shrink-0">
-    <div class="flex items-center gap-4">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/512px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Tut Wuri Handayani" class="h-8 sm:h-10 object-contain drop-shadow-md">
-      <div>
-        <h1 class="text-sm sm:text-lg font-bold text-slate-100 tracking-wide">INSTRUMEN MONEV</h1>
-        <p class="text-[10px] sm:text-xs text-slate-400">Revitalisasi Sekolah Dasar & Menengah 2026</p>
-      </div>
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="text-xs text-slate-400 text-right hidden md:block">Dinas Pendidikan & Kebudayaan<br>Kabupaten Karanganyar</span>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lambang_Kabupaten_Karanganyar.png/400px-Lambang_Kabupaten_Karanganyar.png" alt="Kabupaten Karanganyar" class="h-8 sm:h-10 object-contain drop-shadow-md">
-    </div>
+  <!-- Header Institusi (Desain Tengah/Center) -->
+  <header class="bg-slate-800 border-b border-slate-700 py-5 px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-3 relative overflow-hidden">
+    <!-- Aksen Cahaya Belakang Logo -->
+    <div class="absolute top-0 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl"></div>
+    
+    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-16 sm:h-20 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
+    <h1 class="text-lg sm:text-2xl font-extrabold text-slate-100 tracking-wide text-center relative z-10">INSTRUMEN MONEV REVITALISASI SMP</h1>
   </header>
 
   <main class="flex-1 flex overflow-hidden relative">
@@ -104,14 +98,14 @@
   </footer>
 
   <script>
-    // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI
+    // URL API GAS TERBARU SESUAI PERMINTAAN
     const API_URL = 'https://script.google.com/macros/s/AKfycbwIlUR9iKVWGyRSGmEORCPODLE3zftJCBZRbCUftHqGFemr15CxAjD_nlCQO-0FOnuYqA/exec';
     
     let sessionData = {};
     let currentDraft = {};
     let activeBabIndex = 0;
 
-    // --- DATA INSTRUMEN & RUBRIK 100% SESUAI PDF ---
+    // --- DATA INSTRUMEN & RUBRIK ---
     const instrumenData = [
       {
         bab: "Indikator 1: Peran Dinas Pendidikan Kab/Kota",
@@ -368,8 +362,7 @@
       reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(currentDraft) });
     }
 
-    // MAP KOORDINAT DARI SPREADSHEET (Page di pdf-lib dimulai dari index 0)
-    // Jadi Hal 2 di PDF adalah pageIndex 1.
+    // MAP KOORDINAT DARI SPREADSHEET
     const coordMap = {
       q1: { p: 1, K: [563.00, 460.00], CB: [523.67, 459.33], B: [483.00, 458.00], SB: [443.67, 454.00] },
       q2: { p: 1, K: [563.00, 522.00], CB: [517.00, 521.33], B: [478.33, 520.67], SB: [439.00, 520.00] },
@@ -418,9 +411,14 @@
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
         const pages = pdfDoc.getPages();
         
+        // Halaman Depan
         const page1 = pages[0];
         page1.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 350, size: 20, color: rgb(0.1, 0.1, 0.1) });
         page1.drawText(sessionData.nama_sekolah, { x: 50, y: 320, size: 24, color: rgb(0, 0.2, 0.6) });
+        
+        // Injeksi Centang (Vector Line) ke Halaman-halaman soal
+        const strokeColor = rgb(0.1, 0.2, 0.4); // Warna Navy pekat untuk tinta centang
+        const lineThick = 2.5; // Ketebalan tinta
         
         for (let i = 1; i <= 30; i++) {
           let jwb = currentDraft[`q${i}`]; 
@@ -431,8 +429,21 @@
             let xPos = coordData[jwb][0];
             let yPos = coordData[jwb][1];
             
-            // Injeksi tanda centang. Huruf v kecil, font bold
-            targetPage.drawText('V', { x: xPos, y: yPos, size: 14, color: rgb(0, 0, 0) }); 
+            // Menggambar vector checkmark (✓) menggunakan 2 titik garis yang presisi
+            // Sisi pendek (kiri)
+            targetPage.drawLine({
+                start: { x: xPos, y: yPos + 6 },
+                end: { x: xPos + 4, y: yPos + 2 },
+                thickness: lineThick,
+                color: strokeColor
+            });
+            // Sisi panjang (kanan)
+            targetPage.drawLine({
+                start: { x: xPos + 4, y: yPos + 2 },
+                end: { x: xPos + 10, y: yPos + 11 },
+                thickness: lineThick,
+                color: strokeColor
+            });
           }
         }
         
@@ -442,7 +453,6 @@
         
         if (res.status === 'success') {
           Swal.close();
-          // Hide form, show overlay on same page (No reload)
           document.getElementById('formArea').classList.add('hidden'); 
           document.getElementById('lockedOverlay').classList.remove('hidden');
           document.getElementById('btnDownloadPDF').href = res.pdf_link;
@@ -451,7 +461,7 @@
         }
       } catch (err) {
         console.error(err);
-        Swal.fire('Error PDF', 'Gagal memproses template PDF. Pastikan template bisa diakses publik (CORS).', 'error');
+        Swal.fire('Error PDF', 'Gagal memproses template PDF. Pastikan file template di Github dapat diakses publik.', 'error');
       }
     }
   </script>
