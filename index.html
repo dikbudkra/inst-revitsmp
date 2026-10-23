@@ -404,22 +404,23 @@
       Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menginjeksi Template PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
       
       try {
-        const { PDFDocument, rgb, StandardFonts } = PDFLib; // Tambahkan StandardFonts
+        // 1. Memanggil PDFLib beserta StandardFonts
+        const { PDFDocument, rgb, StandardFonts } = PDFLib;
         
         const urlTemplate = 'https://dikbudkra.github.io/inst-revitsmp/INSTRUMEN_revit_2026.pdf';
         const existingPdfBytes = await fetch(urlTemplate).then(res => res.arrayBuffer());
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        
-        // Panggil font khusus simbol (ZapfDingbats)
-        const checkFont = await pdfDoc.embedFont(StandardFonts.ZapfDingbats);
         const pages = pdfDoc.getPages();
         
-        // Halaman Depan
+        // 2. Memuat Font khusus simbol (ZapfDingbats)
+        const checkFont = await pdfDoc.embedFont(StandardFonts.ZapfDingbats);
+        
+        // 3. Halaman Depan (Nama Sekolah)
         const page1 = pages[0];
         page1.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 350, size: 20, color: rgb(0.1, 0.1, 0.1) });
         page1.drawText(sessionData.nama_sekolah, { x: 50, y: 320, size: 24, color: rgb(0, 0.2, 0.6) });
         
-        // Injeksi Centang menggunakan Font Simbol ZapfDingbats
+        // 4. Looping Centang (Menggunakan Font ZapfDingbats)
         for (let i = 1; i <= 30; i++) {
           let jwb = currentDraft[`q${i}`]; 
           let coordData = coordMap[`q${i}`];
@@ -429,7 +430,7 @@
             let xPos = coordData[jwb][0];
             let yPos = coordData[jwb][1];
             
-            // Karakter '4' pada font ZapfDingbats akan tercetak sebagai simbol centang (✔)
+            // Angka '4' pada ZapfDingbats otomatis berubah menjadi ikon centang tebal (✔)
             targetPage.drawText('4', { 
               x: xPos, 
               y: yPos, 
@@ -442,6 +443,7 @@
         
         const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
         
+        // 5. Kirim ke GAS Backend
         const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: pdfBytes, namaSekolah: sessionData.nama_sekolah });
         
         if (res.status === 'success') {
@@ -454,7 +456,8 @@
         }
       } catch (err) {
         console.error(err);
-        Swal.fire('Error PDF', 'Gagal memproses template PDF. Pastikan file template di Github dapat diakses publik.', 'error');
+        // Menampilkan pesan error spesifik jika terjadi kegagalan
+        Swal.fire('Error PDF', 'Gagal memproses PDF: ' + err.message, 'error');
       }
     }
   </script>
