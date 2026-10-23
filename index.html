@@ -419,10 +419,7 @@
         page1.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 350, size: 20, color: rgb(0.1, 0.1, 0.1) });
         page1.drawText(sessionData.nama_sekolah, { x: 50, y: 320, size: 24, color: rgb(0, 0.2, 0.6) });
         
-        // Injeksi Centang (Vector Line) ke Halaman-halaman soal
-        const strokeColor = rgb(0.1, 0.2, 0.4); // Warna Navy pekat untuk tinta centang
-        const lineThick = 2.5; // Ketebalan tinta
-        
+        // Injeksi Centang menggunakan Font Simbol ZapfDingbats
         for (let i = 1; i <= 30; i++) {
           let jwb = currentDraft[`q${i}`]; 
           let coordData = coordMap[`q${i}`];
@@ -432,21 +429,14 @@
             let xPos = coordData[jwb][0];
             let yPos = coordData[jwb][1];
             
-            // Menggambar vector checkmark (✓) menggunakan 2 titik garis yang presisi
-            // Sisi pendek (kiri)
-            targetPage.drawLine({
-                start: { x: xPos, y: yPos + 6 },
-                end: { x: xPos + 4, y: yPos + 2 },
-                thickness: lineThick,
-                color: strokeColor
-            });
-            // Sisi panjang (kanan)
-            targetPage.drawLine({
-                start: { x: xPos + 4, y: yPos + 2 },
-                end: { x: xPos + 10, y: yPos + 11 },
-                thickness: lineThick,
-                color: strokeColor
-            });
+            // Karakter '4' pada font ZapfDingbats akan tercetak sebagai simbol centang (✔)
+            targetPage.drawText('4', { 
+              x: xPos, 
+              y: yPos, 
+              size: 16, 
+              font: checkFont, 
+              color: rgb(0.1, 0.2, 0.4) 
+            }); 
           }
         }
         
