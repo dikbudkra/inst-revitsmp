@@ -430,11 +430,11 @@
             let xPos = coordData[jwb][0];
             let yPos = coordData[jwb][1];
             
-            // Angka '4' pada ZapfDingbats otomatis berubah menjadi ikon centang tebal (✔)
-            targetPage.drawText('4', { 
+            // Gunakan simbol unicode aslinya, bukan angka 4
+            targetPage.drawText('✔', { 
               x: xPos, 
               y: yPos, 
-              size: 16, 
+              size: 14, 
               font: checkFont, 
               color: rgb(0.1, 0.2, 0.4) 
             }); 
