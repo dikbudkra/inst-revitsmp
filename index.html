@@ -99,7 +99,7 @@
 
   <script>
     // URL API GAS TERBARU SESUAI PERMINTAAN
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwIlUR9iKVWGyRSGmEORCPODLE3zftJCBZRbCUftHqGFemr15CxAjD_nlCQO-0FOnuYqA/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwcjSdEjm7Iqn-hjSalapXJJIlOhCVrLeXd37ybLIR9jiwizkZctrxEzmGsjpsidspI/exec';
     
     let sessionData = {};
     let currentDraft = {};
@@ -362,7 +362,7 @@
       reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(currentDraft) });
     }
 
-    // MAP KOORDINAT DARI SPREADSHEET
+    // MAP KOORDINAT (TIDAK BERUBAH)
     const coordMap = {
       q1: { p: 1, K: [563.00, 460.00], CB: [523.67, 459.33], B: [483.00, 458.00], SB: [443.67, 454.00] },
       q2: { p: 1, K: [563.00, 522.00], CB: [517.00, 521.33], B: [478.33, 520.67], SB: [439.00, 520.00] },
@@ -396,41 +396,69 @@
       q30: { p: 7, K: [564.33, 672.67], CB: [526.33, 672.67], B: [484.33, 672.00], SB: [439.00, 674.67] }
     };
 
+    // FUNGSI HELPER UNTUK MENGUBAH BASE64 KE ARRAYBUFFER
+    function base64ToArrayBuffer(base64) {
+      const binary_string = window.atob(base64);
+      const len = binary_string.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) { bytes[i] = binary_string.charCodeAt(i); }
+      return bytes.buffer;
+    }
+
     async function generatePDF() {
       if (Object.keys(currentDraft).length < 30) {
         return Swal.fire('Belum Lengkap', 'Harap jawab seluruh 30 pertanyaan sebelum melakukan finalisasi.', 'warning');
       }
 
-      Swal.fire({ title: 'Menyusun Dokumen...', text: 'Menginjeksi Template PDF & Menyimpan ke Drive', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      Swal.fire({ title: 'Merakit Dokumen...', html: '<b>Langkah 1/3:</b> Mengambil Cover Slide...<br><span class="text-xs text-slate-500">(Proses ini butuh waktu beberapa detik)</span>', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
       
       try {
-        // 1. Memanggil PDFLib beserta StandardFonts
         const { PDFDocument, rgb, StandardFonts } = PDFLib;
         
-        const urlTemplate = 'https://dikbudkra.github.io/inst-revitsmp/INSTRUMEN_revit_2026.pdf';
-        const existingPdfBytes = await fetch(urlTemplate).then(res => res.arrayBuffer());
-        const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        const pages = pdfDoc.getPages();
+        // LANGKAH 1: Minta GAS memproses Template Slide jadi PDF (Base64)
+        const coverRes = await reqGAS({ action: 'generateCover', namaSekolah: sessionData.nama_sekolah });
+        if(coverRes.status !== 'success') throw new Error(coverRes.message);
         
-        // 2. Memuat Font khusus simbol (ZapfDingbats)
-        const checkFont = await pdfDoc.embedFont(StandardFonts.ZapfDingbats);
+        Swal.update({ html: '<b>Langkah 2/3:</b> Mengunduh Template Instrumen...' });
         
-        // 3. Halaman Depan (Nama Sekolah)
-        const page1 = pages[0];
-        page1.drawText('MONEV INSTRUMEN REVITALISASI', { x: 50, y: 350, size: 20, color: rgb(0.1, 0.1, 0.1) });
-        page1.drawText(sessionData.nama_sekolah, { x: 50, y: 320, size: 24, color: rgb(0, 0.2, 0.6) });
+        // LANGKAH 2: Load PDF Isi dari Github
+        const urlIsi = 'https://raw.githubusercontent.com/dikbudkra/inst-revitsmp/main/INSTRUMEN_revit_2026_2.pdf';
+        // Note: Saya ganti link ke raw.githubusercontent.com agar menghindari error routing Github Pages
+        const isiPdfBytes = await fetch(urlIsi).then(res => res.arrayBuffer());
         
-        // 4. Looping Centang (Menggunakan Font ZapfDingbats)
+        Swal.update({ html: '<b>Langkah 3/3:</b> Menggabungkan & Menginjeksi Data...' });
+        
+        // LANGKAH 3: Merge Kedua PDF
+        const coverPdfBytes = base64ToArrayBuffer(coverRes.coverBase64);
+        const coverDoc = await PDFDocument.load(coverPdfBytes);
+        const isiDoc = await PDFDocument.load(isiPdfBytes);
+        
+        const mergedPdf = await PDFDocument.create();
+        
+        // Salin Halaman 1 (Cover)
+        const copiedCoverPages = await mergedPdf.copyPages(coverDoc, [0]);
+        mergedPdf.addPage(copiedCoverPages[0]);
+        
+        // Salin semua halaman dari Isi (Hal 2 dst)
+        const isiPageIndices = isiDoc.getPageIndices();
+        const copiedIsiPages = await mergedPdf.copyPages(isiDoc, isiPageIndices);
+        copiedIsiPages.forEach(page => mergedPdf.addPage(page));
+        
+        // LANGKAH 4: Injeksi Centang (Font ZapfDingbats ✔) ke Merged PDF
+        const checkFont = await mergedPdf.embedFont(StandardFonts.ZapfDingbats);
+        const pages = mergedPdf.getPages();
+        
         for (let i = 1; i <= 30; i++) {
           let jwb = currentDraft[`q${i}`]; 
           let coordData = coordMap[`q${i}`];
           
           if(coordData && coordData[jwb]) {
+            // Karena koordinat di data Bapak dimulai p: 1 (untuk halaman 2), dan 
+            // array 'pages' kita index 1 juga mengarah ke halaman 2, rumusnya pas!
             let targetPage = pages[coordData.p];
             let xPos = coordData[jwb][0];
             let yPos = coordData[jwb][1];
             
-            // Gunakan simbol unicode aslinya, bukan angka 4
             targetPage.drawText('✔', { 
               x: xPos, 
               y: yPos, 
@@ -441,10 +469,13 @@
           }
         }
         
-        const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
+        // LANGKAH 5: Simpan dan Kirim ke Drive (via GAS)
+        Swal.update({ html: 'Menyimpan final dokumen ke server...' });
+        // Karena base64 dari saveAsBase64 punya format "data:application/pdf;base64,...", kita split langsung ambil isinya
+        const pdfBase64DataUri = await mergedPdf.saveAsBase64({ dataUri: true });
+        const cleanBase64 = pdfBase64DataUri.split(',')[1]; 
         
-        // 5. Kirim ke GAS Backend
-        const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: pdfBytes, namaSekolah: sessionData.nama_sekolah });
+        const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: cleanBase64, namaSekolah: sessionData.nama_sekolah });
         
         if (res.status === 'success') {
           Swal.close();
@@ -452,12 +483,11 @@
           document.getElementById('lockedOverlay').classList.remove('hidden');
           document.getElementById('btnDownloadPDF').href = res.pdf_link;
         } else {
-          Swal.fire('Error', res.message, 'error');
+          Swal.fire('Error Penyimpanan', res.message, 'error');
         }
       } catch (err) {
         console.error(err);
-        // Menampilkan pesan error spesifik jika terjadi kegagalan
-        Swal.fire('Error PDF', 'Gagal memproses PDF: ' + err.message, 'error');
+        Swal.fire('Error PDF', err.message || 'Gagal memproses penggabungan dokumen.', 'error');
       }
     }
   </script>
