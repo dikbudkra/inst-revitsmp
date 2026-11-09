@@ -28,7 +28,7 @@ function doPost(e) {
     if (action === 'loginSekolah') return handleLoginSekolah(params.username, params.npsn);
     if (action === 'saveDraftResponden') return handleSaveDraftResponden(params.npsn, params.role, params.nama, params.nip, params.draftJson);
     if (action === 'generateCover') return handleGenerateCover(params.namaSekolah);
-    if (action === 'finalizeResponden') return handleFinalizeResponden(params.npsn, params.role, params.nama, params.nip, params.pdfBase64, params.namaSekolah);
+    if (action === 'finalizeResponden') return handleFinalizeResponden(params.npsn, params.role, params.nama, params.nip, params.draftJson, params.pdfBase64, params.namaSekolah);
     
     // Admin (Marshal)
     if (action === 'loginAdmin') return handleLoginAdmin(params.username, params.password);
@@ -262,7 +262,7 @@ function handleSaveDraftResponden(npsn, role, nama, nip, draftJson) {
   return responseJSON({ status: 'error', message: 'NPSN sekolah tidak ditemukan' });
 }
 
-function handleFinalizeResponden(npsn, role, nama, nip, pdfBase64, namaSekolah) {
+function handleFinalizeResponden(npsn, role, nama, nip, draftJson, pdfBase64, namaSekolah) {
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName('Data_Sekolah');
   const data = sheet.getDataRange().getValues();
   const cfg = ROLE_COLS[role];
@@ -282,12 +282,25 @@ function handleFinalizeResponden(npsn, role, nama, nip, pdfBase64, namaSekolah) 
   const blob = Utilities.newBlob(Utilities.base64Decode(pdfBase64), 'application/pdf', fileName);
   const file = folder.createFile(blob);
   
+  // Set sharing agar bisa dibuka/diunduh siapa pun dengan tautan tanpa login Gmail
+  try {
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  } catch (e) {
+    Logger.log('Gagal set sharing: ' + e.message);
+  }
+  
   sheet.getRange(rowIdx, cfg.nama).setValue(nama || '');
   if (cfg.nip) sheet.getRange(rowIdx, cfg.nip).setValue(nip || '');
+  if (draftJson) sheet.getRange(rowIdx, cfg.draft).setValue(draftJson);
   sheet.getRange(rowIdx, cfg.pdf).setValue(file.getUrl());
   sheet.getRange(rowIdx, cfg.time).setValue(new Date());
   
-  return responseJSON({ status: 'success', pdf_link: file.getUrl() });
+  const directDownloadUrl = 'https://drive.google.com/uc?export=download&id=' + file.getId();
+  return responseJSON({ 
+    status: 'success', 
+    pdf_link: file.getUrl(),
+    download_url: directDownloadUrl
+  });
 }
 
 // --- LOGIKA ADMIN MARSHAL ---

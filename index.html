@@ -8,74 +8,74 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <style>
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
-    .fade-in { animation: fadeIn 0.3s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans overflow-hidden">
 
   <!-- Header Institusi -->
-  <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-2 relative overflow-hidden">
+  <header class="bg-slate-800 border-b border-slate-700 py-3 sm:py-4 px-4 sm:px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-1.5 relative overflow-hidden">
     <div class="absolute top-0 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl"></div>
-    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-14 sm:h-16 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
-    <h1 class="text-base sm:text-xl font-extrabold text-slate-100 tracking-wide text-center relative z-10">INSTRUMEN MONEV REVITALISASI SMP 2026</h1>
+    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-10 sm:h-14 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
+    <h1 class="text-xs sm:text-lg font-extrabold text-slate-100 tracking-wide text-center relative z-10 uppercase">Instrumen Monev Revitalisasi SMP 2026</h1>
   </header>
 
   <main class="flex-1 flex overflow-hidden relative">
     
     <!-- 1. Halaman Login -->
     <div id="loginSection" class="absolute inset-0 z-20 bg-slate-900 flex items-center justify-center p-4">
-      <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-slate-700 relative overflow-hidden">
+      <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative overflow-hidden">
         <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
         <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
         
-        <h2 class="text-2xl font-bold mb-2 text-center text-amber-400 relative z-10">Login Sekolah</h2>
-        <p class="text-slate-400 text-sm text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
+        <h2 class="text-xl sm:text-2xl font-bold mb-1 text-center text-amber-400 relative z-10">Login Sekolah</h2>
+        <p class="text-slate-400 text-xs text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
         
-        <div class="relative z-10">
-          <input type="text" id="usernameInput" placeholder="Username (misal: revitSMP)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-4 text-white placeholder-slate-400 transition">
-          <input type="password" id="passwordInput" placeholder="Password (NPSN)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-6 text-white placeholder-slate-400 transition">
-          <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 rounded-lg font-bold transition shadow-[0_0_15px_rgba(245,158,11,0.2)]">Masuk ke Instrumen</button>
+        <div class="relative z-10 space-y-4">
+          <input type="text" id="usernameInput" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+          <input type="password" id="passwordInput" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+          <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 rounded-lg font-bold text-sm transition shadow-[0_0_15px_rgba(245,158,11,0.2)]">Masuk ke Instrumen</button>
         </div>
       </div>
     </div>
 
     <!-- 2. Skeleton Loader -->
     <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex flex-col items-center justify-center p-6 gap-4 hidden">
-      <div class="w-12 h-12 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
-      <p class="text-slate-400 text-sm font-medium animate-pulse" id="skeletonText">Menghubungkan ke server...</p>
+      <div class="w-10 h-10 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
+      <p class="text-slate-400 text-xs font-medium animate-pulse" id="skeletonText">Menghubungkan ke server...</p>
     </div>
 
     <!-- 3. Halaman Pilih Responden (3 Card) -->
-    <div id="roleSelectSection" class="absolute inset-0 z-20 bg-slate-900 overflow-y-auto p-6 sm:p-10 hidden fade-in">
-      <div class="max-w-4xl mx-auto flex flex-col h-full justify-between">
+    <div id="roleSelectSection" class="absolute inset-0 z-20 bg-slate-900 overflow-y-auto p-4 sm:p-8 lg:p-10 hidden fade-in">
+      <div class="max-w-4xl mx-auto flex flex-col min-h-full justify-between">
         <div>
-          <!-- Header Sekolah Info -->
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-800/80 p-5 rounded-2xl border border-slate-700 mb-8 gap-4 shadow-lg">
+          <!-- Header Info Sekolah -->
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-800/80 p-4 sm:p-5 rounded-2xl border border-slate-700 mb-6 sm:mb-8 gap-3 shadow-lg">
             <div>
-              <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold">Satuan Pendidikan</p>
-              <h2 id="roleSelectSchoolName" class="text-xl sm:text-2xl font-bold text-amber-400">Nama Sekolah</h2>
-              <p id="roleSelectNpsn" class="text-xs text-slate-400 mt-0.5">NPSN: -</p>
+              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Satuan Pendidikan</p>
+              <h2 id="roleSelectSchoolName" class="text-lg sm:text-2xl font-bold text-amber-400 leading-tight">Nama Sekolah</h2>
+              <p id="roleSelectNpsn" class="text-xs text-slate-400 mt-0.5 font-mono">NPSN: -</p>
             </div>
-            <button onclick="location.reload()" class="px-4 py-2 bg-slate-700/70 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-300 transition">Keluar Akun</button>
+            <button onclick="location.reload()" class="px-3.5 py-1.5 bg-slate-700/70 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-300 transition">Keluar Akun</button>
           </div>
 
-          <div class="text-center mb-8">
-            <h3 class="text-2xl font-extrabold text-white mb-2">Pilih Peran Responden</h3>
-            <p class="text-slate-400 text-sm max-w-lg mx-auto">Instrumen ini diisi oleh 3 pihak terkait secara mandiri. Silakan pilih peran Anda untuk melanjutkan pengisian atau melihat hasil dokumen.</p>
+          <div class="text-center mb-6 sm:mb-8">
+            <h3 class="text-xl sm:text-2xl font-extrabold text-white mb-1.5">Pilih Peran Responden</h3>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-lg mx-auto">Silakan pilih peran Anda untuk mengisi instrumen atau mengunduh dokumen PDF resmi.</p>
           </div>
 
           <!-- 3 Card Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roleCardsContainer">
-            <!-- Diisi secara dinamis oleh JS -->
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6" id="roleCardsContainer"></div>
         </div>
 
-        <div class="text-center text-xs text-slate-500 py-6">
+        <div class="text-center text-[11px] text-slate-500 py-6">
           e-Monev Revitalisasi SMP • Bidang SMP Dinas Pendidikan Kabupaten Karanganyar
         </div>
       </div>
@@ -84,24 +84,27 @@
     <!-- 4. Modal Identitas Responden -->
     <div id="identitasModal" class="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden fade-in">
       <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative">
-        <h3 class="text-xl font-bold text-amber-400 mb-1" id="modalRoleTitle">Identitas Responden</h3>
-        <p class="text-xs text-slate-400 mb-6">Nama dan NIP akan dicantumkan pada lembar tanda tangan dokumen resmi PDF.</p>
+        <h3 class="text-lg sm:text-xl font-bold text-amber-400 mb-1" id="modalRoleTitle">Identitas Responden</h3>
+        <p class="text-xs text-slate-400 mb-5">Nama dan NIP dicantumkan pada lembar tanda tangan dokumen resmi PDF.</p>
         
         <div class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Lengkap & Gelar <span class="text-rose-400">*</span></label>
-            <input type="text" id="modalNamaInput" placeholder="Contoh: Drs. H. Budi Santoso, M.Pd." class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+            <input type="text" id="modalNamaInput" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
           </div>
           
           <div id="modalNipContainer">
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">NIP Responden <span class="text-rose-400">*</span></label>
-            <input type="text" id="modalNipInput" placeholder="Contoh: 197508122000031002 (atau tanda strip jika tidak ada)" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300">NIP Responden (18 Digit) <span class="text-rose-400">*</span></label>
+              <span class="text-[10px] text-slate-400 font-mono" id="modalNipCounter">0/18</span>
+            </div>
+            <input type="text" id="modalNipInput" placeholder="18 digit angka NIP" maxlength="18" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 18); document.getElementById('modalNipCounter').innerText = this.value.length + '/18';" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 font-mono tracking-wider transition">
           </div>
         </div>
 
-        <div class="flex justify-end gap-3 mt-8">
-          <button onclick="closeIdentitasModal()" class="px-5 py-2.5 rounded-lg bg-slate-700/70 hover:bg-slate-600 text-xs font-semibold text-slate-300 transition">Batal</button>
-          <button onclick="saveIdentitasAndEnter()" class="px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow-lg shadow-amber-500/20">Lanjut ke Instrumen →</button>
+        <div class="flex justify-end gap-3 mt-6">
+          <button onclick="closeIdentitasModal()" class="px-4 py-2 rounded-lg bg-slate-700/70 hover:bg-slate-600 text-xs font-semibold text-slate-300 transition">Batal</button>
+          <button onclick="saveIdentitasAndEnter()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow-lg shadow-amber-500/20">Lanjut ke Instrumen →</button>
         </div>
       </div>
     </div>
@@ -109,50 +112,63 @@
     <!-- 5. Dashboard Pengisian Instrumen -->
     <div id="dashboardSection" class="w-full h-full flex flex-col sm:flex-row hidden">
       
-      <!-- Sidebar Navigasi -->
-      <aside class="w-full sm:w-1/4 bg-slate-800 border-r border-slate-700 flex flex-col shrink-0 sm:h-full h-48 shadow-xl z-10">
-        <div class="p-4 border-b border-slate-700 bg-slate-800 flex justify-between items-center">
+      <!-- Aside: Sidebar Desktop & Topbar Mobile -->
+      <aside class="w-full sm:w-1/4 bg-slate-800 sm:border-r border-slate-700 flex flex-col shrink-0 sm:h-full shadow-xl z-10">
+        
+        <!-- Baris Kontrol Atas -->
+        <div class="p-3 sm:p-4 border-b border-slate-700 bg-slate-800 flex justify-between items-center">
           <button onclick="backToRoleSelect()" class="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold transition">
-            <span>←</span> Pilih Peran Lain
+            <span>←</span> <span class="hidden sm:inline">Pilih Peran Lain</span><span class="inline sm:hidden">Ganti Peran</span>
           </button>
-          <span id="activeRoleBadge" class="text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40">KS</span>
+          <div class="flex items-center gap-2">
+            <span id="activeRoleBadge" class="text-[10px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40">KS</span>
+            <span class="sm:hidden text-[10px] text-slate-400 font-medium" id="autosaveStatusIndicatorMobile">✓ Tersimpan</span>
+          </div>
         </div>
 
-        <div class="p-4 border-b border-slate-700/80 bg-slate-800/50">
-          <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Responden Aktif</p>
-          <h3 id="sidebarRespondenNama" class="font-bold text-sm text-slate-200 truncate">-</h3>
-          <p id="sidebarRespondenNip" class="text-xs text-slate-400 truncate">-</p>
+        <!-- Info Responden Aktif -->
+        <div class="p-3 sm:p-4 border-b border-slate-700/80 bg-slate-800/50 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start text-xs gap-1">
+          <div class="min-w-0 flex-1">
+            <p class="hidden sm:block text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-0.5">Responden Aktif</p>
+            <h3 id="sidebarRespondenNama" class="font-bold text-xs sm:text-sm text-slate-200 truncate">-</h3>
+            <p id="sidebarRespondenNip" class="text-[11px] text-slate-400 font-mono truncate"></p>
+          </div>
         </div>
 
-        <nav class="flex-1 overflow-y-auto p-3 space-y-1" id="sidebarNav"></nav>
+        <!-- Navigasi Desktop: List Vertikal -->
+        <nav class="hidden sm:flex flex-1 overflow-y-auto p-3 space-y-1" id="sidebarNav"></nav>
 
-        <div class="p-3 border-t border-slate-700 text-center">
+        <!-- Navigasi Mobile: Horizontal Scrollable Pills -->
+        <div class="sm:hidden overflow-x-auto p-2 flex gap-1.5 shrink-0 bg-slate-900/95 border-b border-slate-700 no-scrollbar" id="mobileNav"></div>
+
+        <!-- Footer Desktop: Status Autosave -->
+        <div class="hidden sm:block p-3 border-t border-slate-700 text-center">
           <span class="text-[11px] text-slate-400" id="autosaveStatusIndicator">Otomatis tersimpan</span>
         </div>
       </aside>
 
       <!-- Main Form Area -->
-      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full flex flex-col">
+      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full flex flex-col flex-1">
         <!-- Banner Mode Baca (Jika Sudah Selesai) -->
-        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-6 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 hidden">
+        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-4 sm:px-6 py-2.5 sm:py-3 flex flex-col sm:flex-row justify-between items-center gap-2.5 hidden shrink-0">
           <div class="flex items-center gap-2 text-emerald-300 text-xs sm:text-sm font-semibold">
-            <span>✅</span> Dokumen ini sudah difinalisasi dan terkunci dalam Mode Baca.
+            <span>✅</span> Dokumen sudah difinalisasi (Mode Baca).
           </div>
-          <a id="btnDownloadTop" href="#" target="_blank" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold transition shadow">
+          <button onclick="downloadRolePdf(currentRole)" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold transition shadow">
             📥 Download Ulang PDF
-          </a>
+          </button>
         </div>
 
-        <div class="max-w-5xl mx-auto p-6 sm:p-10 lg:p-12 flex-1 w-full" id="formArea"></div>
+        <div class="max-w-5xl mx-auto p-4 sm:p-8 lg:p-12 flex-1 w-full" id="formArea"></div>
       </section>
     </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-800 py-2.5 px-4 text-center text-xs text-slate-500 shrink-0">
+  <footer class="bg-slate-950 border-t border-slate-800 py-2 px-4 text-center text-[11px] text-slate-500 shrink-0">
     DIGITALLY SHAPED BY
-    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-4 sm:h-5 mx-1 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
+    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-3.5 sm:h-4 mx-1 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
     <span class="text-slate-400 font-bold ml-1">[BID SMP 2026]</span>
   </footer>
 
@@ -160,9 +176,9 @@
     const API_URL = 'https://script.google.com/macros/s/AKfycbzYQH2suLo-N3L7p1BXu2zshiX51IIz9mtSjD78yMyjRLAKYEn1_DNrRw8hXJF626a11Q/exec';
 
     const ROLE_METADATA = {
-      KS: { label: 'Kepala Sekolah', icon: '🏫', desc: 'Penilaian kepemimpinan, koordinasi program, dan pelaporan.' },
-      Bendahara: { label: 'Bendahara', icon: '💼', desc: 'Pengelolaan arus kas, mitigasi kendala keuangan, dan SPJ.' },
-      P2SP: { label: 'Ketua P2SP', icon: '🛠️', desc: 'Pelaksanaan pembangunan fisik, bahan, pekerja, dan progres harian.' }
+      KS: { label: 'Kepala Sekolah', icon: '🏫', desc: 'Kepemimpinan, koordinasi program, dan pelaporan pertanggungjawaban.' },
+      Bendahara: { label: 'Bendahara', icon: '💼', desc: 'Pengelolaan arus kas, mitigasi hambatan keuangan, dan SPJ.' },
+      P2SP: { label: 'Ketua P2SP', icon: '🛠️', desc: 'Pelaksanaan pembangunan fisik, logistik bahan, dan pengawasan pekerja.' }
     };
 
     let sessionData = {};
@@ -170,6 +186,7 @@
     let currentDraft = {};
     let activeBabIndex = 0;
     let isReadOnlyMode = false;
+    const pdfBlobCache = {};      // Cache memori untuk auto-download langsung
 
     // --- DATA DEFAULT INSTRUMEN & RUBRIK ---
     const instrumenData = [
@@ -386,7 +403,7 @@
     async function login() {
       const u = document.getElementById('usernameInput').value.trim();
       const p = document.getElementById('passwordInput').value.trim();
-      if (!u || !p) return Swal.fire('Lengkapi Data', 'Masukkan Username dan Password (NPSN)', 'warning');
+      if (!u || !p) return Swal.fire('Lengkapi Data', 'Masukkan Username dan Password', 'warning');
 
       document.getElementById('loginSection').classList.add('hidden');
       showSkeleton(true, 'Memverifikasi akun sekolah...');
@@ -435,21 +452,21 @@
         }
 
         html += `
-          <div class="bg-slate-800 rounded-2xl border border-slate-700/80 p-6 flex flex-col justify-between hover:border-slate-500 transition shadow-xl relative overflow-hidden group">
+          <div class="bg-slate-800 rounded-2xl border border-slate-700/80 p-5 sm:p-6 flex flex-col justify-between hover:border-slate-500 transition shadow-xl relative overflow-hidden group">
             <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/10 transition"></div>
             
             <div>
-              <div class="flex justify-between items-start mb-4">
+              <div class="flex justify-between items-start mb-3">
                 <span class="text-3xl">${meta.icon}</span>
-                <span class="text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${badgeClass}">${badgeText}</span>
+                <span class="text-[10px] sm:text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${badgeClass}">${badgeText}</span>
               </div>
 
-              <h4 class="text-lg font-bold text-white mb-1.5">${meta.label}</h4>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-1">${meta.label}</h4>
               <p class="text-xs text-slate-400 mb-4 leading-relaxed">${meta.desc}</p>
               
-              <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/50 text-xs text-slate-300 space-y-1 mb-6">
+              <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/50 text-xs text-slate-300 space-y-1 mb-5">
                 <div class="flex justify-between"><span class="text-slate-500">Nama:</span> <span class="font-medium truncate max-w-[150px]">${rData.nama || '-'}</span></div>
-                ${roleKey !== 'P2SP' ? `<div class="flex justify-between"><span class="text-slate-500">NIP:</span> <span class="font-medium truncate max-w-[150px]">${rData.nip || '-'}</span></div>` : ''}
+                ${roleKey !== 'P2SP' ? `<div class="flex justify-between"><span class="text-slate-500">NIP:</span> <span class="font-medium font-mono truncate max-w-[150px]">${rData.nip || '-'}</span></div>` : ''}
               </div>
             </div>
 
@@ -457,10 +474,10 @@
               <button onclick="handleRoleCardClick('${roleKey}')" class="w-full py-2.5 rounded-lg text-xs font-bold transition shadow ${btnColor}">
                 ${btnText}
               </button>
-              ${isSelesai && rData.pdf_link ? `
-                <a href="${rData.pdf_link}" target="_blank" class="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+              ${isSelesai ? `
+                <button onclick="downloadRolePdf('${roleKey}')" class="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
                   <span>📥</span> Download Ulang PDF
-                </a>
+                </button>
               ` : ''}
             </div>
           </div>
@@ -472,22 +489,42 @@
       document.getElementById('dashboardSection').classList.add('hidden');
     }
 
+    // --- HELPER DOWNLOAD PDF TANPA LOGIN GMAIL ---
+    function downloadRolePdf(roleKey) {
+      if (pdfBlobCache[roleKey]) {
+        const a = document.createElement('a');
+        a.href = pdfBlobCache[roleKey].url;
+        a.download = pdfBlobCache[roleKey].name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        return;
+      }
+      const rData = (sessionData.roles && sessionData.roles[roleKey]) || {};
+      const url = rData.download_url || rData.pdf_link || '#';
+      if (url && url !== '#') {
+        window.open(url, '_blank');
+      } else {
+        Swal.fire('Dokumen Belum Tersedia', 'Belum ada file PDF yang tersimpan untuk peran ini.', 'info');
+      }
+    }
+
     // --- INTERAKSI KARTU RESPONDEN ---
     function handleRoleCardClick(roleKey) {
       currentRole = roleKey;
       const rData = sessionData.roles[roleKey] || {};
-      isReadOnlyMode = rData.status === 'Selesai';
+      isReadOnlyMode = (rData.status === 'Selesai');
 
       if (isReadOnlyMode) {
-        // Langsung buka dalam Mode Baca
         openInstrumentDashboard(rData.nama, rData.nip, rData.draft);
       } else {
-        // Tampilkan Modal Identitas
         document.getElementById('modalRoleTitle').innerText = `Identitas ${ROLE_METADATA[roleKey].label}`;
         document.getElementById('modalNamaInput').value = rData.nama || '';
-        document.getElementById('modalNipInput').value = rData.nip || '';
         
-        // Sembunyikan NIP untuk Ketua P2SP
+        const nipInput = document.getElementById('modalNipInput');
+        nipInput.value = (rData.nip || '').replace(/\D/g, '').slice(0, 18);
+        document.getElementById('modalNipCounter').innerText = nipInput.value.length + '/18';
+        
         document.getElementById('modalNipContainer').classList.toggle('hidden', roleKey === 'P2SP');
         document.getElementById('identitasModal').classList.remove('hidden');
       }
@@ -502,9 +539,12 @@
       const nip = document.getElementById('modalNipInput').value.trim();
 
       if (!nama) return Swal.fire('Nama Diperlukan', 'Harap isi Nama Lengkap Responden.', 'warning');
-      if (currentRole !== 'P2SP' && !nip) return Swal.fire('NIP Diperlukan', 'Harap isi NIP Responden (atau tulis tanda - jika tidak ada NIP).', 'warning');
+      if (currentRole !== 'P2SP') {
+        if (!nip || nip.length !== 18 || !/^\d{18}$/.test(nip)) {
+          return Swal.fire('NIP Tidak Valid', 'NIP harus berupa angka tepat 18 digit.', 'warning');
+        }
+      }
 
-      // Update data sesi lokal
       sessionData.roles[currentRole].nama = nama;
       sessionData.roles[currentRole].nip = nip;
 
@@ -514,26 +554,38 @@
 
     // --- BUKA INSTRUMEN ---
     function openInstrumentDashboard(nama, nip, draftJsonStr) {
-      try { 
-        currentDraft = JSON.parse(draftJsonStr || '{}'); 
-      } catch(e) { 
-        currentDraft = {}; 
+      if (typeof draftJsonStr === 'object' && draftJsonStr !== null) {
+        currentDraft = draftJsonStr;
+      } else {
+        try { 
+          currentDraft = JSON.parse(draftJsonStr || '{}'); 
+        } catch(e) { 
+          currentDraft = {}; 
+        }
+      }
+      if (typeof currentDraft === 'string') {
+        try {
+          currentDraft = JSON.parse(currentDraft);
+        } catch(e) {
+          currentDraft = {};
+        }
+      }
+      if (!currentDraft || typeof currentDraft !== 'object') {
+        currentDraft = {};
       }
 
       document.getElementById('roleSelectSection').classList.add('hidden');
       document.getElementById('dashboardSection').classList.remove('hidden');
 
-      // Update Informasi Sidebar
-      document.getElementById('activeRoleBadge').innerText = ROLE_METADATA[currentRole].label;
+      const roleLabel = ROLE_METADATA[currentRole].label;
+      document.getElementById('activeRoleBadge').innerText = roleLabel;
       document.getElementById('sidebarRespondenNama').innerText = nama || '-';
       document.getElementById('sidebarRespondenNip').innerText = (currentRole !== 'P2SP' && nip) ? `NIP. ${nip}` : '';
 
-      // Tampilkan/Sembunyikan Banner Read-Only
       const banner = document.getElementById('readOnlyBanner');
       const rData = sessionData.roles[currentRole] || {};
-      if (isReadOnlyMode && rData.pdf_link) {
+      if (isReadOnlyMode && (rData.download_url || rData.pdf_link || pdfBlobCache[currentRole])) {
         banner.classList.remove('hidden');
-        document.getElementById('btnDownloadTop').href = rData.pdf_link;
       } else {
         banner.classList.add('hidden');
       }
@@ -550,7 +602,7 @@
     function getActiveIndicatorsForCurrentRole() {
       const allowedList = (sessionData.settings && sessionData.settings[currentRole]) || null;
       if (!allowedList || !Array.isArray(allowedList) || allowedList.length === 0) {
-        return instrumenData; // Fallback jika setting kosong: tampilkan semua
+        return instrumenData;
       }
       return instrumenData.filter(bab => allowedList.includes(bab.bab));
     }
@@ -560,35 +612,58 @@
       if (activeBabList.length === 0) {
         document.getElementById('formArea').innerHTML = `
           <div class="text-center py-16 bg-slate-800 rounded-xl border border-slate-700">
-            <h3 class="text-xl font-bold text-amber-400 mb-2">Tidak Ada Indikator</h3>
+            <h3 class="text-lg font-bold text-amber-400 mb-2">Tidak Ada Indikator</h3>
             <p class="text-xs text-slate-400">Admin belum menetapkan indikator penilaian untuk peran ini.</p>
           </div>
         `;
         return;
       }
 
-      let sidebarHTML = '';
+      let desktopNavHTML = '';
+      let mobileNavHTML = '';
+
       activeBabList.forEach((bab, i) => {
-        const shortName = bab.bab.replace(/^Indikator\s*:\s*/i, '');
-        sidebarHTML += `
-          <div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 rounded-lg cursor-pointer text-xs font-semibold transition ${i === 0 ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">
-            ${shortName}
+        const shortName = bab.bab.replace(/^Indikator\s*(Peran\s*)?/i, '');
+        const isFirst = (i === 0);
+
+        desktopNavHTML += `
+          <div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 rounded-lg cursor-pointer text-xs font-semibold transition ${isFirst ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">
+            ${bab.bab}
           </div>
         `;
+
+        mobileNavHTML += `
+          <button type="button" id="mobileNavBab-${i}" onclick="switchBab(${i})" class="px-3 py-1.5 rounded-full text-[11px] font-semibold shrink-0 transition ${isFirst ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'}">
+            ${shortName}
+          </button>
+        `;
       });
-      document.getElementById('sidebarNav').innerHTML = sidebarHTML;
+
+      document.getElementById('sidebarNav').innerHTML = desktopNavHTML;
+      document.getElementById('mobileNav').innerHTML = mobileNavHTML;
       activeBabIndex = 0;
       renderBab(0);
     }
 
     function switchBab(index) {
-      const activeBabList = getActiveIndicatorsForCurrentRole();
+      // Desktop Nav
       if (document.getElementById(`navBab-${activeBabIndex}`)) {
         document.getElementById(`navBab-${activeBabIndex}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition text-slate-400 hover:bg-slate-700/50 hover:text-slate-300";
       }
       if (document.getElementById(`navBab-${index}`)) {
         document.getElementById(`navBab-${index}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition bg-amber-500/20 text-amber-400 border-l-4 border-amber-500";
       }
+
+      // Mobile Nav
+      if (document.getElementById(`mobileNavBab-${activeBabIndex}`)) {
+        document.getElementById(`mobileNavBab-${activeBabIndex}`).className = "px-3 py-1.5 rounded-full text-[11px] font-semibold shrink-0 transition bg-slate-800 text-slate-400 hover:text-white border border-slate-700";
+      }
+      if (document.getElementById(`mobileNavBab-${index}`)) {
+        const activeBtn = document.getElementById(`mobileNavBab-${index}`);
+        activeBtn.className = "px-3 py-1.5 rounded-full text-[11px] font-bold shrink-0 transition bg-amber-500 text-slate-950 shadow";
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+
       activeBabIndex = index;
       renderBab(index);
     }
@@ -597,40 +672,39 @@
       const activeBabList = getActiveIndicatorsForCurrentRole();
       const babData = activeBabList[index];
 
-      // Penomoran Soal Berurutan Dinamis
       let startingNumber = 1;
       for (let i = 0; i < index; i++) startingNumber += activeBabList[i].soal.length;
 
       let formHTML = `
         <div class="fade-in">
-          <div class="border-b border-slate-700 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-            <h2 class="text-xl sm:text-2xl font-bold text-white leading-tight">${babData.bab}</h2>
-            <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 shrink-0">Bagian ${index + 1} dari ${activeBabList.length}</span>
+          <div class="border-b border-slate-700 pb-3 sm:pb-4 mb-4 sm:mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
+            <h2 class="text-lg sm:text-2xl font-bold text-white leading-tight">${babData.bab}</h2>
+            <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700 shrink-0">Bagian ${index + 1} dari ${activeBabList.length}</span>
           </div>
           
           <!-- Panduan Rubrik -->
-          <div class="mb-8 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
-            <div class="bg-slate-800 px-5 py-2.5 border-b border-slate-700 flex items-center gap-2">
+          <div class="mb-6 sm:mb-8 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
+            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex items-center gap-2">
               <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               <h3 class="font-bold text-slate-200 text-xs tracking-wide uppercase">Panduan Penilaian Rubrik</h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700 text-xs">
-              <div class="p-4 relative">
+              <div class="p-3.5 sm:p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-rose-500/80"></div>
                 <h4 class="font-bold text-rose-400 mb-1">KURANG (K)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.K}</p>
               </div>
-              <div class="p-4 relative">
+              <div class="p-3.5 sm:p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-amber-500/80"></div>
                 <h4 class="font-bold text-amber-400 mb-1">CUKUP BAIK (CB)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.CB}</p>
               </div>
-              <div class="p-4 relative">
+              <div class="p-3.5 sm:p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-blue-500/80"></div>
                 <h4 class="font-bold text-blue-400 mb-1">BAIK (B)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.B}</p>
               </div>
-              <div class="p-4 relative">
+              <div class="p-3.5 sm:p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500/80"></div>
                 <h4 class="font-bold text-emerald-400 mb-1">SANGAT BAIK (SB)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.SB}</p>
@@ -639,46 +713,61 @@
           </div>
 
           <!-- Daftar Soal -->
-          <div class="space-y-4">`;
+          <div class="space-y-3.5 sm:space-y-4">`;
 
       babData.soal.forEach((soal, i) => {
         let qNum = startingNumber + i;
         let draftVal = currentDraft[`q${qNum}`] || '';
         
         formHTML += `
-          <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 hover:border-slate-600 transition">
-            <label class="block mb-4 font-medium text-slate-200 text-sm leading-relaxed">
-              <span class="text-amber-400 font-bold mr-1.5">${qNum}.</span> ${soal}
+          <div class="bg-slate-800/50 p-4 sm:p-5 rounded-xl border border-slate-700/60 hover:border-slate-600 transition">
+            <label class="block mb-3.5 font-medium text-slate-200 text-xs sm:text-sm leading-relaxed">
+              <span class="text-amber-400 font-bold mr-1">${qNum}.</span> ${soal}
             </label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              ${['K', 'CB', 'B', 'SB'].map(opt => `
-                <label class="relative cursor-pointer">
-                  <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${draftVal === opt ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
-                  <div class="px-3 py-2.5 text-center rounded-lg border border-slate-700 bg-slate-800/80 text-slate-400 text-xs font-bold transition peer-checked:bg-blue-600/20 peer-checked:border-blue-500 peer-checked:text-blue-400 hover:bg-slate-700">
-                    ${opt}
-                  </div>
-                </label>
-              `).join('')}
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+              ${['K', 'CB', 'B', 'SB'].map(opt => {
+                const isChecked = (String(draftVal).trim() === opt);
+                let optClass = '';
+                if (isReadOnlyMode) {
+                  if (isChecked) {
+                    optClass = 'border-2 border-amber-400 bg-amber-500/25 text-amber-300 font-extrabold shadow-[0_0_10px_rgba(245,158,11,0.3)] ring-1 ring-amber-400';
+                  } else {
+                    optClass = 'border border-slate-800 bg-slate-900/40 text-slate-600 opacity-40 cursor-not-allowed';
+                  }
+                } else {
+                  optClass = isChecked 
+                    ? 'border-blue-500 bg-blue-600/20 text-blue-400 font-bold ring-1 ring-blue-500/50' 
+                    : 'border-slate-700 bg-slate-800/80 text-slate-400 hover:bg-slate-700';
+                }
+                return `
+                  <label class="relative ${isReadOnlyMode ? 'cursor-not-allowed' : 'cursor-pointer'}">
+                    <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${isChecked ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
+                    <div class="px-2.5 sm:px-3 py-2 sm:py-2.5 text-center rounded-lg text-xs transition ${optClass}">
+                      ${opt} ${isReadOnlyMode && isChecked ? '✓' : ''}
+                    </div>
+                  </label>
+                `;
+              }).join('')}
             </div>
           </div>
         `;
       });
 
-      formHTML += `</div><div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-800">`;
+      formHTML += `</div><div class="flex justify-between items-center mt-8 pt-5 border-t border-slate-800">`;
       
       if (index > 0) {
-        formHTML += `<button onclick="switchBab(${index - 1})" class="px-5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition text-xs font-semibold">← Bab Sebelumnya</button>`;
+        formHTML += `<button onclick="switchBab(${index - 1})" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition text-xs font-semibold">← Bab Sebelumnya</button>`;
       } else {
         formHTML += `<div></div>`;
       }
 
       if (index < activeBabList.length - 1) {
-        formHTML += `<button onclick="switchBab(${index + 1})" class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition">Selanjutnya →</button>`;
+        formHTML += `<button onclick="switchBab(${index + 1})" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition">Selanjutnya →</button>`;
       } else {
         if (!isReadOnlyMode) {
-          formHTML += `<button onclick="generatePDF()" class="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-extrabold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5">Finalisasi & Kirim Berkas</button>`;
+          formHTML += `<button onclick="generatePDF()" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-extrabold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5">Finalisasi & Kirim Berkas</button>`;
         } else {
-          formHTML += `<div class="text-xs text-slate-500 italic">Status: Dokumen sudah difinalisasi</div>`;
+          formHTML += `<div class="text-xs text-slate-500 italic">Status: Berkas sudah difinalisasi</div>`;
         }
       }
 
@@ -693,8 +782,19 @@
     async function autoSave(questionId, value) {
       if (isReadOnlyMode) return;
       currentDraft[questionId] = value;
+      
+      // Update data sesi lokal seketika
+      if (sessionData && sessionData.roles && sessionData.roles[currentRole]) {
+        sessionData.roles[currentRole].draft = JSON.stringify(currentDraft);
+        if (sessionData.roles[currentRole].status === 'Belum') {
+          sessionData.roles[currentRole].status = 'Draf';
+        }
+      }
+
       const statusIndicator = document.getElementById('autosaveStatusIndicator');
-      statusIndicator.innerText = 'Menyimpan...';
+      const statusIndicatorMobile = document.getElementById('autosaveStatusIndicatorMobile');
+      if (statusIndicator) statusIndicator.innerText = 'Menyimpan...';
+      if (statusIndicatorMobile) statusIndicatorMobile.innerText = 'Menyimpan...';
 
       const rData = sessionData.roles[currentRole];
       reqGAS({ 
@@ -705,10 +805,8 @@
         nip: rData.nip, 
         draftJson: JSON.stringify(currentDraft) 
       }).then(() => {
-        statusIndicator.innerText = '✓ Tersimpan';
-        if (sessionData.roles[currentRole].status === 'Belum') {
-          sessionData.roles[currentRole].status = 'Draf';
-        }
+        if (statusIndicator) statusIndicator.innerText = '✓ Tersimpan';
+        if (statusIndicatorMobile) statusIndicatorMobile.innerText = '✓ Tersimpan';
       });
     }
 
@@ -789,7 +887,6 @@
         cursorY = 748;
       }
 
-      // Judul Indikator
       const babLabel = sanitizePdfText(babData.bab);
       page.drawText(babLabel, {
         x: 36,
@@ -922,7 +1019,6 @@
       const maxRubrikLines = Math.max(...wrappedRubriks.map(lines => lines.length), 1);
       const neededRubrikH = Math.max(140, maxRubrikLines * rLineH + 26);
 
-      // Cek apakah muat di halaman ini
       if (curY - 40 - rHeaderH - neededRubrikH < 40) {
         page = mergedPdf.addPage([W, H]);
         drawCornerOrnaments(page, W, H, rgb);
@@ -997,12 +1093,11 @@
 
       curY = rBodyTopY - rBodyH;
 
-      // --- BLOK TANDA TANGAN (HANYA DI INDIKATOR TERAKHIR) ---
+      // --- BLOK TANDA TANGAN (DI INDIKATOR TERAKHIR) ---
       if (isLastIndicator) {
         const rData = sessionData.roles[currentRole];
         const sigH = 130;
         
-        // Jika sisa ruang di bawah kurang dari 140pt, buat halaman baru untuk tanda tangan
         if (curY < sigH + 50) {
           page = mergedPdf.addPage([W, H]);
           drawCornerOrnaments(page, W, H, rgb);
@@ -1031,7 +1126,7 @@
       }
     }
 
-    // --- FINALISASI & MERAKIT PDF ---
+    // --- FINALISASI & AUTO DOWNLOAD PDF ---
     async function generatePDF() {
       const activeBabList = getActiveIndicatorsForCurrentRole();
       let totalSoal = 0;
@@ -1098,11 +1193,28 @@
           runningQNum += babData.soal.length;
         });
         
-        // Simpan Base64 & Kirim ke GAS
-        Swal.update({ html: 'Mengunggah dokumen final ke Google Drive...' });
-        const pdfBase64DataUri = await mergedPdf.saveAsBase64({ dataUri: true });
-        const cleanBase64 = pdfBase64DataUri.split(',')[1];
+        // 2. Simpan Base64 & Upload ke Server
+        Swal.update({ html: 'Menyimpan dokumen final ke server...' });
+        const pdfBytes = await mergedPdf.save();
+        const cleanBase64 = await mergedPdf.saveAsBase64({ dataUri: false });
+
+        // 3. Trigger Auto Download Langsung ke Browser/HP (Tanpa Perlu Login Gmail!)
+        const roleLabelSanitized = ROLE_METADATA[currentRole].label.replace(/ /g, '_');
+        const namaSekolahSanitized = sessionData.nama_sekolah.replace(/[^a-zA-Z0-9]/g, '_');
+        const localFileName = `Monev_Revit_${roleLabelSanitized}_${namaSekolahSanitized}.pdf`;
+
+        const localBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const localBlobUrl = URL.createObjectURL(localBlob);
+        pdfBlobCache[currentRole] = { url: localBlobUrl, name: localFileName };
+
+        const autoDownloadLink = document.createElement('a');
+        autoDownloadLink.href = localBlobUrl;
+        autoDownloadLink.download = localFileName;
+        document.body.appendChild(autoDownloadLink);
+        autoDownloadLink.click();
+        document.body.removeChild(autoDownloadLink);
         
+        // 4. Kirim ke Backend GAS untuk Arsip di Google Drive
         const rData = sessionData.roles[currentRole];
         const res = await reqGAS({ 
           action: 'finalizeResponden', 
@@ -1110,6 +1222,7 @@
           role: currentRole, 
           nama: rData.nama, 
           nip: rData.nip, 
+          draftJson: JSON.stringify(currentDraft),
           pdfBase64: cleanBase64, 
           namaSekolah: sessionData.nama_sekolah 
         });
@@ -1117,15 +1230,16 @@
         if (res.status === 'success') {
           sessionData.roles[currentRole].status = 'Selesai';
           sessionData.roles[currentRole].pdf_link = res.pdf_link;
+          sessionData.roles[currentRole].download_url = res.download_url;
+          sessionData.roles[currentRole].draft = JSON.stringify(currentDraft); // Simpan draf lokal
 
           await Swal.fire({
             title: 'Berhasil Difinalisasi!',
-            html: `Dokumen instrumen untuk <b>${ROLE_METADATA[currentRole].label}</b> telah berhasil dikirim dan tersimpan.`,
+            html: `Dokumen instrumen untuk <b>${ROLE_METADATA[currentRole].label}</b> telah berhasil dikirim dan diunduh otomatis ke perangkat Anda.`,
             icon: 'success',
-            confirmButtonText: 'Lihat Dokumen PDF'
+            confirmButtonText: 'Kembali ke Menu Responden'
           });
 
-          window.open(res.pdf_link, '_blank');
           backToRoleSelect();
         } else {
           Swal.fire('Error Penyimpanan', res.message, 'error');
