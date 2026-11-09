@@ -52,10 +52,10 @@
 
   <script>
     // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI (SAMAKAN DENGAN YANG DI SEKOLAH)
-    const API_URL = 'https://script.google.com/macros/s/AKfycbye4n7H63B9qG05o0l-Yk2qEaE9G1Ld3t6X_7p8_z39_w5Y8-e0m6Z1d9X2O_Y_m9w8G/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzYQH2suLo-N3L7p1BXu2zshiX51IIz9mtSjD78yMyjRLAKYEn1_DNrRw8hXJF626a11Q/exec';
 
     async function reqGAS(data) {
-      const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(data) });
+      const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
       return await res.json();
     }
 
@@ -115,12 +115,14 @@
       try { draft = JSON.parse(decodeURIComponent(draftJsonEncoded)); } catch(e) {}
       
       let K = 0, CB = 0, B = 0, SB = 0;
-      for (let i = 1; i <= 30; i++) {
-        if(draft[`q${i}`] === 'K') K++;
-        if(draft[`q${i}`] === 'CB') CB++;
-        if(draft[`q${i}`] === 'B') B++;
-        if(draft[`q${i}`] === 'SB') SB++;
-      }
+      const qKeys = Object.keys(draft).filter(k => /^q\d+$/.test(k));
+      qKeys.forEach(k => {
+        if(draft[k] === 'K') K++;
+        if(draft[k] === 'CB') CB++;
+        if(draft[k] === 'B') B++;
+        if(draft[k] === 'SB') SB++;
+      });
+      const totalSoal = K + CB + B + SB;
 
       let header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
       <head><meta charset='utf-8'><title>Rekap Monev</title></head><body>`;
@@ -128,7 +130,7 @@
       let content = `
         <h2 style="text-align: center; font-family: Arial, sans-serif;">KESIMPULAN HASIL MONEV REVITALISASI</h2>
         <h3 style="text-align: center; font-family: Arial, sans-serif; color: #1e3a8a; margin-bottom: 30px;">${namaSekolah}</h3>
-        <p style="font-family: Arial, sans-serif;">Berdasarkan pengisian 30 Indikator Instrumen, berikut adalah ringkasan penilaian:</p>
+        <p style="font-family: Arial, sans-serif;">Berdasarkan pengisian ${totalSoal} Butir Pernyataan Instrumen, berikut adalah ringkasan penilaian:</p>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif; width: 100%; border-color: #cbd5e1;">
           <tr>
             <th style="background-color: #f1f5f9; width: 70%; text-align: left;">Kategori Penilaian</th>

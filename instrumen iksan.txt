@@ -1,0 +1,126 @@
+// --- DATA INSTRUMEN & RUBRIK ---
+const instrumenData = [
+  {
+    bab: "Indikator 1: Peran Dinas Pendidikan Kab/Kota",
+    rubrik: {
+      K: "Dinas Pendidikan tidak melakukan pembinaan, pemantauan, maupun fasilitasi koordinasi dalam program revitalisasi sekolah.",
+      CB: "Dinas Pendidikan melakukan sosialisasi awal program revitalisasi, namun belum memberikan pembinaan dan fasilitasi koordinasi secara berkala.",
+      B: "Dinas Pendidikan aktif memberikan pembinaan, memfasilitasi koordinasi antar- pihak, serta memantau progres pelaksanaan revitalisasi secara rutin.",
+      SB: "Dinas Pendidikan memberikan pembinaan berkala, memfasilitasi koordinasi, memantau progres, serta memberikan solusi konkret/advokasi kebijakan atas kendala yang dihadapi sekolah"
+    },
+    soal: [
+      "Satuan Pendidikan menerima sosialisasi dari dinas terkait program revitalisasi sekolah?",
+      "Satuan Pendidikan diberikan arahan teknis secara berkala selama program berjalan?",
+      "Satuan Pendidikan dipantau progres pelaksanaan fisik dan administrasi sekolah secara rutin oleh dinas pendidikan?",
+      "Satuan Pendidikan menerima solusi konkret atau advokasi regulasi ketika sekolah menemui kendala oleh dinas pendidikan?"
+    ]
+  },
+  {
+    bab: "Indikator 2: Peran Kepala Sekolah",
+    rubrik: {
+      K: "Kepala Sekolah tidak membentuk tim pelaksana dan tidak terlibat dalam pengendalian program revitalisasi.",
+      CB: "Kepala Sekolah membentuk tim pelaksana (P2SP) namun fungsi pengendalian dan pengawasan harian belum berjalan optimal.",
+      B: "Kepala Sekolah memimpin koordinasi berkala dengan P2SP, perencana, dan pengawas serta mengendalikan kesesuaian mutu pekerjaan.",
+      SB: "Kepala Sekolah mengendalikan seluruh tahapan program, aktif berkoordinasi, melakukan evaluasi berkala, dan memastikan akuntabilitas pelaporan pertanggungjawaban."
+    },
+    soal: [
+      "Kepala Sekolah membentuk Tim P2SP melalui keputusan resmi?",
+      "Kepala Sekolah memimpin rapat koordinasi rutin dengan seluruh unsur pelaksana?",
+      "Kepala Sekolah melakukan kontrol langsung terhadap kesesuaian mutu hasil pembangunan di lapangan?",
+      "Kepala Sekolah memastikan seluruh dokumen laporan pertanggungjawaban disusun secara akuntabel dan tepat waktu?"
+    ]
+  },
+  {
+    bab: "Indikator 3: Peran Bendahara",
+    rubrik: {
+      K: "Bendahara mengabaikan hambatan keuangan (seperti keterlambatan pencairan, selisih harga, atau pengeluaran tak terduga) sehingga belanja terhenti dan proyek mangkrak.",
+      CB: "Bendahara mengidentifikasi adanya kendala/hambatan arus kas atau pencatatan, namun belum memiliki tindakan penyelesaian serta administrasi pertanggungjawaban yang terarah.",
+      B: "Bendahara mendata setiap kendala keuangan, mendiskusikannya dengan Penanggung Jawab untuk mendapat persetujuan solusi, serta mencatat penggunaan uang sesuai aturan yang berlaku.",
+      SB: "Bendahara mengelola risiko keuangan secara proaktif, memiliki buku catatan kendala (issue log) keuangan, menerapkan mitigasi arus kas yang cepat atas persetujuan Penanggung Jawab, dan menyusun administrasi SPJ secara akuntabel tanpa menghambat progres fisik."
+    },
+    soal: [
+      "Bendahara memetakan dan mencatat hambatan keuangan (seperti lonjakan harga material, keterlambatan pencairan dana, atau pengeluaran tak terduga) yang muncul selama proses revitalisasi?",
+      "Bendahara mengelola dan mencatat seluruh penggunaan uang revitalisasi secara tertib dan transparan sesuai aturan yang berlaku?",
+      "Bendahara mendiskusikan kendala arus kas dan hanya melakukan pembayaran atau langkah penanganan atas persetujuan Penanggung Jawab?",
+      "Bendahara mengevaluasi efektivitas solusi keuangan yang telah diterapkan agar tidak mengganggu pembayaran material maupun upah pekerja?",
+      "Bendahara mendokumentasikan setiap hambatan keuangan dan langkah penanganannya ke dalam administrasi pertanggungjawaban (SPJ) dan laporan berkala?"
+    ]
+  },
+  {
+    bab: "Indikator 4: Peran P2SP",
+    rubrik: {
+      K: "P2SP tidak melaksanakan tugas pembangunan sesuai petunjuk teknis dan administrasi tidak teratur.",
+      CB: "P2SP melaksanakan pembangunan fisik dasar namun administrasi keuangan dan logistik belum terdokumentasi dengan rapi.",
+      B: "P2SP melaksanakan pembangunan sesuai spesifikasi teknis serta mengelola administrasi, material, dan pekerja dengan baik.",
+      SB: "P2SP mengelola seluruh proses pembangunan secara transparan, akuntabel, tepat mutu, tepat waktu, dan mendokumentasikan setiap tahapan secara sistematis."
+    },
+    soal: [
+      "P2SP melaksanakan pengadaan bahan dan pekerja sesuai dengan ketentuan petunjuk teknis?",
+      "P2SP melakukan pencatatan administrasi keuangan dan material masuk/keluar secara rutin?",
+      "P2SP memastikan hasil pekerjaan fisik harian sesuai dengan spesifikasi yang ditetapkan?",
+      "P2SP mendokumentasikan perkembangan fisik (foto 0%, 50%, 100%) dan administrasi secara lengkap dan sistematis?"
+    ]
+  },
+  {
+    bab: "Indikator 5: Peran Perencana",
+    rubrik: {
+      K: "Perencana tidak menyediakan dokumen desain (DED) dan Rencana Anggaran Biaya (RAB) yang memadai untuk pelaksanaan lapangan.",
+      CB: "Perencana menyediakan dokumen desain dan RAB awal, namun sulit diimplementasikan atau banyak ketidaksesuaian dengan kondisi riil sekolah.",
+      B: "Perencana menyediakan dokumen teknis yang akurat (gambar kerja, RAB, RKS) dan bersedia memberikan klarifikasi jika diperlukan oleh pelaksana.",
+      SB: "Perencana menghasilkan dokumen perencanaan yang detail, akurat, sesuai kebutuhan sekolah, serta aktif mendampingi proses rekayasa lapangan (justifikasi teknis) apabila ada perubahan."
+    },
+    soal: [
+      "Perencana menyusun dokumen Gambar Detail Desain (DED) dan RAB sebelum pembangunan dimulai?",
+      "Dokumen perencanaan yang dibuat mudah dipahami dan diterapkan oleh tim pelaksana di lapangan?",
+      "Perencana memberikan penjelasan teknis (aanwijzing) atau klarifikasi terhadap keraguan pelaksana lapangan?",
+      "Perencana memberikan rekomendasi penyesuaian desain/justifikasi teknis secara cepat jika terjadi perbedaan kondisi riil lapangan?"
+    ]
+  },
+  {
+    bab: "Indikator 6: Peran Pengawas (Pengawas Konstruksi)",
+    rubrik: {
+      K: "Pengawas tidak melakukan supervisi lapangan dan tidak membuat laporan pengawasan berkala.",
+      CB: "Pengawas melakukan kunjungan lapangan sesekali, namun laporan pengawasan dan catatan koreksi tidak terdokumentasi dengan jelas.",
+      B: "Pengawas melakukan supervisi rutin, mengontrol kualitas bahan/pekerjaan, serta memberikan rekomendasi perbaikan secara tertulis.",
+      SB: "Pengawas melakukan pengawasan ketat secara berkala, menerbitkan laporan mingguan/bulanan, memastikan kepatuhan terhadap Kurva S, serta menjamin mutu hasil akhir konstruksi."
+    },
+    soal: [
+      "Pengawas melakukan kunjungan dan verifikasi fisik secara terjadwal di lapangan?",
+      "Pengawas memeriksa dan memastikan kualitas bahan bangunan yang masuk sesuai dengan spesifikasi?",
+      "Pengawas memberikan instruksi atau catatan koreksi tertulis jika ditemukan deviasi pekerjaan?",
+      "Pengawas menyusun laporan pengawasan berkala yang mengukur kesesuaian progres riil dengan rencana?"
+    ]
+  },
+  {
+    bab: "Indikator 7: Progres Pembangunan dengan Kurva S",
+    rubrik: {
+      K: "Sekolah tidak memiliki dokumen Kurva S dan tidak mengukur progres capaian fisik mingguan.",
+      CB: "Sekolah memiliki Kurva S, namun pembaruan (updating) realisasi progres tidak dilakukan secara berkala sehingga grafik tidak mencerminkan kondisi riil.",
+      B: "Progres fisik dihitung setiap minggu dan diplot pada Kurva S untuk melihat adanya deviasi (plus/minus) antara rencana dan realisasi.",
+      SB: "Kurva S diperbarui secara disiplin tiap minggu, digunakan sebagai alat kendali utama, dan jika terjadi critical delay (deviasi minus signifikan) langsung diikuti dengan rencana aksi percepatan (catch-up plan)."
+    },
+    soal: [
+      "Sekolah memiliki dokumen Kurva S yang disetujui sebagai acuan jadwal pelaksanaan pekerjaan?",
+      "Perhitungan bobot persentase capaian fisik diperbarui secara berkala pada grafik Kurva S?",
+      "Grafik Kurva S menunjukkan kesesuaian (atau deviasi yang masih aman) antara rencana kumulatif dengan realisasi di lapangan?",
+      "Hasil analisis Kurva S digunakan sebagai dasar penentuan strategi percepatan pekerjaan jika terjadi keterlambatan?",
+      "Dokumen pembaruan Kurva S ini dilaporkan secara berkala kepada pihak manajemen dan dinas terkait?"
+    ]
+  },
+  {
+    bab: "Indikator 8: Hambatan yang Muncul dan Penanganannya",
+    rubrik: {
+      K: "Sekolah mengabaikan hambatan yang muncul (faktor cuaca, pasokan bahan, pekerja, dana) sehingga menyebabkan proyek mangkrak.",
+      CB: "Sekolah mengidentifikasi adanya hambatan yang mengganggu jalannya proyek, namun belum memiliki tindakan penyelesaian yang terarah.",
+      B: "Sekolah mendata setiap hambatan teknis maupun non-teknis serta mendiskusikannya dengan para pihak untuk mencari solusi lokal.",
+      SB: "Sekolah mengelola risiko hambatan secara proaktif, memiliki buku catatan kendala (issue log), menerapkan langkah mitigasi yang cepat, dan berhasil memulihkan progres pembangunan tanpa mengurangi mutu."
+    },
+    soal: [
+      "Sekolah memetakan dan mencatat hambatan (seperti keterlambatan material, kendala cuaca, atau masalah tukang) yang muncul selama pembangunan?",
+      "Setiap hambatan yang muncul langsung dicarikan solusi jangka pendek agar pekerjaan tidak terhenti total?",
+      "Sekolah melibatkan unsur eksternal (Perencana/Pengawas/Dinas) untuk memecahkan hambatan yang memerlukan keputusan teknis khusus?",
+      "Sekolah melakukan evaluasi terhadap efektivitas solusi atau mitigasi yang telah diterapkan pada hambatan sebelumnya?",
+      "Hambatan dan langkah penanganannya didokumentasikan dalam laporan berkala sebagai bagian dari akuntabilitas proyek?"
+    ]
+  }
+];
