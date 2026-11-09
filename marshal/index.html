@@ -2,7 +2,8 @@
 <html lang="id" class="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Marshal - Admin Panel Monev</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marshal - Admin Panel Monev Revitalisasi</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -10,150 +11,311 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
-<body class="p-10 font-sans h-screen flex flex-col overflow-hidden">
+<body class="p-6 sm:p-10 font-sans h-screen flex flex-col overflow-hidden">
   
-  <div id="loginBox" class="max-w-sm mx-auto bg-slate-800 p-8 rounded-xl shadow-xl border border-slate-700 mt-20 shrink-0 relative overflow-hidden">
+  <!-- Form Login Admin -->
+  <div id="loginBox" class="max-w-sm mx-auto bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700 mt-16 shrink-0 relative overflow-hidden">
     <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
-    <h2 class="text-2xl font-bold mb-6 text-amber-400 text-center relative z-10">Akses Marshal</h2>
-    <div class="relative z-10">
-      <input type="text" id="aUser" placeholder="Username Admin" class="w-full px-4 py-2 mb-4 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
-      <input type="password" id="aPass" placeholder="Master Password" class="w-full px-4 py-2 mb-6 bg-slate-700 rounded border border-slate-600 focus:outline-none focus:border-amber-400">
-      <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-bold transition shadow-lg">Masuk Panel</button>
+    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
+    <h2 class="text-2xl font-bold mb-2 text-amber-400 text-center relative z-10">Akses Marshal</h2>
+    <p class="text-xs text-slate-400 text-center mb-6 relative z-10">Panel Pengendali Monev Revitalisasi</p>
+    <div class="relative z-10 space-y-4">
+      <input type="text" id="aUser" placeholder="Username Admin" class="w-full px-4 py-2.5 bg-slate-700/60 rounded-lg border border-slate-600 focus:outline-none focus:border-amber-400 text-sm text-white">
+      <input type="password" id="aPass" placeholder="Master Password" class="w-full px-4 py-2.5 bg-slate-700/60 rounded-lg border border-slate-600 focus:outline-none focus:border-amber-400 text-sm text-white">
+      <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-500 py-2.5 rounded-lg font-bold text-sm text-white transition shadow-lg shadow-blue-600/20">Masuk Panel Admin</button>
     </div>
   </div>
 
-  <div id="dashboard" class="max-w-6xl mx-auto hidden flex-1 flex flex-col w-full h-full">
-    <div class="flex justify-between items-center mb-6 shrink-0">
+  <!-- Dashboard Admin -->
+  <div id="dashboard" class="max-w-7xl mx-auto hidden flex-1 flex flex-col w-full h-full fade-in">
+    <!-- Header Admin & Navigasi Tab -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 shrink-0 gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-white">Monitoring Progres Sekolah</h1>
-        <p class="text-slate-400 text-sm">Dashboard Pemantauan e-Monev Revitalisasi</p>
+        <h1 class="text-2xl font-extrabold text-white tracking-wide">Panel Marshal Monev Revitalisasi</h1>
+        <p class="text-slate-400 text-xs">Pemantauan Progres & Pengaturan Hak Akses Instrumen Responden</p>
       </div>
-      <button onclick="location.reload()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm font-semibold transition">Keluar Akun</button>
+
+      <div class="flex items-center gap-3">
+        <!-- Tab Buttons -->
+        <div class="bg-slate-800 p-1 rounded-xl border border-slate-700 flex text-xs font-semibold">
+          <button id="tabBtnMonitoring" onclick="switchTab('monitoring')" class="px-4 py-2 rounded-lg bg-blue-600 text-white transition">📊 Monitoring Progres</button>
+          <button id="tabBtnSettings" onclick="switchTab('settings')" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">⚙️ Pengaturan Role</button>
+        </div>
+        <button onclick="location.reload()" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-300 transition">Keluar</button>
+      </div>
     </div>
     
-    <div class="bg-slate-800 rounded-xl shadow-lg border border-slate-700 flex-1 flex flex-col overflow-hidden">
-      <div class="overflow-y-auto flex-1 p-1">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-slate-900 text-slate-400 sticky top-0 z-10 shadow">
-            <tr>
-              <th class="p-4 rounded-tl-lg">NPSN</th>
-              <th class="p-4">Nama Instansi</th>
-              <th class="p-4 text-center">Status</th>
-              <th class="p-4 text-right rounded-tr-lg">Tindakan Khusus</th>
-            </tr>
-          </thead>
-          <tbody id="tBody" class="divide-y divide-slate-700/50"></tbody>
-        </table>
+    <!-- KONTEN TAB 1: MONITORING PROGRES SEKOLAH -->
+    <div id="tabMonitoring" class="flex-1 flex flex-col overflow-hidden">
+      <!-- Search & Info Bar -->
+      <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-3 shrink-0">
+        <div class="relative w-full sm:w-80">
+          <input type="text" id="searchInput" oninput="filterTable()" placeholder="Cari nama sekolah atau NPSN..." class="w-full px-4 py-2 bg-slate-800 rounded-lg border border-slate-700 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400">
+        </div>
+        <div class="text-xs text-slate-400" id="totalSekolahCounter">Memuat data...</div>
+      </div>
+
+      <!-- Tabel Multi-Responden -->
+      <div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700 flex-1 flex flex-col overflow-hidden">
+        <div class="overflow-y-auto flex-1 p-1">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-900 text-slate-400 sticky top-0 z-10 shadow font-semibold">
+              <tr>
+                <th class="p-3.5 rounded-tl-xl w-24">NPSN</th>
+                <th class="p-3.5">Nama Satuan Pendidikan</th>
+                <th class="p-3.5 text-center w-56">Kepala Sekolah</th>
+                <th class="p-3.5 text-center w-56">Bendahara</th>
+                <th class="p-3.5 text-center w-56 rounded-tr-xl">Ketua P2SP</th>
+              </tr>
+            </thead>
+            <tbody id="tBody" class="divide-y divide-slate-700/50"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONTEN TAB 2: PENGATURAN INDIKATOR PER ROLE -->
+    <div id="tabSettings" class="flex-1 flex flex-col overflow-hidden hidden">
+      <div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700 p-6 sm:p-8 flex-1 flex flex-col overflow-hidden">
+        <div class="mb-6 shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-700 pb-5">
+          <div>
+            <h2 class="text-lg font-bold text-amber-400">Pengaturan Indikator Tiap Responden</h2>
+            <p class="text-xs text-slate-400 mt-1">Tentukan butir indikator mana saja yang wajib diisi oleh masing-masing responden. Centang indikator yang diizinkan.</p>
+          </div>
+          <button onclick="saveRoleSettings()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition shadow-lg shadow-amber-500/20">
+            💾 Simpan Pengaturan Role
+          </button>
+        </div>
+
+        <div class="overflow-y-auto flex-1">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-900 text-slate-300 sticky top-0 z-10 shadow font-semibold">
+              <tr>
+                <th class="p-4 w-12 text-center">No</th>
+                <th class="p-4">Nama Indikator</th>
+                <th class="p-4 text-center w-40">
+                  <div class="flex items-center justify-center gap-1.5 cursor-pointer" onclick="toggleColumn('KS')">
+                    <span>🏫 Kepala Sekolah</span>
+                  </div>
+                </th>
+                <th class="p-4 text-center w-40">
+                  <div class="flex items-center justify-center gap-1.5 cursor-pointer" onclick="toggleColumn('Bendahara')">
+                    <span>💼 Bendahara</span>
+                  </div>
+                </th>
+                <th class="p-4 text-center w-40">
+                  <div class="flex items-center justify-center gap-1.5 cursor-pointer" onclick="toggleColumn('P2SP')">
+                    <span>🛠️ Ketua P2SP</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="settingsTableBody" class="divide-y divide-slate-700/60">
+              <!-- Diisi secara dinamis -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // MASUKKAN URL DEPLOYMENT GAS ANDA DI SINI (SAMAKAN DENGAN YANG DI SEKOLAH)
     const API_URL = 'https://script.google.com/macros/s/AKfycbzYQH2suLo-N3L7p1BXu2zshiX51IIz9mtSjD78yMyjRLAKYEn1_DNrRw8hXJF626a11Q/exec';
 
+    let allSchools = [];
+    let roleSettingsData = [];
+
     async function reqGAS(data) {
-      const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
+      const res = await fetch(API_URL, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'text/plain' }, 
+        body: JSON.stringify(data) 
+      });
       return await res.json();
     }
 
     async function loginAdmin() {
-      const u = document.getElementById('aUser').value;
-      const p = document.getElementById('aPass').value;
-      if(!u || !p) return;
+      const u = document.getElementById('aUser').value.trim();
+      const p = document.getElementById('aPass').value.trim();
+      if (!u || !p) return;
       
       Swal.showLoading();
       const res = await reqGAS({ action: 'loginAdmin', username: u, password: p });
       if (res.status === 'success') {
         document.getElementById('loginBox').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
-        document.getElementById('dashboard').classList.add('flex');
-        loadTable();
+        loadMonitoringTable();
+        loadRoleSettings();
       } else {
         Swal.fire('Error', res.message, 'error');
       }
     }
 
-    async function loadTable() {
-      const res = await reqGAS({ action: 'adminList' });
-      let html = '';
-      res.data.forEach(s => {
-        let badge = s.status === 'Selesai' ? 'bg-green-500/20 text-green-400 border border-green-500/50' : (s.status === 'Draf' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/50' : 'bg-slate-700 text-slate-400');
-        
-        let safeJson = encodeURIComponent(s.draft_json); 
+    function switchTab(tabName) {
+      const isMon = tabName === 'monitoring';
+      document.getElementById('tabMonitoring').classList.toggle('hidden', !isMon);
+      document.getElementById('tabSettings').classList.toggle('hidden', isMon);
 
-        let btn = s.status === 'Selesai' 
-          ? `<div class="flex flex-col gap-2 items-end">
-               <a href="${s.pdf_link}" target="_blank" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded w-32 text-center transition">Buka PDF</a>
-               <button onclick="downloadDocx('${s.nama_sekolah}', '${safeJson}')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded w-32 text-center transition">Rekap (DOCX)</button>
-               <button onclick="unlock('${s.npsn}')" class="text-xs text-slate-400 hover:text-red-400 hover:bg-red-900/30 px-2 py-1 rounded w-32 text-center transition mt-1">Buka Kunci</button>
-             </div>`
-          : `<span class="text-slate-500 italic text-xs block mt-2 text-right">Proses / Menunggu</span>`;
-        
-        html += `<tr class="hover:bg-slate-700/30 transition">
-          <td class="p-4 text-slate-400 align-top">${s.npsn}</td>
-          <td class="p-4 font-semibold text-slate-200 align-top">${s.nama_sekolah}</td>
-          <td class="p-4 align-top text-center"><span class="px-2 py-1 rounded text-[11px] uppercase tracking-wider font-bold inline-block ${badge}">${s.status}</span></td>
-          <td class="p-4 align-top">${btn}</td>
-        </tr>`;
-      });
-      document.getElementById('tBody').innerHTML = html;
-      Swal.close();
+      document.getElementById('tabBtnMonitoring').className = isMon 
+        ? 'px-4 py-2 rounded-lg bg-blue-600 text-white transition' 
+        : 'px-4 py-2 rounded-lg text-slate-400 hover:text-white transition';
+      
+      document.getElementById('tabBtnSettings').className = !isMon 
+        ? 'px-4 py-2 rounded-lg bg-blue-600 text-white transition' 
+        : 'px-4 py-2 rounded-lg text-slate-400 hover:text-white transition';
     }
 
-    async function unlock(npsn) {
-      if(!confirm('Anda yakin ingin membuka kunci (reset PDF) sekolah ini?')) return;
+    // --- TAB 1: MONITORING ---
+    async function loadMonitoringTable() {
       Swal.showLoading();
-      await reqGAS({ action: 'adminUnlock', npsn: npsn });
-      loadTable();
+      const res = await reqGAS({ action: 'adminList' });
+      Swal.close();
+
+      if (res.status === 'success') {
+        allSchools = res.data;
+        document.getElementById('totalSekolahCounter').innerText = `Total: ${allSchools.length} Sekolah`;
+        renderTableRows(allSchools);
+      } else {
+        Swal.fire('Error', res.message, 'error');
+      }
     }
 
-    function downloadDocx(namaSekolah, draftJsonEncoded) {
-      let draft = {};
-      try { draft = JSON.parse(decodeURIComponent(draftJsonEncoded)); } catch(e) {}
-      
-      let K = 0, CB = 0, B = 0, SB = 0;
-      const qKeys = Object.keys(draft).filter(k => /^q\d+$/.test(k));
-      qKeys.forEach(k => {
-        if(draft[k] === 'K') K++;
-        if(draft[k] === 'CB') CB++;
-        if(draft[k] === 'B') B++;
-        if(draft[k] === 'SB') SB++;
-      });
-      const totalSoal = K + CB + B + SB;
+    function renderRoleCell(s, roleKey) {
+      const r = s[roleKey.toLowerCase()] || {};
+      const status = r.status || 'Belum Mengisi';
+      const isSelesai = status === 'Selesai';
+      const isDraf = status === 'Draf';
 
-      let header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-      <head><meta charset='utf-8'><title>Rekap Monev</title></head><body>`;
-      
-      let content = `
-        <h2 style="text-align: center; font-family: Arial, sans-serif;">KESIMPULAN HASIL MONEV REVITALISASI</h2>
-        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #1e3a8a; margin-bottom: 30px;">${namaSekolah}</h3>
-        <p style="font-family: Arial, sans-serif;">Berdasarkan pengisian ${totalSoal} Butir Pernyataan Instrumen, berikut adalah ringkasan penilaian:</p>
-        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif; width: 100%; border-color: #cbd5e1;">
-          <tr>
-            <th style="background-color: #f1f5f9; width: 70%; text-align: left;">Kategori Penilaian</th>
-            <th style="background-color: #f1f5f9; width: 30%; text-align: center;">Jumlah Jawaban</th>
-          </tr>
-          <tr><td style="color: #059669; font-weight: bold;">Sangat Baik (SB)</td><td style="text-align:center; font-size: 16px;"><b>${SB}</b></td></tr>
-          <tr><td style="color: #2563eb; font-weight: bold;">Baik (B)</td><td style="text-align:center; font-size: 16px;"><b>${B}</b></td></tr>
-          <tr><td style="color: #d97706; font-weight: bold;">Cukup Baik (CB)</td><td style="text-align:center; font-size: 16px;"><b>${CB}</b></td></tr>
-          <tr><td style="color: #e11d48; font-weight: bold;">Kurang (K)</td><td style="text-align:center; font-size: 16px;"><b>${K}</b></td></tr>
-        </table>
-        <p style="font-family: Arial, sans-serif; margin-top: 30px; font-size: 12px; color: #64748b;"><em>Dokumen ini digenerate secara otomatis dari Sistem e-Monev Bidang SMP.</em></p>
+      let badge = 'bg-slate-700/60 text-slate-400 border border-slate-600/40';
+      if (isSelesai) badge = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 font-bold';
+      else if (isDraf) badge = 'bg-amber-500/20 text-amber-400 border border-amber-500/50';
+
+      return `
+        <div class="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-900/40 border border-slate-700/40 gap-1.5">
+          <span class="px-2 py-0.5 rounded text-[10px] uppercase tracking-wider ${badge}">${status}</span>
+          ${r.nama ? `<span class="text-[11px] text-slate-300 font-medium truncate max-w-[170px]" title="${r.nama}">${r.nama}</span>` : ''}
+          
+          <div class="flex gap-1.5 mt-1">
+            ${isSelesai && r.pdf_link ? `
+              <a href="${r.pdf_link}" target="_blank" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1 rounded transition font-semibold">
+                Buka PDF
+              </a>
+              <button onclick="unlock('${s.npsn}', '${roleKey}', '${s.nama_sekolah}')" class="text-[10px] text-rose-400 hover:bg-rose-950/40 border border-rose-800/40 px-2 py-1 rounded transition">
+                Buka Kunci
+              </button>
+            ` : (isDraf ? `
+              <span class="text-[10px] text-amber-400/80 italic">Menyimpan draf...</span>
+            ` : `
+              <span class="text-[10px] text-slate-500 italic">Belum mengisi</span>
+            `)}
+          </div>
+        </div>
       `;
-      let footer = "</body></html>";
-      
-      let sourceHTML = header + content + footer;
-      let source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-      
-      let fileDownload = document.createElement("a");
-      document.body.appendChild(fileDownload);
-      fileDownload.href = source;
-      fileDownload.download = 'Rekap_Monev_' + namaSekolah.replace(/ /g,"_") + '.doc';
-      fileDownload.click();
-      document.body.removeChild(fileDownload);
+    }
+
+    function renderTableRows(schools) {
+      let html = '';
+      schools.forEach(s => {
+        html += `
+          <tr class="hover:bg-slate-700/20 transition">
+            <td class="p-3.5 text-slate-400 font-mono align-middle">${s.npsn}</td>
+            <td class="p-3.5 font-semibold text-slate-100 align-middle leading-tight">${s.nama_sekolah}</td>
+            <td class="p-2.5 align-middle">${renderRoleCell(s, 'KS')}</td>
+            <td class="p-2.5 align-middle">${renderRoleCell(s, 'Bendahara')}</td>
+            <td class="p-2.5 align-middle">${renderRoleCell(s, 'P2SP')}</td>
+          </tr>
+        `;
+      });
+      document.getElementById('tBody').innerHTML = html || '<tr><td colspan="5" class="p-8 text-center text-slate-500">Tidak ada data sekolah yang cocok.</td></tr>';
+    }
+
+    function filterTable() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      if (!q) {
+        renderTableRows(allSchools);
+        return;
+      }
+      const filtered = allSchools.filter(s => 
+        String(s.npsn).toLowerCase().includes(q) || 
+        String(s.nama_sekolah).toLowerCase().includes(q)
+      );
+      renderTableRows(filtered);
+    }
+
+    async function unlock(npsn, role, namaSekolah) {
+      const roleLabels = { KS: 'Kepala Sekolah', Bendahara: 'Bendahara', P2SP: 'Ketua P2SP' };
+      const confirm = await Swal.fire({
+        title: 'Buka Kunci Responden?',
+        html: `Anda akan membuka kunci status pengisian <b>${roleLabels[role] || role}</b> untuk:<br><b>${namaSekolah}</b>.<br><span class="text-xs text-slate-400 mt-2 block">Sekolah akan dapat mengedit dan memfinalisasi ulang berkasnya.</span>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Buka Kunci',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#e11d48'
+      });
+      if (!confirm.isConfirmed) return;
+
+      Swal.showLoading();
+      await reqGAS({ action: 'adminUnlockResponden', npsn, role });
+      Swal.fire('Kunci Dibuka', `Akses pengisian untuk ${roleLabels[role]} berhasil dibuka.`, 'success');
+      loadMonitoringTable();
+    }
+
+    // --- TAB 2: PENGATURAN INDIKATOR PER ROLE ---
+    async function loadRoleSettings() {
+      const res = await reqGAS({ action: 'getRoleSettings' });
+      if (res.status === 'success') {
+        roleSettingsData = res.data;
+        renderSettingsTable();
+      }
+    }
+
+    function renderSettingsTable() {
+      let html = '';
+      roleSettingsData.forEach((item, idx) => {
+        html += `
+          <tr class="hover:bg-slate-700/20 transition">
+            <td class="p-4 text-center text-slate-400 font-mono">${idx + 1}</td>
+            <td class="p-4 font-medium text-slate-200">${item.indikator}</td>
+            <td class="p-4 text-center">
+              <input type="checkbox" id="chk_KS_${idx}" ${item.KS ? 'checked' : ''} onchange="updateSettingRow(${idx}, 'KS', this.checked)" class="w-4 h-4 rounded text-blue-600 bg-slate-700 border-slate-600 focus:ring-0 cursor-pointer">
+            </td>
+            <td class="p-4 text-center">
+              <input type="checkbox" id="chk_Bendahara_${idx}" ${item.Bendahara ? 'checked' : ''} onchange="updateSettingRow(${idx}, 'Bendahara', this.checked)" class="w-4 h-4 rounded text-blue-600 bg-slate-700 border-slate-600 focus:ring-0 cursor-pointer">
+            </td>
+            <td class="p-4 text-center">
+              <input type="checkbox" id="chk_P2SP_${idx}" ${item.P2SP ? 'checked' : ''} onchange="updateSettingRow(${idx}, 'P2SP', this.checked)" class="w-4 h-4 rounded text-blue-600 bg-slate-700 border-slate-600 focus:ring-0 cursor-pointer">
+            </td>
+          </tr>
+        `;
+      });
+      document.getElementById('settingsTableBody').innerHTML = html;
+    }
+
+    function updateSettingRow(idx, role, isChecked) {
+      roleSettingsData[idx][role] = isChecked;
+    }
+
+    function toggleColumn(role) {
+      const allChecked = roleSettingsData.every(r => r[role]);
+      const newStatus = !allChecked;
+      roleSettingsData.forEach(r => r[role] = newStatus);
+      renderSettingsTable();
+    }
+
+    async function saveRoleSettings() {
+      Swal.showLoading();
+      const res = await reqGAS({ action: 'saveRoleSettings', settings: roleSettingsData });
+      if (res.status === 'success') {
+        Swal.fire('Tersimpan', 'Pengaturan indikator responden berhasil disimpan ke database.', 'success');
+      } else {
+        Swal.fire('Gagal Menyimpan', res.message, 'error');
+      }
     }
   </script>
 </body>

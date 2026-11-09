@@ -1,7 +1,7 @@
 // --- DATA INSTRUMEN & RUBRIK ---
 const instrumenData = [
   {
-    bab: "Indikator 1: Peran Dinas Pendidikan Kab/Kota",
+    bab: "Indikator Peran Dinas Pendidikan Kab/Kota",
     rubrik: {
       K: "Dinas Pendidikan tidak melakukan pembinaan, pemantauan, maupun fasilitasi koordinasi dalam program revitalisasi sekolah.",
       CB: "Dinas Pendidikan melakukan sosialisasi awal program revitalisasi, namun belum memberikan pembinaan dan fasilitasi koordinasi secara berkala.",
@@ -16,7 +16,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 2: Peran Kepala Sekolah",
+    bab: "Indikator Peran Kepala Sekolah",
     rubrik: {
       K: "Kepala Sekolah tidak membentuk tim pelaksana dan tidak terlibat dalam pengendalian program revitalisasi.",
       CB: "Kepala Sekolah membentuk tim pelaksana (P2SP) namun fungsi pengendalian dan pengawasan harian belum berjalan optimal.",
@@ -31,7 +31,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 3: Peran Bendahara",
+    bab: "Indikator Peran Bendahara",
     rubrik: {
       K: "Bendahara mengabaikan hambatan keuangan (seperti keterlambatan pencairan, selisih harga, atau pengeluaran tak terduga) sehingga belanja terhenti dan proyek mangkrak.",
       CB: "Bendahara mengidentifikasi adanya kendala/hambatan arus kas atau pencatatan, namun belum memiliki tindakan penyelesaian serta administrasi pertanggungjawaban yang terarah.",
@@ -47,7 +47,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 4: Peran P2SP",
+    bab: "Indikator Peran P2SP",
     rubrik: {
       K: "P2SP tidak melaksanakan tugas pembangunan sesuai petunjuk teknis dan administrasi tidak teratur.",
       CB: "P2SP melaksanakan pembangunan fisik dasar namun administrasi keuangan dan logistik belum terdokumentasi dengan rapi.",
@@ -62,7 +62,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 5: Peran Perencana",
+    bab: "Indikator Peran Perencana",
     rubrik: {
       K: "Perencana tidak menyediakan dokumen desain (DED) dan Rencana Anggaran Biaya (RAB) yang memadai untuk pelaksanaan lapangan.",
       CB: "Perencana menyediakan dokumen desain dan RAB awal, namun sulit diimplementasikan atau banyak ketidaksesuaian dengan kondisi riil sekolah.",
@@ -77,7 +77,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 6: Peran Pengawas (Pengawas Konstruksi)",
+    bab: "Indikator Peran Pengawas (Pengawas Konstruksi)",
     rubrik: {
       K: "Pengawas tidak melakukan supervisi lapangan dan tidak membuat laporan pengawasan berkala.",
       CB: "Pengawas melakukan kunjungan lapangan sesekali, namun laporan pengawasan dan catatan koreksi tidak terdokumentasi dengan jelas.",
@@ -92,7 +92,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 7: Progres Pembangunan dengan Kurva S",
+    bab: "Indikator Progres Pembangunan dengan Kurva S",
     rubrik: {
       K: "Sekolah tidak memiliki dokumen Kurva S dan tidak mengukur progres capaian fisik mingguan.",
       CB: "Sekolah memiliki Kurva S, namun pembaruan (updating) realisasi progres tidak dilakukan secara berkala sehingga grafik tidak mencerminkan kondisi riil.",
@@ -108,7 +108,7 @@ const instrumenData = [
     ]
   },
   {
-    bab: "Indikator 8: Hambatan yang Muncul dan Penanganannya",
+    bab: "Indikator Hambatan yang Muncul dan Penanganannya",
     rubrik: {
       K: "Sekolah mengabaikan hambatan yang muncul (faktor cuaca, pasokan bahan, pekerja, dana) sehingga menyebabkan proyek mangkrak.",
       CB: "Sekolah mengidentifikasi adanya hambatan yang mengganggu jalannya proyek, namun belum memiliki tindakan penyelesaian yang terarah.",

@@ -12,24 +12,22 @@
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
-    .fade-in { animation: fadeIn 0.4s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans overflow-hidden">
 
-  <!-- Header Institusi (Desain Tengah/Center) -->
-  <header class="bg-slate-800 border-b border-slate-700 py-5 px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-3 relative overflow-hidden">
-    <!-- Aksen Cahaya Belakang Logo -->
+  <!-- Header Institusi -->
+  <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-2 relative overflow-hidden">
     <div class="absolute top-0 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl"></div>
-    
-    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-16 sm:h-20 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
-    <h1 class="text-lg sm:text-2xl font-extrabold text-slate-100 tracking-wide text-center relative z-10">INSTRUMEN MONEV REVITALISASI SMP</h1>
+    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-14 sm:h-16 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
+    <h1 class="text-base sm:text-xl font-extrabold text-slate-100 tracking-wide text-center relative z-10">INSTRUMEN MONEV REVITALISASI SMP 2026</h1>
   </header>
 
   <main class="flex-1 flex overflow-hidden relative">
     
-    <!-- Halaman Login -->
+    <!-- 1. Halaman Login -->
     <div id="loginSection" class="absolute inset-0 z-20 bg-slate-900 flex items-center justify-center p-4">
       <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-slate-700 relative overflow-hidden">
         <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
@@ -39,76 +37,144 @@
         <p class="text-slate-400 text-sm text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
         
         <div class="relative z-10">
-          <input type="text" id="usernameInput" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-4 text-white placeholder-slate-400 transition">
-          <input type="password" id="passwordInput" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-6 text-white placeholder-slate-400 transition">
+          <input type="text" id="usernameInput" placeholder="Username (misal: revitSMP)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-4 text-white placeholder-slate-400 transition">
+          <input type="password" id="passwordInput" placeholder="Password (NPSN)" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none mb-6 text-white placeholder-slate-400 transition">
           <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 rounded-lg font-bold transition shadow-[0_0_15px_rgba(245,158,11,0.2)]">Masuk ke Instrumen</button>
         </div>
       </div>
     </div>
 
-    <!-- Skeleton Loader -->
-    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex flex-col sm:flex-row p-4 sm:p-6 gap-6 hidden">
-      <div class="w-full sm:w-1/4 h-full bg-slate-800 rounded-xl p-4 animate-pulse shrink-0 border border-slate-700/50">
-        <div class="h-6 bg-slate-700 rounded w-1/2 mb-8"></div>
-        <div class="h-10 bg-slate-700 rounded mb-4"></div>
-        <div class="h-10 bg-slate-700 rounded mb-4"></div>
-      </div>
-      <div class="w-full sm:w-3/4 h-full bg-slate-800 rounded-xl p-6 animate-pulse border border-slate-700/50">
-        <div class="h-12 bg-slate-700 rounded w-1/3 mb-6"></div>
-        <div class="h-32 bg-slate-700 rounded mb-8"></div>
-        <div class="h-24 bg-slate-700 rounded mb-4"></div>
-        <div class="h-24 bg-slate-700 rounded mb-4"></div>
+    <!-- 2. Skeleton Loader -->
+    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex flex-col items-center justify-center p-6 gap-4 hidden">
+      <div class="w-12 h-12 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
+      <p class="text-slate-400 text-sm font-medium animate-pulse" id="skeletonText">Menghubungkan ke server...</p>
+    </div>
+
+    <!-- 3. Halaman Pilih Responden (3 Card) -->
+    <div id="roleSelectSection" class="absolute inset-0 z-20 bg-slate-900 overflow-y-auto p-6 sm:p-10 hidden fade-in">
+      <div class="max-w-4xl mx-auto flex flex-col h-full justify-between">
+        <div>
+          <!-- Header Sekolah Info -->
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-800/80 p-5 rounded-2xl border border-slate-700 mb-8 gap-4 shadow-lg">
+            <div>
+              <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold">Satuan Pendidikan</p>
+              <h2 id="roleSelectSchoolName" class="text-xl sm:text-2xl font-bold text-amber-400">Nama Sekolah</h2>
+              <p id="roleSelectNpsn" class="text-xs text-slate-400 mt-0.5">NPSN: -</p>
+            </div>
+            <button onclick="location.reload()" class="px-4 py-2 bg-slate-700/70 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-300 transition">Keluar Akun</button>
+          </div>
+
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-extrabold text-white mb-2">Pilih Peran Responden</h3>
+            <p class="text-slate-400 text-sm max-w-lg mx-auto">Instrumen ini diisi oleh 3 pihak terkait secara mandiri. Silakan pilih peran Anda untuk melanjutkan pengisian atau melihat hasil dokumen.</p>
+          </div>
+
+          <!-- 3 Card Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="roleCardsContainer">
+            <!-- Diisi secara dinamis oleh JS -->
+          </div>
+        </div>
+
+        <div class="text-center text-xs text-slate-500 py-6">
+          e-Monev Revitalisasi SMP • Bidang SMP Dinas Pendidikan Kabupaten Karanganyar
+        </div>
       </div>
     </div>
 
-    <!-- Dashboard & Form -->
+    <!-- 4. Modal Identitas Responden -->
+    <div id="identitasModal" class="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden fade-in">
+      <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative">
+        <h3 class="text-xl font-bold text-amber-400 mb-1" id="modalRoleTitle">Identitas Responden</h3>
+        <p class="text-xs text-slate-400 mb-6">Nama dan NIP akan dicantumkan pada lembar tanda tangan dokumen resmi PDF.</p>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Lengkap & Gelar <span class="text-rose-400">*</span></label>
+            <input type="text" id="modalNamaInput" placeholder="Contoh: Drs. H. Budi Santoso, M.Pd." class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+          </div>
+          
+          <div id="modalNipContainer">
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">NIP Responden <span class="text-rose-400">*</span></label>
+            <input type="text" id="modalNipInput" placeholder="Contoh: 197508122000031002 (atau tanda strip jika tidak ada)" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-8">
+          <button onclick="closeIdentitasModal()" class="px-5 py-2.5 rounded-lg bg-slate-700/70 hover:bg-slate-600 text-xs font-semibold text-slate-300 transition">Batal</button>
+          <button onclick="saveIdentitasAndEnter()" class="px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow-lg shadow-amber-500/20">Lanjut ke Instrumen →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Dashboard Pengisian Instrumen -->
     <div id="dashboardSection" class="w-full h-full flex flex-col sm:flex-row hidden">
       
       <!-- Sidebar Navigasi -->
       <aside class="w-full sm:w-1/4 bg-slate-800 border-r border-slate-700 flex flex-col shrink-0 sm:h-full h-48 shadow-xl z-10">
-        <div class="p-5 border-b border-slate-700 bg-slate-800">
-          <p class="text-[10px] text-slate-400 uppercase tracking-widest mb-1 font-semibold">Sekolah Aktif</p>
-          <h3 id="schoolName" class="font-bold text-base text-amber-400 leading-tight">Memuat Nama...</h3>
+        <div class="p-4 border-b border-slate-700 bg-slate-800 flex justify-between items-center">
+          <button onclick="backToRoleSelect()" class="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold transition">
+            <span>←</span> Pilih Peran Lain
+          </button>
+          <span id="activeRoleBadge" class="text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40">KS</span>
         </div>
+
+        <div class="p-4 border-b border-slate-700/80 bg-slate-800/50">
+          <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Responden Aktif</p>
+          <h3 id="sidebarRespondenNama" class="font-bold text-sm text-slate-200 truncate">-</h3>
+          <p id="sidebarRespondenNip" class="text-xs text-slate-400 truncate">-</p>
+        </div>
+
         <nav class="flex-1 overflow-y-auto p-3 space-y-1" id="sidebarNav"></nav>
-        <div class="p-4 border-t border-slate-700">
-          <button onclick="location.reload()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm font-semibold text-white transition">Keluar Sistem</button>
+
+        <div class="p-3 border-t border-slate-700 text-center">
+          <span class="text-[11px] text-slate-400" id="autosaveStatusIndicator">Otomatis tersimpan</span>
         </div>
       </aside>
 
-      <!-- Main Form Content -->
-      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full">
-        <!-- Overlay Selesai -->
-        <div id="lockedOverlay" class="absolute inset-0 bg-slate-900/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center hidden p-6 text-center">
-          <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 text-4xl border border-emerald-500/30">✓</div>
-          <h2 class="text-3xl font-bold text-white mb-3">Monev Selesai</h2>
-          <p class="text-slate-400 mb-8 max-w-md">Data instrumen sekolah Anda telah difinalisasi, dikunci, dan dikirim ke Dinas Pendidikan.</p>
-          <a id="btnDownloadPDF" href="#" target="_blank" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg shadow-blue-600/20 transition">Lihat / Unduh Berkas PDF</a>
+      <!-- Main Form Area -->
+      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full flex flex-col">
+        <!-- Banner Mode Baca (Jika Sudah Selesai) -->
+        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-6 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 hidden">
+          <div class="flex items-center gap-2 text-emerald-300 text-xs sm:text-sm font-semibold">
+            <span>✅</span> Dokumen ini sudah difinalisasi dan terkunci dalam Mode Baca.
+          </div>
+          <a id="btnDownloadTop" href="#" target="_blank" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold transition shadow">
+            📥 Download Ulang PDF
+          </a>
         </div>
 
-        <div class="max-w-5xl mx-auto p-6 sm:p-10 lg:p-12" id="formArea"></div>
+        <div class="max-w-5xl mx-auto p-6 sm:p-10 lg:p-12 flex-1 w-full" id="formArea"></div>
       </section>
     </div>
+
   </main>
 
-  <footer class="w-full bg-slate-950 text-center py-3 text-[10px] sm:text-xs font-medium tracking-wider text-slate-500 whitespace-nowrap border-t border-slate-800 z-10 shrink-0">
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 py-2.5 px-4 text-center text-xs text-slate-500 shrink-0">
     DIGITALLY SHAPED BY
     <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-4 sm:h-5 mx-1 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
     <span class="text-slate-400 font-bold ml-1">[BID SMP 2026]</span>
   </footer>
 
   <script>
-    // URL API GAS TERBARU SESUAI PERMINTAAN
     const API_URL = 'https://script.google.com/macros/s/AKfycbzYQH2suLo-N3L7p1BXu2zshiX51IIz9mtSjD78yMyjRLAKYEn1_DNrRw8hXJF626a11Q/exec';
-    
+
+    const ROLE_METADATA = {
+      KS: { label: 'Kepala Sekolah', icon: '🏫', desc: 'Penilaian kepemimpinan, koordinasi program, dan pelaporan.' },
+      Bendahara: { label: 'Bendahara', icon: '💼', desc: 'Pengelolaan arus kas, mitigasi kendala keuangan, dan SPJ.' },
+      P2SP: { label: 'Ketua P2SP', icon: '🛠️', desc: 'Pelaksanaan pembangunan fisik, bahan, pekerja, dan progres harian.' }
+    };
+
     let sessionData = {};
+    let currentRole = null;       // 'KS' | 'Bendahara' | 'P2SP'
     let currentDraft = {};
     let activeBabIndex = 0;
+    let isReadOnlyMode = false;
 
-    // --- DATA INSTRUMEN & RUBRIK ---
+    // --- DATA DEFAULT INSTRUMEN & RUBRIK ---
     const instrumenData = [
       {
-        bab: "Indikator 1: Peran Dinas Pendidikan Kab/Kota",
+        bab: "Indikator Peran Dinas Pendidikan Kab/Kota",
         rubrik: {
           K: "Dinas Pendidikan tidak melakukan pembinaan, pemantauan, maupun fasilitasi koordinasi dalam program revitalisasi sekolah.",
           CB: "Dinas Pendidikan melakukan sosialisasi awal program revitalisasi, namun belum memberikan pembinaan dan fasilitasi koordinasi secara berkala.",
@@ -123,7 +189,7 @@
         ]
       },
       {
-        bab: "Indikator 2: Peran Kepala Sekolah",
+        bab: "Indikator Peran Kepala Sekolah",
         rubrik: {
           K: "Kepala Sekolah tidak membentuk tim pelaksana dan tidak terlibat dalam pengendalian program revitalisasi.",
           CB: "Kepala Sekolah membentuk tim pelaksana (P2SP) namun fungsi pengendalian dan pengawasan harian belum berjalan optimal.",
@@ -138,7 +204,7 @@
         ]
       },
       {
-        bab: "Indikator 3: Peran Bendahara",
+        bab: "Indikator Peran Bendahara",
         rubrik: {
           K: "Bendahara mengabaikan hambatan keuangan (seperti keterlambatan pencairan, selisih harga, atau pengeluaran tak terduga) sehingga belanja terhenti dan proyek mangkrak.",
           CB: "Bendahara mengidentifikasi adanya kendala/hambatan arus kas atau pencatatan, namun belum memiliki tindakan penyelesaian serta administrasi pertanggungjawaban yang terarah.",
@@ -154,7 +220,7 @@
         ]
       },
       {
-        bab: "Indikator 4: Peran P2SP",
+        bab: "Indikator Peran P2SP",
         rubrik: {
           K: "P2SP tidak melaksanakan tugas pembangunan sesuai petunjuk teknis dan administrasi tidak teratur.",
           CB: "P2SP melaksanakan pembangunan fisik dasar namun administrasi keuangan dan logistik belum terdokumentasi dengan rapi.",
@@ -169,7 +235,7 @@
         ]
       },
       {
-        bab: "Indikator 5: Peran Perencana",
+        bab: "Indikator Peran Perencana",
         rubrik: {
           K: "Perencana tidak menyediakan dokumen desain (DED) dan Rencana Anggaran Biaya (RAB) yang memadai untuk pelaksanaan lapangan.",
           CB: "Perencana menyediakan dokumen desain dan RAB awal, namun sulit diimplementasikan atau banyak ketidaksesuaian dengan kondisi riil sekolah.",
@@ -184,7 +250,7 @@
         ]
       },
       {
-        bab: "Indikator 6: Peran Pengawas (Pengawas Konstruksi)",
+        bab: "Indikator Peran Pengawas (Pengawas Konstruksi)",
         rubrik: {
           K: "Pengawas tidak melakukan supervisi lapangan dan tidak membuat laporan pengawasan berkala.",
           CB: "Pengawas melakukan kunjungan lapangan sesekali, namun laporan pengawasan dan catatan koreksi tidak terdokumentasi dengan jelas.",
@@ -199,7 +265,7 @@
         ]
       },
       {
-        bab: "Indikator 7: Progres Pembangunan dengan Kurva S",
+        bab: "Indikator Progres Pembangunan dengan Kurva S",
         rubrik: {
           K: "Sekolah tidak memiliki dokumen Kurva S dan tidak mengukur progres capaian fisik mingguan.",
           CB: "Sekolah memiliki Kurva S, namun pembaruan (updating) realisasi progres tidak dilakukan secara berkala sehingga grafik tidak mencerminkan kondisi riil.",
@@ -215,7 +281,7 @@
         ]
       },
       {
-        bab: "Indikator 8: Hambatan yang Muncul dan Penanganannya",
+        bab: "Indikator Hambatan yang Muncul dan Penanganannya",
         rubrik: {
           K: "Sekolah mengabaikan hambatan yang muncul (faktor cuaca, pasokan bahan, pekerja, dana) sehingga menyebabkan proyek mangkrak.",
           CB: "Sekolah mengidentifikasi adanya hambatan yang mengganggu jalannya proyek, namun belum memiliki tindakan penyelesaian yang terarah.",
@@ -232,7 +298,7 @@
       }
     ];
 
-    // --- PARSER PINTAR UNTUK MEMBACA "instrumen iksan.txt" OTOMATIS ---
+    // --- PARSER PINTAR FILE "instrumen iksan.txt" ---
     function parseInstrumenTxt(text) {
       if (!text || typeof text !== 'string') return null;
       const blocks = [];
@@ -289,134 +355,306 @@
             if (parsed && parsed.length > 0) {
               instrumenData.length = 0;
               parsed.forEach(item => instrumenData.push(item));
-              if (sessionData && sessionData.npsn && !sessionData.pdf_link) {
-                buildUI();
-              }
               return;
             }
           }
-        } catch (e) {
-          // Gunakan fallback bawaan jika gagal memuat file eksternal
-        }
+        } catch (e) {}
       }
     }
     loadExternalInstrumen();
 
-    function getTotalQuestions() {
-      return instrumenData.reduce((acc, bab) => acc + bab.soal.length, 0);
-    }
-
     async function reqGAS(data) {
       try {
-        const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) });
+        const res = await fetch(API_URL, { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'text/plain' }, 
+          body: JSON.stringify(data) 
+        });
         return await res.json();
       } catch (err) {
-        return { status: 'error', message: 'Koneksi gagal. Pastikan URL GAS benar dan di-set "Anyone".' };
+        return { status: 'error', message: 'Koneksi ke server gagal. Pastikan jaringan stabil.' };
       }
     }
 
-    function showSkeleton(show) {
-      document.getElementById('skeletonLoader').classList.toggle('hidden', !show);
+    function showSkeleton(show, text = 'Memproses data...') {
+      const loader = document.getElementById('skeletonLoader');
+      document.getElementById('skeletonText').innerText = text;
+      loader.classList.toggle('hidden', !show);
     }
 
+    // --- ALUR LOGIN SEKOLAH ---
     async function login() {
       const u = document.getElementById('usernameInput').value.trim();
       const p = document.getElementById('passwordInput').value.trim();
-      
-      if (!u || !p) return Swal.fire('Oops', 'Lengkapi Username dan Password', 'warning');
+      if (!u || !p) return Swal.fire('Lengkapi Data', 'Masukkan Username dan Password (NPSN)', 'warning');
 
       document.getElementById('loginSection').classList.add('hidden');
-      showSkeleton(true);
+      showSkeleton(true, 'Memverifikasi akun sekolah...');
 
       const res = await reqGAS({ action: 'loginSekolah', username: u, npsn: p });
       showSkeleton(false);
 
       if (res.status === 'success') {
         sessionData = res.data;
-        document.getElementById('dashboardSection').classList.remove('hidden');
-        document.getElementById('schoolName').innerText = sessionData.nama_sekolah;
-        
-        if (sessionData.pdf_link) {
-          document.getElementById('lockedOverlay').classList.remove('hidden');
-          document.getElementById('btnDownloadPDF').href = sessionData.pdf_link;
-        } else {
-          try { currentDraft = JSON.parse(sessionData.draft_json); } catch(e) { currentDraft = {}; }
-          buildUI();
-        }
+        renderRoleCards();
       } else {
         document.getElementById('loginSection').classList.remove('hidden');
         Swal.fire('Akses Ditolak', res.message, 'error');
       }
     }
 
+    // --- RENDER 3 KARTU RESPONDEN ---
+    function renderRoleCards() {
+      document.getElementById('roleSelectSchoolName').innerText = sessionData.nama_sekolah;
+      document.getElementById('roleSelectNpsn').innerText = `NPSN: ${sessionData.npsn}`;
+
+      const container = document.getElementById('roleCardsContainer');
+      let html = '';
+
+      ['KS', 'Bendahara', 'P2SP'].forEach(roleKey => {
+        const meta = ROLE_METADATA[roleKey];
+        const rData = (sessionData.roles && sessionData.roles[roleKey]) || {};
+        const isSelesai = rData.status === 'Selesai';
+        const isDraf = rData.status === 'Draf';
+
+        let badgeClass = 'bg-slate-700/60 text-slate-400 border border-slate-600/50';
+        let badgeText = '⏳ Belum Mengisi';
+        let btnText = 'Mulai Mengisi →';
+        let btnColor = 'bg-blue-600 hover:bg-blue-500 text-white';
+
+        if (isSelesai) {
+          badgeClass = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50';
+          badgeText = '✅ Selesai';
+          btnText = 'Lihat Jawaban (Read-only)';
+          btnColor = 'bg-slate-700 hover:bg-slate-600 text-slate-200';
+        } else if (isDraf) {
+          badgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/50';
+          badgeText = '📝 Draf Tersimpan';
+          btnText = 'Lanjutkan Mengisi →';
+          btnColor = 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold';
+        }
+
+        html += `
+          <div class="bg-slate-800 rounded-2xl border border-slate-700/80 p-6 flex flex-col justify-between hover:border-slate-500 transition shadow-xl relative overflow-hidden group">
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/10 transition"></div>
+            
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <span class="text-3xl">${meta.icon}</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${badgeClass}">${badgeText}</span>
+              </div>
+
+              <h4 class="text-lg font-bold text-white mb-1.5">${meta.label}</h4>
+              <p class="text-xs text-slate-400 mb-4 leading-relaxed">${meta.desc}</p>
+              
+              <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/50 text-xs text-slate-300 space-y-1 mb-6">
+                <div class="flex justify-between"><span class="text-slate-500">Nama:</span> <span class="font-medium truncate max-w-[150px]">${rData.nama || '-'}</span></div>
+                ${roleKey !== 'P2SP' ? `<div class="flex justify-between"><span class="text-slate-500">NIP:</span> <span class="font-medium truncate max-w-[150px]">${rData.nip || '-'}</span></div>` : ''}
+              </div>
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-700/50">
+              <button onclick="handleRoleCardClick('${roleKey}')" class="w-full py-2.5 rounded-lg text-xs font-bold transition shadow ${btnColor}">
+                ${btnText}
+              </button>
+              ${isSelesai && rData.pdf_link ? `
+                <a href="${rData.pdf_link}" target="_blank" class="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                  <span>📥</span> Download Ulang PDF
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      document.getElementById('roleSelectSection').classList.remove('hidden');
+      document.getElementById('dashboardSection').classList.add('hidden');
+    }
+
+    // --- INTERAKSI KARTU RESPONDEN ---
+    function handleRoleCardClick(roleKey) {
+      currentRole = roleKey;
+      const rData = sessionData.roles[roleKey] || {};
+      isReadOnlyMode = rData.status === 'Selesai';
+
+      if (isReadOnlyMode) {
+        // Langsung buka dalam Mode Baca
+        openInstrumentDashboard(rData.nama, rData.nip, rData.draft);
+      } else {
+        // Tampilkan Modal Identitas
+        document.getElementById('modalRoleTitle').innerText = `Identitas ${ROLE_METADATA[roleKey].label}`;
+        document.getElementById('modalNamaInput').value = rData.nama || '';
+        document.getElementById('modalNipInput').value = rData.nip || '';
+        
+        // Sembunyikan NIP untuk Ketua P2SP
+        document.getElementById('modalNipContainer').classList.toggle('hidden', roleKey === 'P2SP');
+        document.getElementById('identitasModal').classList.remove('hidden');
+      }
+    }
+
+    function closeIdentitasModal() {
+      document.getElementById('identitasModal').classList.add('hidden');
+    }
+
+    function saveIdentitasAndEnter() {
+      const nama = document.getElementById('modalNamaInput').value.trim();
+      const nip = document.getElementById('modalNipInput').value.trim();
+
+      if (!nama) return Swal.fire('Nama Diperlukan', 'Harap isi Nama Lengkap Responden.', 'warning');
+      if (currentRole !== 'P2SP' && !nip) return Swal.fire('NIP Diperlukan', 'Harap isi NIP Responden (atau tulis tanda - jika tidak ada NIP).', 'warning');
+
+      // Update data sesi lokal
+      sessionData.roles[currentRole].nama = nama;
+      sessionData.roles[currentRole].nip = nip;
+
+      closeIdentitasModal();
+      openInstrumentDashboard(nama, nip, sessionData.roles[currentRole].draft);
+    }
+
+    // --- BUKA INSTRUMEN ---
+    function openInstrumentDashboard(nama, nip, draftJsonStr) {
+      try { 
+        currentDraft = JSON.parse(draftJsonStr || '{}'); 
+      } catch(e) { 
+        currentDraft = {}; 
+      }
+
+      document.getElementById('roleSelectSection').classList.add('hidden');
+      document.getElementById('dashboardSection').classList.remove('hidden');
+
+      // Update Informasi Sidebar
+      document.getElementById('activeRoleBadge').innerText = ROLE_METADATA[currentRole].label;
+      document.getElementById('sidebarRespondenNama').innerText = nama || '-';
+      document.getElementById('sidebarRespondenNip').innerText = (currentRole !== 'P2SP' && nip) ? `NIP. ${nip}` : '';
+
+      // Tampilkan/Sembunyikan Banner Read-Only
+      const banner = document.getElementById('readOnlyBanner');
+      const rData = sessionData.roles[currentRole] || {};
+      if (isReadOnlyMode && rData.pdf_link) {
+        banner.classList.remove('hidden');
+        document.getElementById('btnDownloadTop').href = rData.pdf_link;
+      } else {
+        banner.classList.add('hidden');
+      }
+
+      buildUI();
+    }
+
+    function backToRoleSelect() {
+      document.getElementById('dashboardSection').classList.add('hidden');
+      renderRoleCards();
+    }
+
+    // --- FILTER INDIKATOR AKTIF BERDASARKAN ROLE ---
+    function getActiveIndicatorsForCurrentRole() {
+      const allowedList = (sessionData.settings && sessionData.settings[currentRole]) || null;
+      if (!allowedList || !Array.isArray(allowedList) || allowedList.length === 0) {
+        return instrumenData; // Fallback jika setting kosong: tampilkan semua
+      }
+      return instrumenData.filter(bab => allowedList.includes(bab.bab));
+    }
+
     function buildUI() {
+      const activeBabList = getActiveIndicatorsForCurrentRole();
+      if (activeBabList.length === 0) {
+        document.getElementById('formArea').innerHTML = `
+          <div class="text-center py-16 bg-slate-800 rounded-xl border border-slate-700">
+            <h3 class="text-xl font-bold text-amber-400 mb-2">Tidak Ada Indikator</h3>
+            <p class="text-xs text-slate-400">Admin belum menetapkan indikator penilaian untuk peran ini.</p>
+          </div>
+        `;
+        return;
+      }
+
       let sidebarHTML = '';
-      instrumenData.forEach((bab, i) => {
-        sidebarHTML += `<div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 rounded-lg cursor-pointer text-sm font-semibold transition ${i === 0 ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">${bab.bab.split(':')[0]}</div>`;
+      activeBabList.forEach((bab, i) => {
+        const shortName = bab.bab.replace(/^Indikator\s*:\s*/i, '');
+        sidebarHTML += `
+          <div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 rounded-lg cursor-pointer text-xs font-semibold transition ${i === 0 ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">
+            ${shortName}
+          </div>
+        `;
       });
       document.getElementById('sidebarNav').innerHTML = sidebarHTML;
+      activeBabIndex = 0;
       renderBab(0);
     }
 
     function switchBab(index) {
-      document.getElementById(`navBab-${activeBabIndex}`).className = "p-3 rounded-lg cursor-pointer text-sm font-semibold transition text-slate-400 hover:bg-slate-700/50 hover:text-slate-300";
-      document.getElementById(`navBab-${index}`).className = "p-3 rounded-lg cursor-pointer text-sm font-semibold transition bg-amber-500/20 text-amber-400 border-l-4 border-amber-500";
+      const activeBabList = getActiveIndicatorsForCurrentRole();
+      if (document.getElementById(`navBab-${activeBabIndex}`)) {
+        document.getElementById(`navBab-${activeBabIndex}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition text-slate-400 hover:bg-slate-700/50 hover:text-slate-300";
+      }
+      if (document.getElementById(`navBab-${index}`)) {
+        document.getElementById(`navBab-${index}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition bg-amber-500/20 text-amber-400 border-l-4 border-amber-500";
+      }
       activeBabIndex = index;
       renderBab(index);
     }
 
     function renderBab(index) {
-      const babData = instrumenData[index];
+      const activeBabList = getActiveIndicatorsForCurrentRole();
+      const babData = activeBabList[index];
+
+      // Penomoran Soal Berurutan Dinamis
       let startingNumber = 1;
-      for (let i = 0; i < index; i++) startingNumber += instrumenData[i].soal.length;
+      for (let i = 0; i < index; i++) startingNumber += activeBabList[i].soal.length;
 
       let formHTML = `
         <div class="fade-in">
-          <h2 class="text-2xl font-bold text-white mb-6 leading-tight border-b border-slate-700 pb-4">${babData.bab}</h2>
+          <div class="border-b border-slate-700 pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <h2 class="text-xl sm:text-2xl font-bold text-white leading-tight">${babData.bab}</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 shrink-0">Bagian ${index + 1} dari ${activeBabList.length}</span>
+          </div>
           
-          <div class="mb-10 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
-            <div class="bg-slate-800 px-5 py-3 border-b border-slate-700 flex items-center gap-2">
-              <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <h3 class="font-bold text-slate-200 text-sm tracking-wide">PANDUAN PENILAIAN INSTRUMEN</h3>
+          <!-- Panduan Rubrik -->
+          <div class="mb-8 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
+            <div class="bg-slate-800 px-5 py-2.5 border-b border-slate-700 flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <h3 class="font-bold text-slate-200 text-xs tracking-wide uppercase">Panduan Penilaian Rubrik</h3>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700">
-              <div class="p-5 relative">
+            <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700 text-xs">
+              <div class="p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-rose-500/80"></div>
-                <h4 class="font-bold text-rose-400 mb-2">KURANG (K)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.K}</p>
+                <h4 class="font-bold text-rose-400 mb-1">KURANG (K)</h4>
+                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.K}</p>
               </div>
-              <div class="p-5 relative">
+              <div class="p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-amber-500/80"></div>
-                <h4 class="font-bold text-amber-400 mb-2">CUKUP BAIK (CB)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.CB}</p>
+                <h4 class="font-bold text-amber-400 mb-1">CUKUP BAIK (CB)</h4>
+                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.CB}</p>
               </div>
-              <div class="p-5 relative">
+              <div class="p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-blue-500/80"></div>
-                <h4 class="font-bold text-blue-400 mb-2">BAIK (B)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.B}</p>
+                <h4 class="font-bold text-blue-400 mb-1">BAIK (B)</h4>
+                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.B}</p>
               </div>
-              <div class="p-5 relative">
+              <div class="p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500/80"></div>
-                <h4 class="font-bold text-emerald-400 mb-2">SANGAT BAIK (SB)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">${babData.rubrik.SB}</p>
+                <h4 class="font-bold text-emerald-400 mb-1">SANGAT BAIK (SB)</h4>
+                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.SB}</p>
               </div>
             </div>
           </div>
 
-          <div class="space-y-6">`;
+          <!-- Daftar Soal -->
+          <div class="space-y-4">`;
 
       babData.soal.forEach((soal, i) => {
         let qNum = startingNumber + i;
         let draftVal = currentDraft[`q${qNum}`] || '';
         
         formHTML += `
-          <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-slate-600 transition">
-            <label class="block mb-5 font-medium text-slate-200 leading-relaxed"><span class="text-amber-400 font-bold mr-2">${qNum}.</span> ${soal}</label>
+          <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700/60 hover:border-slate-600 transition">
+            <label class="block mb-4 font-medium text-slate-200 text-sm leading-relaxed">
+              <span class="text-amber-400 font-bold mr-1.5">${qNum}.</span> ${soal}
+            </label>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
               ${['K', 'CB', 'B', 'SB'].map(opt => `
                 <label class="relative cursor-pointer">
-                  <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${draftVal === opt ? 'checked' : ''} class="peer sr-only">
-                  <div class="px-3 py-3 text-center rounded-lg border border-slate-700 bg-slate-800/80 text-slate-400 text-sm font-bold transition peer-checked:bg-blue-600/20 peer-checked:border-blue-500 peer-checked:text-blue-400 hover:bg-slate-700">
+                  <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${draftVal === opt ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
+                  <div class="px-3 py-2.5 text-center rounded-lg border border-slate-700 bg-slate-800/80 text-slate-400 text-xs font-bold transition peer-checked:bg-blue-600/20 peer-checked:border-blue-500 peer-checked:text-blue-400 hover:bg-slate-700">
                     ${opt}
                   </div>
                 </label>
@@ -429,15 +667,19 @@
       formHTML += `</div><div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-800">`;
       
       if (index > 0) {
-        formHTML += `<button onclick="switchBab(${index - 1})" class="px-6 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition font-medium">← Bab Sebelumnya</button>`;
+        formHTML += `<button onclick="switchBab(${index - 1})" class="px-5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition text-xs font-semibold">← Bab Sebelumnya</button>`;
       } else {
         formHTML += `<div></div>`;
       }
 
-      if (index < instrumenData.length - 1) {
-        formHTML += `<button onclick="switchBab(${index + 1})" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-bold transition">Selanjutnya →</button>`;
+      if (index < activeBabList.length - 1) {
+        formHTML += `<button onclick="switchBab(${index + 1})" class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition">Selanjutnya →</button>`;
       } else {
-        formHTML += `<button onclick="generatePDF()" class="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-lg font-bold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-1">Finalisasi & Kirim</button>`;
+        if (!isReadOnlyMode) {
+          formHTML += `<button onclick="generatePDF()" class="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-extrabold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5">Finalisasi & Kirim Berkas</button>`;
+        } else {
+          formHTML += `<div class="text-xs text-slate-500 italic">Status: Dokumen sudah difinalisasi</div>`;
+        }
       }
 
       formHTML += `</div></div>`;
@@ -447,12 +689,30 @@
       document.querySelector('section').scrollTo({top: 0, behavior: 'smooth'});
     }
 
+    // --- AUTOSAVE DRAFT ---
     async function autoSave(questionId, value) {
+      if (isReadOnlyMode) return;
       currentDraft[questionId] = value;
-      reqGAS({ action: 'saveDraft', npsn: sessionData.npsn, draftJson: JSON.stringify(currentDraft) });
+      const statusIndicator = document.getElementById('autosaveStatusIndicator');
+      statusIndicator.innerText = 'Menyimpan...';
+
+      const rData = sessionData.roles[currentRole];
+      reqGAS({ 
+        action: 'saveDraftResponden', 
+        npsn: sessionData.npsn, 
+        role: currentRole, 
+        nama: rData.nama, 
+        nip: rData.nip, 
+        draftJson: JSON.stringify(currentDraft) 
+      }).then(() => {
+        statusIndicator.innerText = '✓ Tersimpan';
+        if (sessionData.roles[currentRole].status === 'Belum') {
+          sessionData.roles[currentRole].status = 'Draf';
+        }
+      });
     }
 
-    // FUNGSI HELPER UNTUK MENGUBAH BASE64 KE ARRAYBUFFER
+    // --- HELPER PDF ---
     function base64ToArrayBuffer(base64) {
       const binary_string = window.atob(base64);
       const len = binary_string.length;
@@ -491,32 +751,30 @@
     }
 
     function drawCornerOrnaments(page, W, H, rgb) {
-      // Ornamen Lengkungan Sudut Kanan Atas
       page.drawEllipse({ x: W + 35, y: H + 35, xScale: 154, yScale: 154, color: rgb(0.75, 0.84, 0.93) });
       page.drawEllipse({ x: W + 35, y: H + 35, xScale: 149, yScale: 149, color: rgb(1, 1, 1) });
       page.drawEllipse({ x: W + 35, y: H + 35, xScale: 144, yScale: 144, color: rgb(0.02, 0.16, 0.31) });
 
-      // Ornamen Lengkungan Sudut Kiri Bawah
       page.drawEllipse({ x: -35, y: -35, xScale: 134, yScale: 134, color: rgb(0.75, 0.84, 0.93) });
       page.drawEllipse({ x: -35, y: -35, xScale: 129, yScale: 129, color: rgb(1, 1, 1) });
       page.drawEllipse({ x: -35, y: -35, xScale: 124, yScale: 124, color: rgb(0.02, 0.16, 0.31) });
     }
 
-    function renderIndicatorToPdf(mergedPdf, babData, babIdx, startingQNum, fonts, rgb) {
+    // --- RENDER HALAMAN INDIKATOR KE PDF ---
+    function renderIndicatorToPdf(mergedPdf, babData, babIdx, isLastIndicator, startingQNum, fonts, rgb) {
       const W = 595.28;
       const H = 841.89;
       const { fontRegular, fontBold, fontTitle, checkFont } = fonts;
 
-      const colorHeaderBg = rgb(0.992, 0.902, 0.769); // #FDE6C4
-      const colorRowBg = rgb(1, 0.994, 0.984);        // #FFFEFA
-      const colorBorder = rgb(0.957, 0.796, 0.655);   // #F4CBA7
+      const colorHeaderBg = rgb(0.992, 0.902, 0.769);
+      const colorRowBg = rgb(1, 0.994, 0.984);
+      const colorBorder = rgb(0.957, 0.796, 0.655);
       const colorText = rgb(0.06, 0.06, 0.06);
       const colorCheck = rgb(0.08, 0.20, 0.42);
 
       let page = mergedPdf.addPage([W, H]);
       drawCornerOrnaments(page, W, H, rgb);
 
-      // Judul Utama pada Halaman Indikator Pertama
       let cursorY = 768;
       if (babIdx === 0) {
         const mainTitle = 'INSTRUMEN MONEV';
@@ -532,7 +790,7 @@
       }
 
       // Judul Indikator
-      const babLabel = sanitizePdfText(babData.bab).replace(/^indikator\s*(\d+)\s*:/i, 'INDIKATOR $1:');
+      const babLabel = sanitizePdfText(babData.bab);
       page.drawText(babLabel, {
         x: 36,
         y: cursorY,
@@ -541,13 +799,11 @@
         color: colorText
       });
 
-      // Konfigurasi Tabel Pernyataan
       const tableX = 14;
-      const colWidths = [37, 370, 40, 40, 40, 40]; // Total = 567
+      const colWidths = [37, 370, 40, 40, 40, 40];
       const colX = [14, 51, 421, 461, 501, 541];
       const headers = ['NO', 'PERNYATAAN', 'K', 'CB', 'B', 'SB'];
 
-      // Ukuran dinamis menyesuaikan jumlah soal dalam indikator
       const soalCount = babData.soal.length;
       const qFontSize = soalCount > 5 ? 9.0 : (soalCount > 4 ? 9.4 : 10);
       const qLineHeight = qFontSize * 1.35;
@@ -584,7 +840,6 @@
       let curY = tableTopY - headerH;
       const optIndexMap = { K: 2, CB: 3, B: 4, SB: 5 };
 
-      // Gambar Baris Soal (dengan dukungan pindah halaman otomatis bila soal sangat banyak)
       babData.soal.forEach((soalText, idx) => {
         const qNum = startingQNum + idx;
         const wrappedLines = wrapPdfText(soalText, fontRegular, qFontSize, colWidths[1] - 20);
@@ -610,7 +865,6 @@
           });
         }
 
-        // Nomor Soal
         const numStr = String(qNum);
         const numW = fontRegular.widthOfTextAtSize(numStr, qFontSize);
         page.drawText(numStr, {
@@ -621,7 +875,6 @@
           color: colorText
         });
 
-        // Teks Pernyataan
         let lineY = curY - (rowH - textBlockH) / 2 - qFontSize + 1.5;
         wrappedLines.forEach(line => {
           page.drawText(line, {
@@ -634,7 +887,6 @@
           lineY -= qLineHeight;
         });
 
-        // Injeksi Tanda Centang (✔) Sesuai Jawaban
         const jwb = currentDraft[`q${qNum}`];
         const targetCol = optIndexMap[jwb];
         if (targetCol !== undefined) {
@@ -652,8 +904,8 @@
         curY -= rowH;
       });
 
-      // --- TABEL 2: RUBRIK PENILAIAN ---
-      const shortBabName = sanitizePdfText(babData.bab).replace(/^Indikator\s*\d+\s*:\s*/i, '');
+      // --- TABEL RUBRIK PENILAIAN ---
+      const shortBabName = sanitizePdfText(babData.bab).replace(/^Indikator\s*(Peran\s*)?/i, '');
       const rubricTitle = `Tabel 1: Identifikasi unsur pembeda rubrik indikator ${shortBabName}`;
       const rTitleSize = 10;
       const rTitleW = fontBold.widthOfTextAtSize(rubricTitle, rTitleSize);
@@ -668,9 +920,9 @@
         wrapPdfText((babData.rubrik && babData.rubrik[k]) || '-', fontRegular, rFontSize, rColW - 18)
       );
       const maxRubrikLines = Math.max(...wrappedRubriks.map(lines => lines.length), 1);
-      const neededRubrikH = Math.max(145, maxRubrikLines * rLineH + 26);
+      const neededRubrikH = Math.max(140, maxRubrikLines * rLineH + 26);
 
-      // Jika sisa ruang di bawah tidak cukup untuk tabel rubrik, buat halaman lanjutan
+      // Cek apakah muat di halaman ini
       if (curY - 40 - rHeaderH - neededRubrikH < 40) {
         page = mergedPdf.addPage([W, H]);
         drawCornerOrnaments(page, W, H, rgb);
@@ -742,10 +994,49 @@
           ry -= rLineH;
         });
       }
+
+      curY = rBodyTopY - rBodyH;
+
+      // --- BLOK TANDA TANGAN (HANYA DI INDIKATOR TERAKHIR) ---
+      if (isLastIndicator) {
+        const rData = sessionData.roles[currentRole];
+        const sigH = 130;
+        
+        // Jika sisa ruang di bawah kurang dari 140pt, buat halaman baru untuk tanda tangan
+        if (curY < sigH + 50) {
+          page = mergedPdf.addPage([W, H]);
+          drawCornerOrnaments(page, W, H, rgb);
+          curY = 750;
+        }
+
+        const roleLabel = ROLE_METADATA[currentRole].label;
+        const namaSekolah = sanitizePdfText(sessionData.nama_sekolah);
+        const namaResponden = sanitizePdfText(rData.nama);
+        const nipResponden = (currentRole !== 'P2SP' && rData.nip) ? `NIP. ${sanitizePdfText(rData.nip)}` : '';
+
+        const sigBoxX = 360;
+        let sigY = curY - 35;
+
+        page.drawText(roleLabel, { x: sigBoxX, y: sigY, size: 10, font: fontBold, color: colorText });
+        sigY -= 14;
+        page.drawText(namaSekolah, { x: sigBoxX, y: sigY, size: 10, font: fontBold, color: colorText });
+        
+        sigY -= 55; // Ruang Tanda Tangan & Stempel
+        
+        page.drawText(namaResponden, { x: sigBoxX, y: sigY, size: 10, font: fontBold, color: colorText });
+        if (nipResponden) {
+          sigY -= 13;
+          page.drawText(nipResponden, { x: sigBoxX, y: sigY, size: 9.5, font: fontRegular, color: colorText });
+        }
+      }
     }
 
+    // --- FINALISASI & MERAKIT PDF ---
     async function generatePDF() {
-      const totalSoal = getTotalQuestions();
+      const activeBabList = getActiveIndicatorsForCurrentRole();
+      let totalSoal = 0;
+      activeBabList.forEach(b => totalSoal += b.soal.length);
+
       const missingNums = [];
       for (let i = 1; i <= totalSoal; i++) {
         if (!currentDraft[`q${i}`]) missingNums.push(i);
@@ -754,23 +1045,38 @@
       if (missingNums.length > 0) {
         return Swal.fire(
           'Belum Lengkap',
-          `Harap jawab seluruh ${totalSoal} pertanyaan sebelum melakukan finalisasi. (Nomor belum dijawab: ${missingNums.join(', ')})`,
+          `Harap jawab seluruh ${totalSoal} pertanyaan sebelum finalisasi. (Nomor belum terjawab: ${missingNums.join(', ')})`,
           'warning'
         );
       }
 
-      Swal.fire({ title: 'Merakit Dokumen...', html: '<b>Langkah 1/2:</b> Mengambil Cover Slide...<br><span class="text-xs text-slate-500">(Proses ini butuh waktu beberapa detik)</span>', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+      const confirm = await Swal.fire({
+        title: 'Konfirmasi Finalisasi',
+        html: `Apakah Anda yakin ingin memfinalisasi berkas untuk <b>${ROLE_METADATA[currentRole].label}</b>?<br><span class="text-xs text-slate-400">Setelah dikirim, data akan dikunci dan hanya dapat dibuka kembali oleh Admin Dinas.</span>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Finalisasi & Kirim',
+        cancelButtonText: 'Periksa Kembali',
+        confirmButtonColor: '#f59e0b'
+      });
+      if (!confirm.isConfirmed) return;
+
+      Swal.fire({ 
+        title: 'Merakit Dokumen PDF...', 
+        html: '<b>Langkah 1/2:</b> Mengambil Cover Slide...<br><span class="text-xs text-slate-500">(Proses ini butuh waktu beberapa detik)</span>', 
+        allowOutsideClick: false, 
+        didOpen: () => Swal.showLoading() 
+      });
       
       try {
         const { PDFDocument, rgb, StandardFonts } = PDFLib;
         
-        // LANGKAH 1: Minta GAS memproses Template Slide jadi PDF (Base64)
+        // 1. Generate Cover dari Google Slides
         const coverRes = await reqGAS({ action: 'generateCover', namaSekolah: sessionData.nama_sekolah });
-        if(coverRes.status !== 'success') throw new Error(coverRes.message);
+        if (coverRes.status !== 'success') throw new Error(coverRes.message);
         
-        Swal.update({ html: '<b>Langkah 2/2:</b> Menyusun Tabel Instrumen & Jawaban Otomatis...' });
+        Swal.update({ html: '<b>Langkah 2/2:</b> Menyusun Tabel Instrumen & Tanda Tangan...' });
         
-        // LANGKAH 2: Buat Dokumen PDF & Salin Halaman 1 (Cover)
         const coverPdfBytes = base64ToArrayBuffer(coverRes.coverBase64);
         const coverDoc = await PDFDocument.load(coverPdfBytes);
         const mergedPdf = await PDFDocument.create();
@@ -778,7 +1084,6 @@
         const copiedCoverPages = await mergedPdf.copyPages(coverDoc, [0]);
         mergedPdf.addPage(copiedCoverPages[0]);
         
-        // LANGKAH 3: Render Seluruh Halaman Indikator Secara Dinamis dari instrumenData
         const fonts = {
           fontRegular: await mergedPdf.embedFont(StandardFonts.Helvetica),
           fontBold: await mergedPdf.embedFont(StandardFonts.HelveticaBold),
@@ -787,29 +1092,47 @@
         };
 
         let runningQNum = 1;
-        instrumenData.forEach((babData, babIdx) => {
-          renderIndicatorToPdf(mergedPdf, babData, babIdx, runningQNum, fonts, rgb);
+        activeBabList.forEach((babData, babIdx) => {
+          const isLast = (babIdx === activeBabList.length - 1);
+          renderIndicatorToPdf(mergedPdf, babData, babIdx, isLast, runningQNum, fonts, rgb);
           runningQNum += babData.soal.length;
         });
         
-        // LANGKAH 4: Simpan dan Kirim ke Drive (via GAS)
-        Swal.update({ html: 'Menyimpan final dokumen ke server...' });
+        // Simpan Base64 & Kirim ke GAS
+        Swal.update({ html: 'Mengunggah dokumen final ke Google Drive...' });
         const pdfBase64DataUri = await mergedPdf.saveAsBase64({ dataUri: true });
-        const cleanBase64 = pdfBase64DataUri.split(',')[1]; 
+        const cleanBase64 = pdfBase64DataUri.split(',')[1];
         
-        const res = await reqGAS({ action: 'finalize', npsn: sessionData.npsn, pdfBase64: cleanBase64, namaSekolah: sessionData.nama_sekolah });
+        const rData = sessionData.roles[currentRole];
+        const res = await reqGAS({ 
+          action: 'finalizeResponden', 
+          npsn: sessionData.npsn, 
+          role: currentRole, 
+          nama: rData.nama, 
+          nip: rData.nip, 
+          pdfBase64: cleanBase64, 
+          namaSekolah: sessionData.nama_sekolah 
+        });
         
         if (res.status === 'success') {
-          Swal.close();
-          document.getElementById('formArea').classList.add('hidden'); 
-          document.getElementById('lockedOverlay').classList.remove('hidden');
-          document.getElementById('btnDownloadPDF').href = res.pdf_link;
+          sessionData.roles[currentRole].status = 'Selesai';
+          sessionData.roles[currentRole].pdf_link = res.pdf_link;
+
+          await Swal.fire({
+            title: 'Berhasil Difinalisasi!',
+            html: `Dokumen instrumen untuk <b>${ROLE_METADATA[currentRole].label}</b> telah berhasil dikirim dan tersimpan.`,
+            icon: 'success',
+            confirmButtonText: 'Lihat Dokumen PDF'
+          });
+
+          window.open(res.pdf_link, '_blank');
+          backToRoleSelect();
         } else {
           Swal.fire('Error Penyimpanan', res.message, 'error');
         }
       } catch (err) {
         console.error(err);
-        Swal.fire('Error PDF', err.message || 'Gagal memproses penggabungan dokumen.', 'error');
+        Swal.fire('Error PDF', err.message || 'Gagal memproses perakitan dokumen.', 'error');
       }
     }
   </script>
