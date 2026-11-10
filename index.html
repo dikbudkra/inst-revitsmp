@@ -109,48 +109,60 @@
       </div>
     </div>
 
-    <!-- 5. Dashboard Pengisian Instrumen -->
-    <div id="dashboardSection" class="w-full h-full flex flex-col sm:flex-row hidden">
+    <!-- 5. Dashboard Pengisian Instrumen (100% Full Width, Navigasi Atas) -->
+    <div id="dashboardSection" class="w-full h-full flex flex-col hidden overflow-hidden">
       
-      <!-- Aside: Sidebar Desktop & Topbar Mobile -->
-      <aside class="w-full sm:w-1/4 bg-slate-800 sm:border-r border-slate-700 flex flex-col shrink-0 sm:h-full shadow-xl z-10">
+      <!-- Sub-Header Navigasi Atas -->
+      <header class="bg-slate-800 border-b border-slate-700 px-4 sm:px-8 py-3 shrink-0 flex flex-col gap-2.5 shadow-lg z-20">
         
-        <!-- Baris Kontrol Atas -->
-        <div class="p-3 sm:p-4 border-b border-slate-700 bg-slate-800 flex justify-between items-center">
-          <button onclick="backToRoleSelect()" class="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold transition">
-            <span>←</span> <span class="hidden sm:inline">Pilih Peran Lain</span><span class="inline sm:hidden">Ganti Peran</span>
-          </button>
-          <div class="flex items-center gap-2">
-            <span id="activeRoleBadge" class="text-[10px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40">KS</span>
-            <span class="sm:hidden text-[10px] text-slate-400 font-medium" id="autosaveStatusIndicatorMobile">✓ Tersimpan</span>
+        <!-- Baris 1: Kontrol Peran, Identitas Responden & Autosave -->
+        <div class="flex items-center justify-between gap-3">
+          <!-- Kiri: Tombol Kembali & Info Responden -->
+          <div class="flex items-center gap-3 min-w-0">
+            <button onclick="backToRoleSelect()" class="px-3 py-1.5 rounded-lg bg-slate-700/80 hover:bg-slate-700 text-xs text-amber-400 hover:text-amber-300 font-semibold transition shrink-0 flex items-center gap-1.5 shadow-sm">
+              <span>←</span>
+              <span class="hidden sm:inline">Pilih Peran Lain</span><span class="inline sm:hidden">Ganti Peran</span>
+            </button>
+            <div class="h-4 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="min-w-0 flex items-center gap-2">
+              <span id="activeRoleBadge" class="text-[10px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40 shrink-0">KS</span>
+              <div class="truncate">
+                <span id="sidebarRespondenNama" class="font-bold text-xs sm:text-sm text-slate-100 truncate">Nama</span>
+                <span id="sidebarRespondenNip" class="text-[11px] text-slate-400 font-mono ml-1.5 hidden sm:inline"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanan: Status Autosave -->
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-[11px] text-slate-400 font-medium" id="autosaveStatusIndicator">Otomatis tersimpan</span>
           </div>
         </div>
 
-        <!-- Info Responden Aktif -->
-        <div class="p-3 sm:p-4 border-b border-slate-700/80 bg-slate-800/50 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start text-xs gap-1">
-          <div class="min-w-0 flex-1">
-            <p class="hidden sm:block text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-0.5">Responden Aktif</p>
-            <h3 id="sidebarRespondenNama" class="font-bold text-xs sm:text-sm text-slate-200 truncate">-</h3>
-            <p id="sidebarRespondenNip" class="text-[11px] text-slate-400 font-mono truncate"></p>
+        <!-- Baris 2: Pemilihan Indikator (Dropdown & Quick Pills) -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 pt-2 border-t border-slate-700/60">
+          
+          <!-- Dropdown Selector Indikator -->
+          <div class="flex items-center gap-2 shrink-0">
+            <label for="indicatorSelectDropdown" class="text-xs text-slate-400 font-semibold whitespace-nowrap hidden sm:inline">Pilih Indikator:</label>
+            <div class="relative w-full sm:w-80">
+              <select id="indicatorSelectDropdown" onchange="switchBab(parseInt(this.value))" class="w-full bg-slate-900 border border-slate-600 hover:border-amber-400/80 focus:border-amber-400 text-amber-400 font-bold rounded-lg px-3 py-1.5 text-xs focus:outline-none transition cursor-pointer appearance-none pr-8 shadow-inner">
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
           </div>
+
+          <!-- Quick Navigation Pills (Horizontal Stepper) -->
+          <div class="overflow-x-auto flex items-center gap-1.5 py-0.5 no-scrollbar" id="navIndicatorPills"></div>
         </div>
+      </header>
 
-        <!-- Navigasi Desktop: List Vertikal -->
-        <nav class="hidden sm:flex flex-1 overflow-y-auto p-3 space-y-1" id="sidebarNav"></nav>
-
-        <!-- Navigasi Mobile: Horizontal Scrollable Pills -->
-        <div class="sm:hidden overflow-x-auto p-2 flex gap-1.5 shrink-0 bg-slate-900/95 border-b border-slate-700 no-scrollbar" id="mobileNav"></div>
-
-        <!-- Footer Desktop: Status Autosave -->
-        <div class="hidden sm:block p-3 border-t border-slate-700 text-center">
-          <span class="text-[11px] text-slate-400" id="autosaveStatusIndicator">Otomatis tersimpan</span>
-        </div>
-      </aside>
-
-      <!-- Main Form Area -->
-      <section class="w-full sm:w-3/4 bg-slate-900 overflow-y-auto relative h-full flex flex-col flex-1">
+      <!-- Main Form Area (100% Full Width) -->
+      <section class="flex-1 bg-slate-900 overflow-y-auto relative h-full flex flex-col">
         <!-- Banner Mode Baca (Jika Sudah Selesai) -->
-        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-4 sm:px-6 py-2.5 sm:py-3 flex flex-col sm:flex-row justify-between items-center gap-2.5 hidden shrink-0">
+        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-4 sm:px-8 py-2.5 sm:py-3 flex flex-col sm:flex-row justify-between items-center gap-2.5 hidden shrink-0">
           <div class="flex items-center gap-2 text-emerald-300 text-xs sm:text-sm font-semibold">
             <span>✅</span> Dokumen sudah difinalisasi (Mode Baca).
           </div>
@@ -159,7 +171,8 @@
           </button>
         </div>
 
-        <div class="max-w-5xl mx-auto p-4 sm:p-8 lg:p-12 flex-1 w-full" id="formArea"></div>
+        <!-- Form Area Maksimal & Lapang -->
+        <div class="max-w-6xl mx-auto p-4 sm:p-8 lg:p-10 flex-1 w-full" id="formArea"></div>
       </section>
     </div>
 
@@ -619,49 +632,53 @@
         return;
       }
 
-      let desktopNavHTML = '';
-      let mobileNavHTML = '';
+      let dropdownHTML = '';
+      let pillsHTML = '';
 
       activeBabList.forEach((bab, i) => {
         const shortName = bab.bab.replace(/^Indikator\s*(Peran\s*)?/i, '');
         const isFirst = (i === 0);
 
-        desktopNavHTML += `
-          <div id="navBab-${i}" onclick="switchBab(${i})" class="p-3 rounded-lg cursor-pointer text-xs font-semibold transition ${isFirst ? 'bg-amber-500/20 text-amber-400 border-l-4 border-amber-500' : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-300'}">
-            ${bab.bab}
-          </div>
+        dropdownHTML += `
+          <option value="${i}" ${isFirst ? 'selected' : ''}>
+            ${i + 1}. ${bab.bab}
+          </option>
         `;
 
-        mobileNavHTML += `
-          <button type="button" id="mobileNavBab-${i}" onclick="switchBab(${i})" class="px-3 py-1.5 rounded-full text-[11px] font-semibold shrink-0 transition ${isFirst ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'}">
-            ${shortName}
+        pillsHTML += `
+          <button type="button" id="navPillBab-${i}" onclick="switchBab(${i})" class="px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition ${isFirst ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-600/50'}">
+            <span class="opacity-75">${i + 1}.</span> ${shortName}
           </button>
         `;
       });
 
-      document.getElementById('sidebarNav').innerHTML = desktopNavHTML;
-      document.getElementById('mobileNav').innerHTML = mobileNavHTML;
+      const dropdownEl = document.getElementById('indicatorSelectDropdown');
+      const pillsEl = document.getElementById('navIndicatorPills');
+      if (dropdownEl) dropdownEl.innerHTML = dropdownHTML;
+      if (pillsEl) pillsEl.innerHTML = pillsHTML;
+
       activeBabIndex = 0;
       renderBab(0);
     }
 
     function switchBab(index) {
-      // Desktop Nav
-      if (document.getElementById(`navBab-${activeBabIndex}`)) {
-        document.getElementById(`navBab-${activeBabIndex}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition text-slate-400 hover:bg-slate-700/50 hover:text-slate-300";
-      }
-      if (document.getElementById(`navBab-${index}`)) {
-        document.getElementById(`navBab-${index}`).className = "p-3 rounded-lg cursor-pointer text-xs font-semibold transition bg-amber-500/20 text-amber-400 border-l-4 border-amber-500";
+      const activeBabList = getActiveIndicatorsForCurrentRole();
+      if (index < 0 || index >= activeBabList.length) return;
+
+      // Update dropdown selection
+      const dropdownEl = document.getElementById('indicatorSelectDropdown');
+      if (dropdownEl) dropdownEl.value = index;
+
+      // Update pill styling
+      const prevPill = document.getElementById(`navPillBab-${activeBabIndex}`);
+      if (prevPill) {
+        prevPill.className = "px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition bg-slate-700/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-600/50";
       }
 
-      // Mobile Nav
-      if (document.getElementById(`mobileNavBab-${activeBabIndex}`)) {
-        document.getElementById(`mobileNavBab-${activeBabIndex}`).className = "px-3 py-1.5 rounded-full text-[11px] font-semibold shrink-0 transition bg-slate-800 text-slate-400 hover:text-white border border-slate-700";
-      }
-      if (document.getElementById(`mobileNavBab-${index}`)) {
-        const activeBtn = document.getElementById(`mobileNavBab-${index}`);
-        activeBtn.className = "px-3 py-1.5 rounded-full text-[11px] font-bold shrink-0 transition bg-amber-500 text-slate-950 shadow";
-        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      const nextPill = document.getElementById(`navPillBab-${index}`);
+      if (nextPill) {
+        nextPill.className = "px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition bg-amber-500 text-slate-950 shadow";
+        nextPill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
 
       activeBabIndex = index;
