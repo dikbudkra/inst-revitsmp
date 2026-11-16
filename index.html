@@ -708,17 +708,17 @@
             <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700 text-xs">
               <div class="p-3.5 sm:p-4 relative">
                 <div class="absolute top-0 left-0 w-full h-1 bg-rose-500/80"></div>
-                <h4 class="font-bold text-rose-400 mb-1">KURANG (K)</h4>
+                <h4 class="font-bold text-rose-400 mb-1">KURANG BAIK (KB)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.K}</p>
               </div>
               <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-amber-500/80"></div>
-                <h4 class="font-bold text-amber-400 mb-1">CUKUP BAIK (CB)</h4>
+                <div class="absolute top-0 left-0 w-full h-1 bg-orange-500/80"></div>
+                <h4 class="font-bold text-orange-400 mb-1">CUKUP BAIK (CB)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.CB}</p>
               </div>
               <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-blue-500/80"></div>
-                <h4 class="font-bold text-blue-400 mb-1">BAIK (B)</h4>
+                <div class="absolute top-0 left-0 w-full h-1 bg-yellow-500/80"></div>
+                <h4 class="font-bold text-yellow-400 mb-1">BAIK (B)</h4>
                 <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.B}</p>
               </div>
               <div class="p-3.5 sm:p-4 relative">
@@ -732,9 +732,40 @@
           <!-- Daftar Soal -->
           <div class="space-y-3.5 sm:space-y-4">`;
 
+      const answerOptions = [
+        {
+          code: 'KB',
+          label: 'Kurang Baik',
+          hoverClass: 'hover:bg-rose-500/15 hover:border-rose-400/70 hover:text-rose-200',
+          checkedClass: 'peer-checked:border-rose-500 peer-checked:bg-rose-600/25 peer-checked:text-rose-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-rose-500/60',
+          readOnlyCheckedClass: 'border-2 border-rose-400 bg-rose-500/25 text-rose-300 font-extrabold shadow-[0_0_10px_rgba(244,63,94,0.3)] ring-1 ring-rose-400'
+        },
+        {
+          code: 'CB',
+          label: 'Cukup Baik',
+          hoverClass: 'hover:bg-orange-500/15 hover:border-orange-400/70 hover:text-orange-200',
+          checkedClass: 'peer-checked:border-orange-500 peer-checked:bg-orange-600/25 peer-checked:text-orange-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-orange-500/60',
+          readOnlyCheckedClass: 'border-2 border-orange-400 bg-orange-500/25 text-orange-300 font-extrabold shadow-[0_0_10px_rgba(249,115,22,0.3)] ring-1 ring-orange-400'
+        },
+        {
+          code: 'B',
+          label: 'Baik',
+          hoverClass: 'hover:bg-yellow-500/15 hover:border-yellow-400/70 hover:text-yellow-200',
+          checkedClass: 'peer-checked:border-yellow-400 peer-checked:bg-yellow-500/25 peer-checked:text-yellow-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-yellow-400/60',
+          readOnlyCheckedClass: 'border-2 border-yellow-400 bg-yellow-500/25 text-yellow-300 font-extrabold shadow-[0_0_10px_rgba(234,179,8,0.3)] ring-1 ring-yellow-400'
+        },
+        {
+          code: 'SB',
+          label: 'Sangat Baik',
+          hoverClass: 'hover:bg-emerald-500/15 hover:border-emerald-400/70 hover:text-emerald-200',
+          checkedClass: 'peer-checked:border-emerald-500 peer-checked:bg-emerald-600/25 peer-checked:text-emerald-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-emerald-500/60',
+          readOnlyCheckedClass: 'border-2 border-emerald-400 bg-emerald-500/25 text-emerald-300 font-extrabold shadow-[0_0_10px_rgba(16,185,129,0.3)] ring-1 ring-emerald-400'
+        }
+      ];
+
       babData.soal.forEach((soal, i) => {
         let qNum = startingNumber + i;
-        let draftVal = currentDraft[`q${qNum}`] || '';
+        let draftVal = normalizeAnswerCode(currentDraft[`q${qNum}`]);
         
         formHTML += `
           <div class="bg-slate-800/50 p-4 sm:p-5 rounded-xl border border-slate-700/60 hover:border-slate-600 transition">
@@ -742,23 +773,23 @@
               <span class="text-amber-400 font-bold mr-1">${qNum}.</span> ${soal}
             </label>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-              ${['K', 'CB', 'B', 'SB'].map(opt => {
-                const isChecked = (String(draftVal).trim() === opt);
+              ${answerOptions.map(opt => {
+                const isChecked = (draftVal === opt.code);
                 let optClass = '';
                 if (isReadOnlyMode) {
                   if (isChecked) {
-                    optClass = 'border-2 border-amber-400 bg-amber-500/25 text-amber-300 font-extrabold shadow-[0_0_10px_rgba(245,158,11,0.3)] ring-1 ring-amber-400';
+                    optClass = opt.readOnlyCheckedClass;
                   } else {
                     optClass = 'border border-slate-800 bg-slate-900/40 text-slate-600 opacity-40 cursor-not-allowed';
                   }
                 } else {
-                  optClass = 'border border-slate-700 bg-slate-800/80 text-slate-400 hover:bg-slate-700 peer-checked:border-blue-500 peer-checked:bg-blue-600/25 peer-checked:text-blue-400 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-blue-500/50';
+                  optClass = `border border-slate-700 bg-slate-800/80 text-slate-300 ${opt.hoverClass} ${opt.checkedClass}`;
                 }
                 return `
                   <label class="relative ${isReadOnlyMode ? 'cursor-not-allowed' : 'cursor-pointer'}">
-                    <input type="radio" name="q${qNum}" value="${opt}" onchange="autoSave('q${qNum}', '${opt}')" ${isChecked ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
+                    <input type="radio" name="q${qNum}" value="${opt.code}" onchange="autoSave('q${qNum}', '${opt.code}')" ${isChecked ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
                     <div class="px-2.5 sm:px-3 py-2 sm:py-2.5 text-center rounded-lg text-xs transition ${optClass}">
-                      ${opt} ${isReadOnlyMode && isChecked ? '✓' : ''}
+                      ${opt.label} ${isReadOnlyMode && isChecked ? '✓' : ''}
                     </div>
                   </label>
                 `;
@@ -793,6 +824,11 @@
       document.querySelector('section').scrollTo({top: 0, behavior: 'smooth'});
     }
 
+    function normalizeAnswerCode(val) {
+      const trimmed = String(val || '').trim();
+      return trimmed === 'K' ? 'KB' : trimmed;
+    }
+
     // --- AUTOSAVE DRAFT ---
     async function autoSave(questionId, value) {
       if (isReadOnlyMode) return;
@@ -807,9 +843,7 @@
       }
 
       const statusIndicator = document.getElementById('autosaveStatusIndicator');
-      const statusIndicatorMobile = document.getElementById('autosaveStatusIndicatorMobile');
       if (statusIndicator) statusIndicator.innerText = 'Menyimpan...';
-      if (statusIndicatorMobile) statusIndicatorMobile.innerText = 'Menyimpan...';
 
       const rData = sessionData.roles[currentRole];
       reqGAS({ 
@@ -819,9 +853,10 @@
         nama: rData.nama, 
         nip: rData.nip, 
         draftJson: JSON.stringify(currentDraft) 
-      }).then(() => {
-        if (statusIndicator) statusIndicator.innerText = '✓ Tersimpan';
-        if (statusIndicatorMobile) statusIndicatorMobile.innerText = '✓ Tersimpan';
+      }).then((res) => {
+        if (statusIndicator) {
+          statusIndicator.innerText = (res && res.status === 'success') ? '✓ Tersimpan' : '⚠ Gagal menyimpan';
+        }
       });
     }
 
@@ -912,17 +947,104 @@
       });
 
       const tableX = 14;
+      let curY = cursorY;
+
+      // --- 1. TABEL RUBRIK PENILAIAN (DI ATAS) ---
+      const shortBabName = sanitizePdfText(babData.bab).replace(/^Indikator\s*(Peran\s*)?/i, '');
+      const rubricTitle = `Identifikasi unsur pembeda rubrik indikator ${shortBabName}`;
+      const rTitleSize = 10;
+      const rTitleW = fontBold.widthOfTextAtSize(rubricTitle, rTitleSize);
+
+      const rHeaderH = 30;
+      const rColW = 567 / 4;
+      const rHeaders = ['KURANG BAIK', 'CUKUP BAIK', 'BAIK', 'SANGAT BAIK'];
+      const rKeys = ['K', 'CB', 'B', 'SB'];
+      const rFontSize = 9.0;
+      const rLineH = 12.2;
+      const wrappedRubriks = rKeys.map(k =>
+        wrapPdfText((babData.rubrik && babData.rubrik[k]) || '-', fontRegular, rFontSize, rColW - 18)
+      );
+      const maxRubrikLines = Math.max(...wrappedRubriks.map(lines => lines.length), 1);
+      const neededRubrikH = Math.max(120, maxRubrikLines * rLineH + 22);
+
+      let rTitleY = curY - 22;
+      page.drawText(rubricTitle, {
+        x: Math.max(14, (W - rTitleW) / 2),
+        y: rTitleY,
+        size: rTitleSize,
+        font: fontBold,
+        color: colorText
+      });
+
+      const rTableTopY = rTitleY - 10;
+
+      for (let c = 0; c < 4; c++) {
+        const rx = tableX + c * rColW;
+        page.drawRectangle({
+          x: rx,
+          y: rTableTopY - rHeaderH,
+          width: rColW,
+          height: rHeaderH,
+          color: colorHeaderBg,
+          borderColor: colorBorder,
+          borderWidth: 1.1
+        });
+        const rhText = rHeaders[c];
+        const rhW = fontBold.widthOfTextAtSize(rhText, 9.2);
+        page.drawText(rhText, {
+          x: rx + (rColW - rhW) / 2,
+          y: rTableTopY - rHeaderH / 2 - 3.2,
+          size: 9.2,
+          font: fontBold,
+          color: colorText
+        });
+      }
+
+      const rBodyTopY = rTableTopY - rHeaderH;
+      const availableRubrikH = Math.max(100, rBodyTopY - 45);
+      const rBodyH = Math.min(availableRubrikH, neededRubrikH);
+
+      for (let c = 0; c < 4; c++) {
+        const rx = tableX + c * rColW;
+        page.drawRectangle({
+          x: rx,
+          y: rBodyTopY - rBodyH,
+          width: rColW,
+          height: rBodyH,
+          color: colorRowBg,
+          borderColor: colorBorder,
+          borderWidth: 1.1
+        });
+
+        const lines = wrappedRubriks[c];
+        const blockH = lines.length * rLineH;
+        let ry = rBodyTopY - Math.max(12, (rBodyH - blockH) / 2) - rFontSize + 1.5;
+        lines.forEach(line => {
+          if (ry > rBodyTopY - rBodyH + 6) {
+            page.drawText(line, {
+              x: rx + 9,
+              y: ry,
+              size: rFontSize,
+              font: fontRegular,
+              color: colorText
+            });
+          }
+          ry -= rLineH;
+        });
+      }
+
+      curY = rBodyTopY - rBodyH;
+
+      // --- 2. TABEL PERNYATAAN & JAWABAN RESPONDEN (DI BAWAH) ---
       const colWidths = [37, 370, 40, 40, 40, 40];
       const colX = [14, 51, 421, 461, 501, 541];
-      const headers = ['NO', 'PERNYATAAN', 'K', 'CB', 'B', 'SB'];
+      const headers = ['NO', 'PERNYATAAN', 'KB', 'CB', 'B', 'SB'];
 
       const soalCount = babData.soal.length;
       const qFontSize = soalCount > 5 ? 9.0 : (soalCount > 4 ? 9.4 : 10);
       const qLineHeight = qFontSize * 1.35;
       const minRowH = soalCount > 5 ? 40 : (soalCount > 4 ? 48 : 56);
       const rowPadY = soalCount > 5 ? 14 : 18;
-
-      let tableTopY = cursorY - 16;
       const headerH = 34;
 
       function drawStatementHeader(targetPage, topY) {
@@ -948,9 +1070,18 @@
         }
       }
 
+      let tableTopY = curY - 22;
+      const firstWrapped = wrapPdfText(babData.soal[0] || '', fontRegular, qFontSize, colWidths[1] - 20);
+      const firstRowH = Math.max(minRowH, firstWrapped.length * qLineHeight + rowPadY);
+      if (tableTopY - headerH - firstRowH < 65) {
+        page = mergedPdf.addPage([W, H]);
+        drawCornerOrnaments(page, W, H, rgb);
+        tableTopY = 765;
+      }
+
       drawStatementHeader(page, tableTopY);
-      let curY = tableTopY - headerH;
-      const optIndexMap = { K: 2, CB: 3, B: 4, SB: 5 };
+      curY = tableTopY - headerH;
+      const optIndexMap = { K: 2, KB: 2, CB: 3, B: 4, SB: 5 };
 
       babData.soal.forEach((soalText, idx) => {
         const qNum = startingQNum + idx;
@@ -999,7 +1130,7 @@
           lineY -= qLineHeight;
         });
 
-        const jwb = currentDraft[`q${qNum}`];
+        const jwb = normalizeAnswerCode(currentDraft[`q${qNum}`]);
         const targetCol = optIndexMap[jwb];
         if (targetCol !== undefined) {
           const checkSize = 14;
@@ -1015,98 +1146,6 @@
 
         curY -= rowH;
       });
-
-      // --- TABEL RUBRIK PENILAIAN ---
-      const shortBabName = sanitizePdfText(babData.bab).replace(/^Indikator\s*(Peran\s*)?/i, '');
-      const rubricTitle = `Tabel 1: Identifikasi unsur pembeda rubrik indikator ${shortBabName}`;
-      const rTitleSize = 10;
-      const rTitleW = fontBold.widthOfTextAtSize(rubricTitle, rTitleSize);
-
-      const rHeaderH = 32;
-      const rColW = 567 / 4;
-      const rHeaders = ['KURANG', 'CUKUP BAIK', 'BAIK', 'SANGAT BAIK'];
-      const rKeys = ['K', 'CB', 'B', 'SB'];
-      const rFontSize = 9.0;
-      const rLineH = 12.2;
-      const wrappedRubriks = rKeys.map(k =>
-        wrapPdfText((babData.rubrik && babData.rubrik[k]) || '-', fontRegular, rFontSize, rColW - 18)
-      );
-      const maxRubrikLines = Math.max(...wrappedRubriks.map(lines => lines.length), 1);
-      const neededRubrikH = Math.max(140, maxRubrikLines * rLineH + 26);
-
-      if (curY - 40 - rHeaderH - neededRubrikH < 40) {
-        page = mergedPdf.addPage([W, H]);
-        drawCornerOrnaments(page, W, H, rgb);
-        curY = 785;
-      }
-
-      let rTitleY = curY - 26;
-      page.drawText(rubricTitle, {
-        x: Math.max(14, (W - rTitleW) / 2),
-        y: rTitleY,
-        size: rTitleSize,
-        font: fontBold,
-        color: colorText
-      });
-
-      const rTableTopY = rTitleY - 12;
-
-      for (let c = 0; c < 4; c++) {
-        const rx = tableX + c * rColW;
-        page.drawRectangle({
-          x: rx,
-          y: rTableTopY - rHeaderH,
-          width: rColW,
-          height: rHeaderH,
-          color: colorHeaderBg,
-          borderColor: colorBorder,
-          borderWidth: 1.1
-        });
-        const rhText = rHeaders[c];
-        const rhW = fontBold.widthOfTextAtSize(rhText, 9.2);
-        page.drawText(rhText, {
-          x: rx + (rColW - rhW) / 2,
-          y: rTableTopY - rHeaderH / 2 - 3.2,
-          size: 9.2,
-          font: fontBold,
-          color: colorText
-        });
-      }
-
-      const rBodyTopY = rTableTopY - rHeaderH;
-      const availableBottomH = Math.max(100, rBodyTopY - 45);
-      const rBodyH = Math.min(availableBottomH, neededRubrikH);
-
-      for (let c = 0; c < 4; c++) {
-        const rx = tableX + c * rColW;
-        page.drawRectangle({
-          x: rx,
-          y: rBodyTopY - rBodyH,
-          width: rColW,
-          height: rBodyH,
-          color: colorRowBg,
-          borderColor: colorBorder,
-          borderWidth: 1.1
-        });
-
-        const lines = wrappedRubriks[c];
-        const blockH = lines.length * rLineH;
-        let ry = rBodyTopY - Math.max(12, (rBodyH - blockH) / 2) - rFontSize + 1.5;
-        lines.forEach(line => {
-          if (ry > rBodyTopY - rBodyH + 6) {
-            page.drawText(line, {
-              x: rx + 9,
-              y: ry,
-              size: rFontSize,
-              font: fontRegular,
-              color: colorText
-            });
-          }
-          ry -= rLineH;
-        });
-      }
-
-      curY = rBodyTopY - rBodyH;
 
       // --- BLOK TANDA TANGAN (DI INDIKATOR TERAKHIR) ---
       if (isLastIndicator) {
