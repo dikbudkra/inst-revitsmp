@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,103 +8,103 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <style>
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .fade-in { animation: fadeIn 0.25s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-200 h-screen flex flex-col font-sans overflow-hidden">
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col font-sans overflow-hidden">
 
   <!-- Header Institusi -->
-  <header class="bg-slate-800 border-b border-slate-700 py-3 sm:py-4 px-4 sm:px-6 flex flex-col items-center justify-center shadow-lg z-10 shrink-0 gap-1.5 relative overflow-hidden">
-    <div class="absolute top-0 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl"></div>
-    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-10 sm:h-14 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] relative z-10">
-    <h1 class="text-xs sm:text-lg font-extrabold text-slate-100 tracking-wide text-center relative z-10 uppercase">Instrumen Monev Revitalisasi SMP 2026</h1>
+  <header class="bg-white border-b border-slate-200 py-3 sm:py-4 px-4 sm:px-6 flex flex-col items-center justify-center shadow-sm z-10 shrink-0 gap-1.5 relative overflow-hidden">
+    <div class="absolute top-0 w-40 h-40 bg-amber-400/10 rounded-full blur-2xl"></div>
+    <img src="https://lh3.googleusercontent.com/d/1e1LH5ZgYyLjclSNXwMAU5Zy_PKiju5z-" alt="Kabupaten Karanganyar" class="h-10 sm:h-14 object-contain drop-shadow-sm relative z-10">
+    <h1 class="text-xs sm:text-lg font-extrabold text-slate-800 tracking-wide text-center relative z-10 uppercase">Instrumen Monev Revitalisasi SMP 2026</h1>
   </header>
 
   <main class="flex-1 flex overflow-hidden relative">
     
     <!-- 1. Halaman Login -->
-    <div id="loginSection" class="absolute inset-0 z-20 bg-slate-900 flex items-center justify-center p-4">
-      <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative overflow-hidden">
-        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
-        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
+    <div id="loginSection" class="absolute inset-0 z-20 bg-slate-50 flex items-center justify-center p-4">
+      <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200 relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-400/15 rounded-full blur-2xl"></div>
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/15 rounded-full blur-2xl"></div>
         
-        <h2 class="text-xl sm:text-2xl font-bold mb-1 text-center text-amber-400 relative z-10">Login Sekolah</h2>
-        <p class="text-slate-400 text-xs text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
+        <h2 class="text-xl sm:text-2xl font-bold mb-1 text-center text-slate-900 relative z-10">Login Sekolah</h2>
+        <p class="text-slate-500 text-xs text-center mb-6 relative z-10">Masukkan kredensial sekolah Anda</p>
         
         <div class="relative z-10 space-y-4">
-          <input type="text" id="usernameInput" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
-          <input type="password" id="passwordInput" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
-          <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 py-3 rounded-lg font-bold text-sm transition shadow-[0_0_15px_rgba(245,158,11,0.2)]">Masuk ke Instrumen</button>
+          <input type="text" id="usernameInput" placeholder="Username" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:outline-none text-slate-900 text-sm placeholder-slate-400 transition">
+          <input type="password" id="passwordInput" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:outline-none text-slate-900 text-sm placeholder-slate-400 transition">
+          <button onclick="login()" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-lg font-bold text-sm transition shadow-md shadow-amber-500/20">Masuk ke Instrumen</button>
         </div>
       </div>
     </div>
 
     <!-- 2. Skeleton Loader -->
-    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-slate-900 flex flex-col items-center justify-center p-6 gap-4 hidden">
-      <div class="w-10 h-10 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
-      <p class="text-slate-400 text-xs font-medium animate-pulse" id="skeletonText">Menghubungkan ke server...</p>
+    <div id="skeletonLoader" class="absolute inset-0 z-30 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 gap-4 hidden">
+      <div class="w-10 h-10 border-4 border-amber-200 border-t-amber-500 rounded-full animate-spin"></div>
+      <p class="text-slate-600 text-xs font-medium animate-pulse" id="skeletonText">Menghubungkan ke server...</p>
     </div>
 
     <!-- 3. Halaman Pilih Responden (3 Card) -->
-    <div id="roleSelectSection" class="absolute inset-0 z-20 bg-slate-900 overflow-y-auto p-4 sm:p-8 lg:p-10 hidden fade-in">
+    <div id="roleSelectSection" class="absolute inset-0 z-20 bg-slate-50 overflow-y-auto p-4 sm:p-8 lg:p-10 hidden fade-in">
       <div class="max-w-4xl mx-auto flex flex-col min-h-full justify-between">
         <div>
           <!-- Header Info Sekolah -->
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-800/80 p-4 sm:p-5 rounded-2xl border border-slate-700 mb-6 sm:mb-8 gap-3 shadow-lg">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 mb-6 sm:mb-8 gap-3 shadow-sm">
             <div>
-              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Satuan Pendidikan</p>
-              <h2 id="roleSelectSchoolName" class="text-lg sm:text-2xl font-bold text-amber-400 leading-tight">Nama Sekolah</h2>
-              <p id="roleSelectNpsn" class="text-xs text-slate-400 mt-0.5 font-mono">NPSN: -</p>
+              <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Satuan Pendidikan</p>
+              <h2 id="roleSelectSchoolName" class="text-lg sm:text-2xl font-bold text-slate-900 leading-tight">Nama Sekolah</h2>
+              <p id="roleSelectNpsn" class="text-xs text-slate-500 mt-0.5 font-mono">NPSN: -</p>
             </div>
-            <button onclick="location.reload()" class="px-3.5 py-1.5 bg-slate-700/70 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-300 transition">Keluar Akun</button>
+            <button onclick="location.reload()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">Keluar Akun</button>
           </div>
 
           <div class="text-center mb-6 sm:mb-8">
-            <h3 class="text-xl sm:text-2xl font-extrabold text-white mb-1.5">Pilih Peran Responden</h3>
-            <p class="text-slate-400 text-xs sm:text-sm max-w-lg mx-auto">Silakan pilih peran Anda untuk mengisi instrumen atau mengunduh dokumen PDF resmi.</p>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-1.5">Pilih Peran Responden</h3>
+            <p class="text-slate-500 text-xs sm:text-sm max-w-lg mx-auto">Silakan pilih peran Anda untuk mengisi instrumen atau mengunduh dokumen PDF resmi.</p>
           </div>
 
           <!-- 3 Card Grid -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6" id="roleCardsContainer"></div>
         </div>
 
-        <div class="text-center text-[11px] text-slate-500 py-6">
+        <div class="text-center text-[11px] text-slate-400 py-6">
           e-Monev Revitalisasi SMP • Bidang SMP Dinas Pendidikan Kabupaten Karanganyar
         </div>
       </div>
     </div>
 
     <!-- 4. Modal Identitas Responden -->
-    <div id="identitasModal" class="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden fade-in">
-      <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative">
-        <h3 class="text-lg sm:text-xl font-bold text-amber-400 mb-1" id="modalRoleTitle">Identitas Responden</h3>
-        <p class="text-xs text-slate-400 mb-5">Nama dan NIP dicantumkan pada lembar tanda tangan dokumen resmi PDF.</p>
+    <div id="identitasModal" class="absolute inset-0 z-40 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden fade-in">
+      <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-200 relative">
+        <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-1" id="modalRoleTitle">Identitas Responden</h3>
+        <p class="text-xs text-slate-500 mb-5">Nama dan NIP dicantumkan pada lembar tanda tangan dokumen resmi PDF.</p>
         
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Lengkap & Gelar <span class="text-rose-400">*</span></label>
-            <input type="text" id="modalNamaInput" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 transition">
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nama Lengkap & Gelar <span class="text-rose-500">*</span></label>
+            <input type="text" id="modalNamaInput" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:outline-none text-slate-900 text-sm placeholder-slate-400 transition">
           </div>
           
           <div id="modalNipContainer">
             <div class="flex justify-between items-center mb-1.5">
-              <label class="block text-xs font-semibold text-slate-300">NIP Responden (18 Digit) <span class="text-rose-400">*</span></label>
-              <span class="text-[10px] text-slate-400 font-mono" id="modalNipCounter">0/18</span>
+              <label class="block text-xs font-semibold text-slate-700">NIP Responden (18 Digit) <span class="text-rose-500">*</span></label>
+              <span class="text-[10px] text-slate-500 font-mono" id="modalNipCounter">0/18</span>
             </div>
-            <input type="text" id="modalNipInput" placeholder="18 digit angka NIP" maxlength="18" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 18); document.getElementById('modalNipCounter').innerText = this.value.length + '/18';" class="w-full px-4 py-2.5 rounded-lg bg-slate-700/60 border border-slate-600 focus:border-amber-400 focus:bg-slate-700 focus:outline-none text-white text-sm placeholder-slate-400 font-mono tracking-wider transition">
+            <input type="text" id="modalNipInput" placeholder="18 digit angka NIP" maxlength="18" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 18); document.getElementById('modalNipCounter').innerText = this.value.length + '/18';" class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:outline-none text-slate-900 text-sm placeholder-slate-400 font-mono tracking-wider transition">
           </div>
         </div>
 
         <div class="flex justify-end gap-3 mt-6">
-          <button onclick="closeIdentitasModal()" class="px-4 py-2 rounded-lg bg-slate-700/70 hover:bg-slate-600 text-xs font-semibold text-slate-300 transition">Batal</button>
-          <button onclick="saveIdentitasAndEnter()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow-lg shadow-amber-500/20">Lanjut ke Instrumen →</button>
+          <button onclick="closeIdentitasModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-semibold text-slate-700 transition">Batal</button>
+          <button onclick="saveIdentitasAndEnter()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition shadow-md shadow-amber-500/20">Lanjut ke Instrumen →</button>
         </div>
       </div>
     </div>
@@ -113,42 +113,42 @@
     <div id="dashboardSection" class="w-full h-full flex flex-col hidden overflow-hidden">
       
       <!-- Sub-Header Navigasi Atas -->
-      <header class="bg-slate-800 border-b border-slate-700 px-4 sm:px-8 py-3 shrink-0 flex flex-col gap-2.5 shadow-lg z-20">
+      <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3 shrink-0 flex flex-col gap-2.5 shadow-sm z-20">
         
         <!-- Baris 1: Kontrol Peran, Identitas Responden & Autosave -->
         <div class="flex items-center justify-between gap-3">
           <!-- Kiri: Tombol Kembali & Info Responden -->
           <div class="flex items-center gap-3 min-w-0">
-            <button onclick="backToRoleSelect()" class="px-3 py-1.5 rounded-lg bg-slate-700/80 hover:bg-slate-700 text-xs text-amber-400 hover:text-amber-300 font-semibold transition shrink-0 flex items-center gap-1.5 shadow-sm">
+            <button onclick="backToRoleSelect()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-slate-700 font-semibold transition shrink-0 flex items-center gap-1.5">
               <span>←</span>
               <span class="hidden sm:inline">Pilih Peran Lain</span><span class="inline sm:hidden">Ganti Peran</span>
             </button>
-            <div class="h-4 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
             <div class="min-w-0 flex items-center gap-2">
-              <span id="activeRoleBadge" class="text-[10px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/40 shrink-0">KS</span>
+              <span id="activeRoleBadge" class="text-[10px] px-2.5 py-0.5 rounded font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 shrink-0">KS</span>
               <div class="truncate">
-                <span id="sidebarRespondenNama" class="font-bold text-xs sm:text-sm text-slate-100 truncate">Nama</span>
-                <span id="sidebarRespondenNip" class="text-[11px] text-slate-400 font-mono ml-1.5 hidden sm:inline"></span>
+                <span id="sidebarRespondenNama" class="font-bold text-xs sm:text-sm text-slate-900 truncate">Nama</span>
+                <span id="sidebarRespondenNip" class="text-[11px] text-slate-500 font-mono ml-1.5 hidden sm:inline"></span>
               </div>
             </div>
           </div>
 
           <!-- Kanan: Status Autosave -->
           <div class="flex items-center gap-2 shrink-0">
-            <span class="text-[11px] text-slate-400 font-medium" id="autosaveStatusIndicator">Otomatis tersimpan</span>
+            <span class="text-[11px] text-slate-500 font-medium" id="autosaveStatusIndicator">Otomatis tersimpan</span>
           </div>
         </div>
 
         <!-- Baris 2: Pemilihan Indikator (Dropdown & Quick Pills) -->
-        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 pt-2 border-t border-slate-700/60">
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 pt-2 border-t border-slate-200">
           
           <!-- Dropdown Selector Indikator -->
           <div class="flex items-center gap-2 shrink-0">
-            <label for="indicatorSelectDropdown" class="text-xs text-slate-400 font-semibold whitespace-nowrap hidden sm:inline">Pilih Indikator:</label>
+            <label for="indicatorSelectDropdown" class="text-xs text-slate-600 font-semibold whitespace-nowrap hidden sm:inline">Pilih Indikator:</label>
             <div class="relative w-full sm:w-80">
-              <select id="indicatorSelectDropdown" onchange="switchBab(parseInt(this.value))" class="w-full bg-slate-900 border border-slate-600 hover:border-amber-400/80 focus:border-amber-400 text-amber-400 font-bold rounded-lg px-3 py-1.5 text-xs focus:outline-none transition cursor-pointer appearance-none pr-8 shadow-inner">
+              <select id="indicatorSelectDropdown" onchange="switchBab(parseInt(this.value))" class="w-full bg-slate-50 border border-slate-300 hover:border-amber-500 focus:border-amber-500 text-slate-900 font-bold rounded-lg px-3 py-1.5 text-xs focus:outline-none transition cursor-pointer appearance-none pr-8">
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-400">
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-500">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
             </div>
@@ -160,13 +160,13 @@
       </header>
 
       <!-- Main Form Area (100% Full Width) -->
-      <section class="flex-1 bg-slate-900 overflow-y-auto relative h-full flex flex-col">
+      <section class="flex-1 bg-slate-50 overflow-y-auto relative h-full flex flex-col">
         <!-- Banner Mode Baca (Jika Sudah Selesai) -->
-        <div id="readOnlyBanner" class="bg-emerald-900/40 border-b border-emerald-500/40 px-4 sm:px-8 py-2.5 sm:py-3 flex flex-col sm:flex-row justify-between items-center gap-2.5 hidden shrink-0">
-          <div class="flex items-center gap-2 text-emerald-300 text-xs sm:text-sm font-semibold">
+        <div id="readOnlyBanner" class="bg-emerald-50 border-b border-emerald-200 px-4 sm:px-8 py-2.5 sm:py-3 flex flex-col sm:flex-row justify-between items-center gap-2.5 hidden shrink-0">
+          <div class="flex items-center gap-2 text-emerald-800 text-xs sm:text-sm font-semibold">
             <span>✅</span> Dokumen sudah difinalisasi (Mode Baca).
           </div>
-          <button onclick="downloadRolePdf(currentRole)" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold transition shadow">
+          <button onclick="downloadRolePdf(currentRole)" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm">
             📥 Download Ulang PDF
           </button>
         </div>
@@ -179,10 +179,10 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-800 py-2 px-4 text-center text-[11px] text-slate-500 shrink-0">
+  <footer class="bg-white border-t border-slate-200 py-2 px-4 text-center text-[11px] text-slate-500 shrink-0">
     DIGITALLY SHAPED BY
-    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-3.5 sm:h-4 mx-1 object-contain brightness-[4] contrast-150 saturate-150 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
-    <span class="text-slate-400 font-bold ml-1">[BID SMP 2026]</span>
+    <img src="https://i.ibb.co.com/KpqwmHd6/Logo-Jemprot-2-1-removebg-preview.png" alt="Logo JeMPROT" class="inline-block align-middle h-3.5 sm:h-4 mx-1 object-contain contrast-125">
+    <span class="text-slate-700 font-bold ml-1">[BID SMP 2026]</span>
   </footer>
 
   <script>
@@ -447,26 +447,26 @@
         const isSelesai = rData.status === 'Selesai';
         const isDraf = rData.status === 'Draf';
 
-        let badgeClass = 'bg-slate-700/60 text-slate-400 border border-slate-600/50';
+        let badgeClass = 'bg-slate-100 text-slate-600 border border-slate-200';
         let badgeText = '⏳ Belum Mengisi';
         let btnText = 'Mulai Mengisi →';
-        let btnColor = 'bg-blue-600 hover:bg-blue-500 text-white';
+        let btnColor = 'bg-blue-600 hover:bg-blue-700 text-white';
 
         if (isSelesai) {
-          badgeClass = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50';
+          badgeClass = 'bg-emerald-50 text-emerald-700 border border-emerald-200';
           badgeText = '✅ Selesai';
           btnText = 'Lihat Jawaban (Read-only)';
-          btnColor = 'bg-slate-700 hover:bg-slate-600 text-slate-200';
+          btnColor = 'bg-slate-700 hover:bg-slate-800 text-white';
         } else if (isDraf) {
-          badgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/50';
+          badgeClass = 'bg-amber-50 text-amber-700 border border-amber-200';
           badgeText = '📝 Draf Tersimpan';
           btnText = 'Lanjutkan Mengisi →';
-          btnColor = 'bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold';
+          btnColor = 'bg-amber-500 hover:bg-amber-600 text-white font-bold';
         }
 
         html += `
-          <div class="bg-slate-800 rounded-2xl border border-slate-700/80 p-5 sm:p-6 flex flex-col justify-between hover:border-slate-500 transition shadow-xl relative overflow-hidden group">
-            <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/10 transition"></div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col justify-between hover:border-slate-300 hover:shadow-md transition shadow-sm relative overflow-hidden group">
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-400/10 rounded-full blur-xl group-hover:bg-amber-400/20 transition"></div>
             
             <div>
               <div class="flex justify-between items-start mb-3">
@@ -474,21 +474,21 @@
                 <span class="text-[10px] sm:text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${badgeClass}">${badgeText}</span>
               </div>
 
-              <h4 class="text-base sm:text-lg font-bold text-white mb-1">${meta.label}</h4>
-              <p class="text-xs text-slate-400 mb-4 leading-relaxed">${meta.desc}</p>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1">${meta.label}</h4>
+              <p class="text-xs text-slate-500 mb-4 leading-relaxed">${meta.desc}</p>
               
-              <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/50 text-xs text-slate-300 space-y-1 mb-5">
-                <div class="flex justify-between"><span class="text-slate-500">Nama:</span> <span class="font-medium truncate max-w-[150px]">${rData.nama || '-'}</span></div>
-                ${roleKey !== 'P2SP' ? `<div class="flex justify-between"><span class="text-slate-500">NIP:</span> <span class="font-medium font-mono truncate max-w-[150px]">${rData.nip || '-'}</span></div>` : ''}
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs text-slate-700 space-y-1 mb-5">
+                <div class="flex justify-between"><span class="text-slate-400">Nama:</span> <span class="font-medium truncate max-w-[150px]">${rData.nama || '-'}</span></div>
+                ${roleKey !== 'P2SP' ? `<div class="flex justify-between"><span class="text-slate-400">NIP:</span> <span class="font-medium font-mono truncate max-w-[150px]">${rData.nip || '-'}</span></div>` : ''}
               </div>
             </div>
 
-            <div class="space-y-2 pt-2 border-t border-slate-700/50">
-              <button onclick="handleRoleCardClick('${roleKey}')" class="w-full py-2.5 rounded-lg text-xs font-bold transition shadow ${btnColor}">
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+              <button onclick="handleRoleCardClick('${roleKey}')" class="w-full py-2.5 rounded-lg text-xs font-bold transition shadow-sm ${btnColor}">
                 ${btnText}
               </button>
               ${isSelesai ? `
-                <button onclick="downloadRolePdf('${roleKey}')" class="w-full py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                <button onclick="downloadRolePdf('${roleKey}')" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition">
                   <span>📥</span> Download Ulang PDF
                 </button>
               ` : ''}
@@ -624,9 +624,9 @@
       const activeBabList = getActiveIndicatorsForCurrentRole();
       if (activeBabList.length === 0) {
         document.getElementById('formArea').innerHTML = `
-          <div class="text-center py-16 bg-slate-800 rounded-xl border border-slate-700">
-            <h3 class="text-lg font-bold text-amber-400 mb-2">Tidak Ada Indikator</h3>
-            <p class="text-xs text-slate-400">Admin belum menetapkan indikator penilaian untuk peran ini.</p>
+          <div class="text-center py-16 bg-white rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-lg font-bold text-amber-600 mb-2">Tidak Ada Indikator</h3>
+            <p class="text-xs text-slate-500">Admin belum menetapkan indikator penilaian untuk peran ini.</p>
           </div>
         `;
         return;
@@ -646,7 +646,7 @@
         `;
 
         pillsHTML += `
-          <button type="button" id="navPillBab-${i}" onclick="switchBab(${i})" class="px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition ${isFirst ? 'bg-amber-500 text-slate-950 font-bold shadow' : 'bg-slate-700/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-600/50'}">
+          <button type="button" id="navPillBab-${i}" onclick="switchBab(${i})" class="px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition ${isFirst ? 'bg-amber-500 text-white font-bold shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200'}">
             <span class="opacity-75">${i + 1}.</span> ${shortName}
           </button>
         `;
@@ -672,12 +672,12 @@
       // Update pill styling
       const prevPill = document.getElementById(`navPillBab-${activeBabIndex}`);
       if (prevPill) {
-        prevPill.className = "px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition bg-slate-700/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-600/50";
+        prevPill.className = "px-3 py-1 rounded-lg text-xs font-semibold shrink-0 transition bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200";
       }
 
       const nextPill = document.getElementById(`navPillBab-${index}`);
       if (nextPill) {
-        nextPill.className = "px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition bg-amber-500 text-slate-950 shadow";
+        nextPill.className = "px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition bg-amber-500 text-white shadow-sm";
         nextPill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
 
@@ -694,37 +694,37 @@
 
       let formHTML = `
         <div class="fade-in">
-          <div class="border-b border-slate-700 pb-3 sm:pb-4 mb-4 sm:mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
-            <h2 class="text-lg sm:text-2xl font-bold text-white leading-tight">${babData.bab}</h2>
-            <span class="text-[11px] text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-700 shrink-0">Bagian ${index + 1} dari ${activeBabList.length}</span>
+          <div class="border-b border-slate-200 pb-3 sm:pb-4 mb-4 sm:mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
+            <h2 class="text-lg sm:text-2xl font-bold text-slate-900 leading-tight">${babData.bab}</h2>
+            <span class="text-[11px] text-slate-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 shadow-sm shrink-0">Bagian ${index + 1} dari ${activeBabList.length}</span>
           </div>
           
           <!-- Panduan Rubrik -->
-          <div class="mb-6 sm:mb-8 bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden shadow-lg">
-            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex items-center gap-2">
-              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <h3 class="font-bold text-slate-200 text-xs tracking-wide uppercase">Panduan Penilaian Rubrik</h3>
+          <div class="mb-6 sm:mb-8 bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="bg-slate-100/80 px-4 py-2.5 border-b border-slate-200 flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <h3 class="font-bold text-slate-700 text-xs tracking-wide uppercase">Panduan Penilaian Rubrik</h3>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-700 text-xs">
-              <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-rose-500/80"></div>
-                <h4 class="font-bold text-rose-400 mb-1">KURANG BAIK (KB)</h4>
-                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.K}</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200 text-xs">
+              <div class="p-3.5 sm:p-4 relative bg-red-50/40">
+                <div class="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
+                <h4 class="font-bold text-red-700 mb-1">KURANG BAIK (KB)</h4>
+                <p class="text-slate-600 leading-relaxed text-[11px]">${babData.rubrik.K}</p>
               </div>
-              <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-orange-500/80"></div>
-                <h4 class="font-bold text-orange-400 mb-1">CUKUP BAIK (CB)</h4>
-                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.CB}</p>
+              <div class="p-3.5 sm:p-4 relative bg-orange-50/40">
+                <div class="absolute top-0 left-0 w-full h-1 bg-orange-500"></div>
+                <h4 class="font-bold text-orange-700 mb-1">CUKUP BAIK (CB)</h4>
+                <p class="text-slate-600 leading-relaxed text-[11px]">${babData.rubrik.CB}</p>
               </div>
-              <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-yellow-500/80"></div>
-                <h4 class="font-bold text-yellow-400 mb-1">BAIK (B)</h4>
-                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.B}</p>
+              <div class="p-3.5 sm:p-4 relative bg-yellow-50/50">
+                <div class="absolute top-0 left-0 w-full h-1 bg-yellow-400"></div>
+                <h4 class="font-bold text-yellow-700 mb-1">BAIK (B)</h4>
+                <p class="text-slate-600 leading-relaxed text-[11px]">${babData.rubrik.B}</p>
               </div>
-              <div class="p-3.5 sm:p-4 relative">
-                <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500/80"></div>
-                <h4 class="font-bold text-emerald-400 mb-1">SANGAT BAIK (SB)</h4>
-                <p class="text-slate-300 leading-relaxed text-[11px]">${babData.rubrik.SB}</p>
+              <div class="p-3.5 sm:p-4 relative bg-emerald-50/40">
+                <div class="absolute top-0 left-0 w-full h-1 bg-emerald-600"></div>
+                <h4 class="font-bold text-emerald-700 mb-1">SANGAT BAIK (SB)</h4>
+                <p class="text-slate-600 leading-relaxed text-[11px]">${babData.rubrik.SB}</p>
               </div>
             </div>
           </div>
@@ -736,30 +736,30 @@
         {
           code: 'KB',
           label: 'Kurang Baik',
-          hoverClass: 'hover:bg-rose-500/15 hover:border-rose-400/70 hover:text-rose-200',
-          checkedClass: 'peer-checked:border-rose-500 peer-checked:bg-rose-600/25 peer-checked:text-rose-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-rose-500/60',
-          readOnlyCheckedClass: 'border-2 border-rose-400 bg-rose-500/25 text-rose-300 font-extrabold shadow-[0_0_10px_rgba(244,63,94,0.3)] ring-1 ring-rose-400'
+          hoverClass: 'hover:bg-red-50 hover:border-red-400 hover:text-red-700',
+          checkedClass: 'peer-checked:border-red-700 peer-checked:bg-red-600 peer-checked:text-white peer-checked:font-bold peer-checked:shadow-md peer-checked:shadow-red-600/25',
+          readOnlyCheckedClass: 'border-2 border-red-700 bg-red-600 text-white font-extrabold shadow-md shadow-red-600/25'
         },
         {
           code: 'CB',
           label: 'Cukup Baik',
-          hoverClass: 'hover:bg-orange-500/15 hover:border-orange-400/70 hover:text-orange-200',
-          checkedClass: 'peer-checked:border-orange-500 peer-checked:bg-orange-600/25 peer-checked:text-orange-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-orange-500/60',
-          readOnlyCheckedClass: 'border-2 border-orange-400 bg-orange-500/25 text-orange-300 font-extrabold shadow-[0_0_10px_rgba(249,115,22,0.3)] ring-1 ring-orange-400'
+          hoverClass: 'hover:bg-orange-50 hover:border-orange-400 hover:text-orange-700',
+          checkedClass: 'peer-checked:border-orange-600 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:font-bold peer-checked:shadow-md peer-checked:shadow-orange-500/25',
+          readOnlyCheckedClass: 'border-2 border-orange-600 bg-orange-500 text-white font-extrabold shadow-md shadow-orange-500/25'
         },
         {
           code: 'B',
           label: 'Baik',
-          hoverClass: 'hover:bg-yellow-500/15 hover:border-yellow-400/70 hover:text-yellow-200',
-          checkedClass: 'peer-checked:border-yellow-400 peer-checked:bg-yellow-500/25 peer-checked:text-yellow-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-yellow-400/60',
-          readOnlyCheckedClass: 'border-2 border-yellow-400 bg-yellow-500/25 text-yellow-300 font-extrabold shadow-[0_0_10px_rgba(234,179,8,0.3)] ring-1 ring-yellow-400'
+          hoverClass: 'hover:bg-yellow-50 hover:border-yellow-400 hover:text-yellow-800',
+          checkedClass: 'peer-checked:border-yellow-500 peer-checked:bg-yellow-400 peer-checked:text-slate-900 peer-checked:font-bold peer-checked:shadow-md peer-checked:shadow-yellow-400/30',
+          readOnlyCheckedClass: 'border-2 border-yellow-500 bg-yellow-400 text-slate-900 font-extrabold shadow-md shadow-yellow-400/30'
         },
         {
           code: 'SB',
           label: 'Sangat Baik',
-          hoverClass: 'hover:bg-emerald-500/15 hover:border-emerald-400/70 hover:text-emerald-200',
-          checkedClass: 'peer-checked:border-emerald-500 peer-checked:bg-emerald-600/25 peer-checked:text-emerald-300 peer-checked:font-bold peer-checked:ring-1 peer-checked:ring-emerald-500/60',
-          readOnlyCheckedClass: 'border-2 border-emerald-400 bg-emerald-500/25 text-emerald-300 font-extrabold shadow-[0_0_10px_rgba(16,185,129,0.3)] ring-1 ring-emerald-400'
+          hoverClass: 'hover:bg-emerald-50 hover:border-emerald-400 hover:text-emerald-700',
+          checkedClass: 'peer-checked:border-emerald-700 peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:font-bold peer-checked:shadow-md peer-checked:shadow-emerald-600/25',
+          readOnlyCheckedClass: 'border-2 border-emerald-700 bg-emerald-600 text-white font-extrabold shadow-md shadow-emerald-600/25'
         }
       ];
 
@@ -768,9 +768,9 @@
         let draftVal = normalizeAnswerCode(currentDraft[`q${qNum}`]);
         
         formHTML += `
-          <div class="bg-slate-800/50 p-4 sm:p-5 rounded-xl border border-slate-700/60 hover:border-slate-600 transition">
-            <label class="block mb-3.5 font-medium text-slate-200 text-xs sm:text-sm leading-relaxed">
-              <span class="text-amber-400 font-bold mr-1">${qNum}.</span> ${soal}
+          <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 hover:border-slate-300 shadow-sm transition">
+            <label class="block mb-3.5 font-medium text-slate-800 text-xs sm:text-sm leading-relaxed">
+              <span class="text-amber-600 font-bold mr-1">${qNum}.</span> ${soal}
             </label>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
               ${answerOptions.map(opt => {
@@ -780,15 +780,15 @@
                   if (isChecked) {
                     optClass = opt.readOnlyCheckedClass;
                   } else {
-                    optClass = 'border border-slate-800 bg-slate-900/40 text-slate-600 opacity-40 cursor-not-allowed';
+                    optClass = 'border border-slate-200 bg-slate-100 text-slate-400 opacity-60 cursor-not-allowed';
                   }
                 } else {
-                  optClass = `border border-slate-700 bg-slate-800/80 text-slate-300 ${opt.hoverClass} ${opt.checkedClass}`;
+                  optClass = `border border-slate-200 bg-slate-50 text-slate-700 font-medium ${opt.hoverClass} ${opt.checkedClass}`;
                 }
                 return `
                   <label class="relative ${isReadOnlyMode ? 'cursor-not-allowed' : 'cursor-pointer'}">
                     <input type="radio" name="q${qNum}" value="${opt.code}" onchange="autoSave('q${qNum}', '${opt.code}')" ${isChecked ? 'checked' : ''} ${isReadOnlyMode ? 'disabled' : ''} class="peer sr-only">
-                    <div class="px-2.5 sm:px-3 py-2 sm:py-2.5 text-center rounded-lg text-xs transition ${optClass}">
+                    <div class="px-2.5 sm:px-3 py-2.5 text-center rounded-lg text-xs transition ${optClass}">
                       ${opt.label} ${isReadOnlyMode && isChecked ? '✓' : ''}
                     </div>
                   </label>
@@ -799,21 +799,21 @@
         `;
       });
 
-      formHTML += `</div><div class="flex justify-between items-center mt-8 pt-5 border-t border-slate-800">`;
+      formHTML += `</div><div class="flex justify-between items-center mt-8 pt-5 border-t border-slate-200">`;
       
       if (index > 0) {
-        formHTML += `<button onclick="switchBab(${index - 1})" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition text-xs font-semibold">← Bab Sebelumnya</button>`;
+        formHTML += `<button onclick="switchBab(${index - 1})" class="px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 transition text-xs font-semibold">← Bab Sebelumnya</button>`;
       } else {
         formHTML += `<div></div>`;
       }
 
       if (index < activeBabList.length - 1) {
-        formHTML += `<button onclick="switchBab(${index + 1})" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition">Selanjutnya →</button>`;
+        formHTML += `<button onclick="switchBab(${index + 1})" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold transition shadow-sm">Selanjutnya →</button>`;
       } else {
         if (!isReadOnlyMode) {
-          formHTML += `<button onclick="generatePDF()" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-extrabold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5">Finalisasi & Kirim Berkas</button>`;
+          formHTML += `<button onclick="generatePDF()" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-extrabold shadow-md shadow-amber-500/25 transition transform hover:-translate-y-0.5">Finalisasi & Kirim Berkas</button>`;
         } else {
-          formHTML += `<div class="text-xs text-slate-500 italic">Status: Berkas sudah difinalisasi</div>`;
+          formHTML += `<div class="text-xs text-slate-400 italic">Status: Berkas sudah difinalisasi</div>`;
         }
       }
 
